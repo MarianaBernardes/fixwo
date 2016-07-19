@@ -1,0 +1,12 @@
+Tutorial de instalação do AngularJS no Eclipse Mars:
+( Para uma versão do tutorial com imagens, acesse: http://devtroll.blogspot.com.br/2014/05/angularjs-usando-o-eclipse-como-ide.html )
+
+1º - Clique em “Help” no menu de navegação e vá ate a aba “Install new softwares…”.
+
+2º - Informe a url do projeto AngularJS : você pode usar a versão estável: http://oss.opensagres.fr/angularjs-eclipse/0.1.0/ ou a versão em desenvolvimento: http://oss.opensagres.fr/angularjs-eclipse/0.2.0-SNAPSHOT/ .
+
+3º - Depois de instalado, crie um projeto do tipo Dynamic Web Project ou Static Web Project.
+
+4º - Clique com o botão direito em cima do projeto selecione o menu “configure” e selecione “Convert to AngularJS project…”.
+
+5º - Pronto! Seu projeto está pronto para o uso do AngularJS. Agora basta criar um arquivo “.html” a partir da pasta “WebContent” e começar a programar!

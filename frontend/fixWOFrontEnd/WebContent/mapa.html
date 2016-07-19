@@ -11,19 +11,6 @@
 			var map = L.map('mapa1').setView([-21.241062, -44.996481], 13);
 			L.control.scale().addTo(map);
 			
-			L.Util.template = function (str, data) {
-		        return str.replace(/\{ *([\w_]+) *\}/g, function (str, key) {
-		          var value = data[key];
-		          if (!data.hasOwnProperty(key)) {
-		            throw new Error('No value provided for variable ' + str);
-		          } else if (typeof value === 'function') {
-		            value = value(data);
-		          }
-
-		          return value;
-		        });
-		      }
-			
 			L.tileLayer('http://{s}{hash}.wikimapia.org/?x={x}&y={y}&zoom={z}&r=7071412&type=&lng=3', {
 				hash: function (data) {
 			          return data.x % 4 + (data.y % 4) *4;
@@ -32,6 +19,24 @@
 		        , maxZoom: 21
 		        , attribution: '<a href="http://wikimapia.org" target="_blank">Wikimapia.org</a>'
 		      }).addTo(map);
+			
+			var marker = L.marker([-21.2505021, -45.010643]).addTo(map);
+			
+			var circle = L.circle([-21.241062, -44.996481], 500, {
+			    color: 'red',
+			    fillColor: '#f03',
+			    fillOpacity: 0.5
+			}).addTo(map);
+			
+			var polygon = L.polygon([
+				[-21.167124, -45.102060],
+				[-21.269444, -45.904280],
+				[-21.371864, -45.506300]
+			]).addTo(map);
+			
+			marker.bindPopup("<b>Hello world!</b><br>Sou uma popup.").openPopup();
+			circle.bindPopup("Eu sou um circulo.");
+			polygon.bindPopup("Eu sou um polígono.");
 			
 			</script>
 		</div>

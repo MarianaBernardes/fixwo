@@ -1,4 +1,4 @@
-var app = angular.module('angularjs-starter', ['jsonService']);
+var app = angular.module('fixWO', ['jsonService']);
 
 app.controller('Main', function($scope, JsonService) {
   JsonService.get(function(data){
