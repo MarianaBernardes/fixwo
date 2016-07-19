@@ -1,0 +1,10 @@
+{
+  "estado": "Minas Gerais", 
+  "cidades":[
+    {"data": "Lavras" }, 
+    {"data": "Ijací" }, 
+    {"data": "Nepomuceno" }, 
+    {"data": "Varginha" }, 
+    {"data": "Três Corações" }
+  ]
+}

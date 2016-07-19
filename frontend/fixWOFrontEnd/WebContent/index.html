@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="angularjs-starter">
+  
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <script src="http://code.angularjs.org/1.0.3/angular-resource.min.js"></script>
+  
+    <script src="services.js"></script>
+    <script src="app.js"></script>
+    
+  </head>
+  
+  <body ng-controller="Main">
+    <hr />
+    <code>
+      {{estado | json}}<br>
+      {{cidades | json}}
+    </code>
+    <hr />
+    
+    <h2>Estado:</h2> {{estado}}
+    <h2>Cidades:</h2>
+    <div ng-repeat="cidade in cidades">
+      {{cidade.data}}
+    </div>
+  </body>
+
+</html>

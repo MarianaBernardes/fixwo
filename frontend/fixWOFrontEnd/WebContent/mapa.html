@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
+		<script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
+		<script src="http://leaflet.github.com/Leaflet.label/leaflet.label.js"></script>
+	</head>
+	<body>
+		<div id="mapa1" style="width:80%; height:300px;">
+		<script>
+			var map = L.map('mapa1').setView([-21.241062, -44.996481], 13);
+			L.control.scale().addTo(map);
+			
+			L.Util.template = function (str, data) {
+		        return str.replace(/\{ *([\w_]+) *\}/g, function (str, key) {
+		          var value = data[key];
+		          if (!data.hasOwnProperty(key)) {
+		            throw new Error('No value provided for variable ' + str);
+		          } else if (typeof value === 'function') {
+		            value = value(data);
+		          }
+
+		          return value;
+		        });
+		      }
+			
+			L.tileLayer('http://{s}{hash}.wikimapia.org/?x={x}&y={y}&zoom={z}&r=7071412&type=&lng=3', {
+				hash: function (data) {
+			          return data.x % 4 + (data.y % 4) *4;
+			        }
+				, subdomains : 'i'
+		        , maxZoom: 21
+		        , attribution: '<a href="http://wikimapia.org" target="_blank">Wikimapia.org</a>'
+		      }).addTo(map);
+			
+			</script>
+		</div>
+	</body>
+</html>	
