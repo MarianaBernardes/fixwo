@@ -1,13 +1,13 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="QR Code">
   <ion-content class="padding">
     <h2>Mire a câmera no QR code do local</h2>
     <p>
 
-			<button class = "button  ion-camera button-positive" ng-click = "takePicture()">
+			<button class = "button ion-camera button-positive" ng-click = "takePicture()">
 				Tirar uma foto
 			</button>
 
-			<button class = "button  ion-images button-positive" ng-click = "getPicture()">
+			<button class = "button ion-images button-positive" ng-click = "getPicture()">
 				Abrir galeria
 			</button>
 			<img ng-src = "{{user.picture}}">
