@@ -1,28 +1,24 @@
 angular.module('starter.controllers', [])
 
-.controller('QRCodeCtrl', function($scope) {})
+.controller('CadastrarOcorrenciaCtrl', function($scope, $state) {
+	
+	$scope.goToQrCodeState = function() {
+		$state.go('^.^.qrCodeScanner');
+	};
 
-.controller('GeoCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+	$scope.goToGeolocalizacaoState = function() {
+		$state.go('^.^.geolocalizacao');
+	};
+	
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('ListarOcorrenciasCtrl', function($scope, $state, Ocorrencias) {
+	
+	$scope.ocorrencias = Ocorrencias.all();
+	
+	
 })
 
-.controller('ReqCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('DetalhesDaOcorrenciaCtrl', function($scope, $state, $stateParams, Ocorrencias) {
+	  $scope.ocorrencia = Ocorrencias.get($stateParams.ocorrenciaId);
 });

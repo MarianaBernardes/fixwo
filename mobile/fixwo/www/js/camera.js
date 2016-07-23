@@ -1,4 +1,4 @@
-.factory('Camera', function($q) {
+/*.factory('Camera', function($q) {
 
    return {
       getPicture: function(options) {
@@ -14,4 +14,4 @@
       }
    }
 
-});
+});//*/

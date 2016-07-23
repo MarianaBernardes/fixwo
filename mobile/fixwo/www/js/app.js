@@ -40,37 +40,37 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   // Each tab has its own nav history stack:
 
-  .state('tab.qrcode', {
-    url: '/qrcode',
+  .state('tab.cadastrarOcorrencia', {
+    url: '/cadastrarOcorrencia',
     views: {
-      'tab-qrcode': {
-        templateUrl: 'templates/tab-qrcode.html',
-        controller: 'QRCodeCtrl'
+      'tab-cadastrarOcorrencia': {
+        templateUrl: 'templates/tab-cadastrarOcorrencia.html',
+        controller: 'CadastrarOcorrenciaCtrl'
       }
     }
   })
 
-  .state('tab.geo', {
-      url: '/geo',
+  .state('tab.listarOcorrencias', {
+      url: '/listarOcorrencias',
       views: {
-        'tab-geo': {
-          templateUrl: 'templates/tab-geo.html',
-          controller: 'GeoCtrl'
+        'tab-listarOcorrencias': {
+          templateUrl: 'templates/tab-listarOcorrencias.html',
+          controller: 'ListarOcorrenciasCtrl'
         }
       }
     })
-
-  .state('tab.req', {
-    url: '/req',
-    views: {
-      'tab-req': {
-        templateUrl: 'templates/tab-req.html',
-        controller: 'ReqCtrl'
+  
+  .state('tab.detalhesDaOcorrencia', {
+      url: '/listarOcorrencias/:ocorrenciaId',
+      views: {
+        'tab-listarOcorrencias': {
+          templateUrl: 'templates/tab-detalhesDaOcorrencia.html',
+          controller: 'DetalhesDaOcorrenciaCtrl'
+        }
       }
-    }
-  });
+    });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/qrcode');
+  $urlRouterProvider.otherwise('/tab/cadastrarOcorrencia');
 
 });

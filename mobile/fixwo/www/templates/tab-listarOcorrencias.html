@@ -1,0 +1,16 @@
+<ion-view view-title="fixWO - Listar Ocorrências">
+  <ion-content>
+    <ion-list>
+		<ion-item   class="item item-thumbnail-right"
+				ng-repeat="ocorrencia in ocorrencias"
+				type="item-text-wrap"
+				href="#/tab/listarOcorrencias/{{ocorrencia.id}}">
+			<img src="{{ ocorrencia.imagem }}" style="width: 128px; height: 128px"></img>
+			<h2><b> {{ ocorrencia.titulo }} </b></h2><br/>
+			Estado: {{ ocorrencia.estado }} <br/>
+			{{ ocorrencia.data }} <br/>	
+			<i class="icon icon-accessory"></i>
+		</ion-item> 
+	</ion-list>
+  </ion-content>
+</ion-view>
