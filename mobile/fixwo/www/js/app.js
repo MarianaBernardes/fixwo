@@ -68,6 +68,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           controller: 'DetalhesDaOcorrenciaCtrl'
         }
       }
+    })
+
+  .state('qrCodeScanner', {
+      url: '/qrCodeScanner',
+      templateUrl: 'templates/qrCodeScanner.html',
+      controller: 'QrCodeScannerCtrl'
+    })
+
+  .state('fotos', {
+      url: '/fotos',
+      templateUrl: 'templates/fotos.html',
+      controller: 'FotosCtrl'
+    })
+
+  .state('comentarios', {
+      url: '/comentarios',
+      templateUrl: 'templates/comentarios.html',
+      controller: 'ComentariosCtrl'
     });
 
   // if none of the above states are matched, use this as the fallback
