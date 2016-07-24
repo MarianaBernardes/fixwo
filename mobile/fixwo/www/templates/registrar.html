@@ -1,0 +1,22 @@
+<ion-view view-title="fixWO - Cadastrar">
+  <ion-content class="padding">
+      <div class="list list-inset">
+          <label class="item item-input">
+              <input type="text" placeholder="nome" ng-model="data.name"></input>
+          </label>
+          <label class="item item-input">
+              <input type="password" placeholder="cpf" ng-model="data.cpf"></input>
+          </label>
+          <label class="item item-input">
+              <input type="password" placeholder="email" ng-model="data.email"></input>
+          </label>
+          <label class="item item-input">
+              <input type="password" placeholder="senha" ng-model="data.senha"></input>
+          </label>
+          <label class="item item-input">
+              <input type="password" placeholder="confirmar senha" ng-model="data.senhaConfir"></input>
+          </label>
+      </div>
+	  <button class="button button-block button-positive" ng-click="registrar()">CADASTRAR</button>
+  </ion-content>
+</ion-view>

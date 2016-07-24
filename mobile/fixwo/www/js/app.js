@@ -72,6 +72,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   .state('qrCodeScanner', {
       url: '/qrCodeScanner',
+	  params: {
+		location: null
+	  },
       templateUrl: 'templates/qrCodeScanner.html',
       controller: 'QrCodeScannerCtrl'
     })
@@ -86,9 +89,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/comentarios',
       templateUrl: 'templates/comentarios.html',
       controller: 'ComentariosCtrl'
+    })
+
+  .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LoginCtrl'
+    })
+
+  .state('registrar', {
+      url: '/registrar',
+      templateUrl: 'templates/registrar.html',
+      controller: 'RegistrarCtrl'
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/cadastrarOcorrencia');
+  $urlRouterProvider.otherwise('/login');
 
 });

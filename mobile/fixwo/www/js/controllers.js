@@ -2,9 +2,13 @@ angular.module('starter.controllers', [])
 
 .controller('CadastrarOcorrenciaCtrl', function($scope, $state) {
 	
+
 	$scope.goToQrCodeState = function() {
-		$state.go('^.^.qrCodeScanner');
-	};
+		var qrCodeLocation = { 
+			location: 'Banheiro 01 PV3, UFLA'
+		}
+		$state.go('^.^.qrCodeScanner', {location: qrCodeLocation});
+	}
 
 	$scope.goToGeolocalizacaoState = function() {
 		$state.go('^.^.fotos');
@@ -18,7 +22,9 @@ angular.module('starter.controllers', [])
 	
 })
 
-.controller('QrCodeScannerCtrl', function($scope, $state, Ocorrencias) {
+.controller('QrCodeScannerCtrl', function($scope, $state, $stateParams) {
+
+	$scope.location = $state.params.location.location;
 
 	$scope.goToFotosState = function() {
 		$state.go('^.fotos');
@@ -26,7 +32,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('FotosCtrl', function($scope, $state, Ocorrencias) {
+.controller('FotosCtrl', function($scope, $state) {
 	
 	$scope.goToComentariosState = function() {
 		$state.go('^.comentarios');
@@ -34,9 +40,29 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('ComentariosCtrl', function($scope, $state, Ocorrencias) {
+.controller('ComentariosCtrl', function($scope, $state) {
 
 	$scope.goToCadastrarOcorrenciaState = function() {
+		$state.go('^.tab.cadastrarOcorrencia');
+	};
+		
+})
+
+.controller('LoginCtrl', function($scope, $state) {
+
+	$scope.login = function() {
+		$state.go('^.tab.cadastrarOcorrencia');
+	};
+
+	$scope.registrar = function() {
+		$state.go('^.registrar');
+	};
+		
+})
+
+.controller('RegistrarCtrl', function($scope, $state) {
+
+	$scope.registrar = function() {
 		$state.go('^.tab.cadastrarOcorrencia');
 	};
 		
