@@ -1,17 +1,33 @@
 <!doctype html>
-<html>
+<html ng-app="fixWO">
 	<head>
 		<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
 		<script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
 		<script src="http://leaflet.github.com/Leaflet.label/leaflet.label.js"></script>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    	<script src="http://code.angularjs.org/1.0.3/angular-resource.min.js"></script>
+		
+		<script src="services.js"></script>
+    	<script src="app.js"></script>
+		
 	</head>
-	<body>
+	<body ng-controller="Mapa">
+		<hr />
+    	<code>
+      	{{searchQuery | json}}<br>
+      	{{locais | json}}
+    	</code>
+    	<hr />
+    	
+    	<h2>Termo Buscado:</h2> {{searchQuery}}<br><br>
+		
 		<div id="mapa1" style="width:80%; height:300px;">
-		<script>
-			var map = L.map('mapa1').setView([-21.241062, -44.996481], 13);
+		<script type="text/javascript">
+			var map = L.map('mapa1');
 			L.control.scale().addTo(map);
 			
-			L.tileLayer('http://{s}{hash}.wikimapia.org/?x={x}&y={y}&zoom={z}&r=7071412&type=&lng=3', {
+			L.tileLayer('http://{s}{hash}.wikimapia.org/?x={x}&y={y}&zoom={z}&type=&lng=3', {
 				hash: function (data) {
 			          return data.x % 4 + (data.y % 4) *4;
 			        }
@@ -20,25 +36,24 @@
 		        , attribution: '<a href="http://wikimapia.org" target="_blank">Wikimapia.org</a>'
 		      }).addTo(map);
 			
-			var marker = L.marker([-21.2505021, -45.010643]).addTo(map);
+			window.onload=function(){
+				
+				var loc = angular.element(document.querySelector('[ng-controller="Mapa"]')).scope().locais;
+				var myPoints = [];
+				for (i = 0; i < loc.length; i++) { 
+					myPoints.push([loc[i].lat,loc[i].lng]);
+					var marker = L.marker([loc[i].lat,loc[i].lng]).addTo(map); 
+				}
+				
+				var myBounds = new L.LatLngBounds(myPoints);
+				map.fitBounds(myBounds);
+				
+			}
 			
-			var circle = L.circle([-21.241062, -44.996481], 500, {
-			    color: 'red',
-			    fillColor: '#f03',
-			    fillOpacity: 0.5
-			}).addTo(map);
-			
-			var polygon = L.polygon([
-				[-21.167124, -45.102060],
-				[-21.269444, -45.904280],
-				[-21.371864, -45.506300]
-			]).addTo(map);
-			
-			marker.bindPopup("<b>Hello world!</b><br>Sou uma popup.").openPopup();
-			circle.bindPopup("Eu sou um circulo.");
-			polygon.bindPopup("Eu sou um polígono.");
 			
 			</script>
+			
 		</div>
+		
 	</body>
 </html>	
