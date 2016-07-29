@@ -1,18 +1,28 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ionic','ngCordova'])
 
-.controller('CadastrarOcorrenciaCtrl', function($scope, $state) {
+.controller('CadastrarOcorrenciaCtrl', function($scope, $state, $cordovaBarcodeScanner) {
 	
-
 	$scope.goToQrCodeState = function() {
-		var qrCodeLocation = { 
-			location: 'Banheiro 01 PV3, UFLA'
-		}
-		$state.go('^.^.qrCodeScanner', {location: qrCodeLocation});
+	$cordovaBarcodeScanner.scan().then
+        (
+          function(imageData) {
+           	var qrcode_text = { location : imageData.text }
+						$state.go('^.^.qrCodeScanner', {location: qrcode_text});
+            console.log("Barcode Format -> " + imageData.format);
+            console.log("Cancelled -> " + imageData.cancelled);
+          },
+          function(error) {
+            console.log("An error happened -> " + error);
+          }
+          
+        );	
+
 	}
 
 	$scope.goToGeolocalizacaoState = function() {
 		$state.go('^.^.fotos');
 	};
+
 	
 })
 
