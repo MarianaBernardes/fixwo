@@ -17,8 +17,8 @@ public class Main {
 		/*
 		 * Lembrar de criar outros grupos
 		 */
-		Grupo grupo = new Grupo();
-		grupo.setName("ResponsavelArea");
+		/*Grupo grupo = new Grupo();
+		grupo.setName("Triador");
 		
 		try {
 			CRUDUserGroup.create(grupo);
@@ -27,14 +27,34 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+		Grupo grupo2 = new Grupo();
+		grupo2.setName("Usuario");
+		
+		try {
+			CRUDUserGroup.create(grupo2);
+		} catch (CRUDException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Grupo grupo3 = new Grupo();
+		grupo3.setName("ResponsavelArea");
+		
+		try {
+			CRUDUserGroup.create(grupo3);
+		} catch (CRUDException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// criação de usuários
 		Usuario usu = new Usuario();
-		usu.setId("5");
-		usu.setName("Pedro");
+		usu.setId("1");
+		usu.setName("Jean");
 		usu.setTenancy("1"); //id do cliente 1=fixo
 		
 		List<String> li = new ArrayList();
-		li.add("ResponsavelArea");
+		li.add("Triador");
 		
 		usu.setUserGroupNames(li);
 		
@@ -44,6 +64,42 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Usuario usu2 = new Usuario();
+		usu2.setId("2");
+		usu2.setName("Roger");
+		usu2.setTenancy("1"); //id do cliente 1=fixo
+		
+		List<String> li2 = new ArrayList();
+		li2.add("ResponsavelArea");
+		
+		usu2.setUserGroupNames(li2);
+		
+		try {
+			CRUDUser.create(usu2);
+		} catch (CRUDException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		Usuario usu3 = new Usuario();
+		usu3.setId("3");
+		usu3.setName("Pedro");
+		usu3.setTenancy("1"); //id do cliente 1=fixo
+		
+		List<String> li3 = new ArrayList();
+		li3.add("Usuario");
+		
+		usu3.setUserGroupNames(li3);
+		
+		try {
+			CRUDUser.create(usu3);
+		} catch (CRUDException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 	
 		// Cadastro de ocorrência
 		Ocorrencia o = new Ocorrencia();
