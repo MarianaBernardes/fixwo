@@ -1,5 +1,8 @@
 package fixwo
 
+import grails.rest.*
+
+@Resource(uri="/ordenservicos", readOnly=false, formats=["json","xml"])
 class OrdemServico {
 
     String titulo
@@ -10,7 +13,8 @@ class OrdemServico {
     Byte fotos
     String point
     Setor setor
-    Area[] areas
+    static hasMany = [areas:Area]
+    static belongsTo = [Area]
     Local local
 
     static constraints = {
