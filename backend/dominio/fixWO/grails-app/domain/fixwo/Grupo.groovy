@@ -1,7 +1,11 @@
 package fixwo
 
-class Grupo {
+import grails.rest.*
 
-    String descricao
-    Perfil perfil
+@Resource(uri="/grupos", readOnly=false, formats=["json","xml"])
+class Grupo {
+	Cliente cliente;
+
+	static hasMany = [usuarios:Usuario]
+	
 }

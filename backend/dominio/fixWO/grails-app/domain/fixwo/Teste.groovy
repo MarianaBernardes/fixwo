@@ -2,16 +2,14 @@ package fixwo
 
 import grails.rest.*
 
-@Resource(uri="/usuarios", readOnly=false, formats=["json","xml"])
-class Usuario {
+@Resource(uri="/testes", readOnly=false, formats=["json","xml"])
+class Teste {
 
     String nome
     String login
     String hashSenha
     String email
     int ativo=0;
-    static hasMany = [grupos:Grupo]
-    static belongsTo = [Grupo]
 
     static constraints = {
 		nome (nullable:false, blank:false, unique:false)
@@ -20,5 +18,4 @@ class Usuario {
 		hashSenha(nullable:false, blank:false, password:true)
 		grupo(nullable:true, blank:true)
     }
-
 }
