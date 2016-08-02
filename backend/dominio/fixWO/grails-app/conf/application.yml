@@ -16,7 +16,7 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: create
+            dbCreate: update
             url: jdbc:postgresql://localhost:5432/fixWO
     test:
         dataSource:

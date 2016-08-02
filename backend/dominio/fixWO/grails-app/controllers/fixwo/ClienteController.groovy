@@ -2,5 +2,5 @@ package fixwo
 
 class ClienteController {
 
-    def index() { }
+    def scaffold = Cliente
 }
