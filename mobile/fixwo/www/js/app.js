@@ -41,11 +41,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Each tab has its own nav history stack:
 
   .state('tab.cadastrarOcorrencia', {
-    url: '/cadastrarOcorrencia',
+    url: '/tabcadastrarOcorrencia',
     views: {
       'tab-cadastrarOcorrencia': {
         templateUrl: 'templates/tab-cadastrarOcorrencia.html',
-        controller: 'CadastrarOcorrenciaCtrl'
+        controller: 'TabCadastrarOcorrenciaCtrl'
       }
     }
   })
@@ -70,13 +70,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-  .state('qrCodeScanner', {
-      url: '/qrCodeScanner',
-	  params: {
-		location: null
-	  },
-      templateUrl: 'templates/qrCodeScanner.html',
-      controller: 'QrCodeScannerCtrl'
+  .state('cadastrarOcorrencia', {
+      url: '/cadastrarOcorrencia',
+  	  params: {
+  		qrcode: null
+  	  },
+      templateUrl: 'templates/cadastrarOcorrencia.html',
+      controller: 'CadastrarOcorrenciaCtrl'
     })
 
   .state('fotos', {
