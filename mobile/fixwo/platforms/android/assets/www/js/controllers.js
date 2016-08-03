@@ -1,19 +1,24 @@
 angular.module('starter.controllers', ['ionic','ngCordova'])
 
-.controller('CadastrarOcorrenciaCtrl', function($scope, $state, $cordovaBarcodeScanner) {
+.controller('TabCadastrarOcorrenciaCtrl', function($scope, $state, $cordovaBarcodeScanner) {
 	
 	$scope.goToQrCodeState = function() {
 	$cordovaBarcodeScanner.scan().then
-        (
-          function(imageData) {
-						$state.go('^.^.qrCodeScanner', {location: imageData});
-            console.log("Barcode Format -> " + imageData.format);
-            console.log("Cancelled -> " + imageData.cancelled);
-          },
-          function(error) {
-            console.log("An error happened -> " + error);
-          }          
-        );
+	  (
+	    function(imageData) {
+				$state.go('^.^.qrCodeScanner', {location: imageData.text});
+	      console.log("Barcode Format -> " + imageData.format);
+	      console.log("Cancelled -> " + imageData.cancelled);
+	    },
+	    function(error) {
+	      console.log("An error happened -> " + error);
+	    }          
+	  );
+	}
+
+	$scope.getCadOcorr = function(){
+		var text = '{"location":"teste"}';
+		$state.go('^.^.cadastrarOcorrencia', {qrcode : text} );
 	}
 
 	$scope.goToGeolocalizacaoState = function() {
@@ -21,10 +26,10 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	};	
 })
 
-.controller('QrCodeScannerCtrl', function($scope, $state, $stateParams) {
+.controller('CadastrarOcorrenciaCtrl', function($scope, $state, $stateParams) {
 
 	$scope.qrcodeJson = JSON.parse($state.params.qrcode);
-	$scope.location = $scope.qrcode.location;
+	$scope.location = $scope.qrcodeJson.location;
 
 	$scope.goToFotosState = function() {
 		$state.go('^.fotos');
@@ -36,7 +41,6 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	$scope.ocorrencias = Ocorrencias.all();
 	
 })
-
 
 .controller('FotosCtrl', function($scope, $state) {
 	

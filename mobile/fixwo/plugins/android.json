@@ -9,6 +9,9 @@
     "installed_plugins": {
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.fixwo233272"
+        },
+        "cordova-sqlite-storage": {
+            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
         }
     },
     "dependent_plugins": {
