@@ -1,20 +1,24 @@
-<ion-view view-title="fixWO - Login">
+<ion-view view-title="Login">
   <ion-content class="padding">
       <div class="list list-inset">
-          <label class="item item-input">
-              <input type="text" placeholder="email" ng-model="data.username"></input>
-          </label>
-          <label class="item item-input">
-              <input type="password" placeholder="senha" ng-model="data.password"></input>
-          </label>
+        <p>
+              <label class="item item-input">
+                  <input type="text" placeholder="email" ng-model="usuario.email"></input>
+              </label>
+        </p>
+        <p>
+              <label class="item item-input">
+                  <input type="password" placeholder="senha" ng-model="usuario.senha"></input>
+              </label>
+        </p>
       </div>
       <button id="button_login" class="button button-block button-positive" 
-			ng-click="login()">
-		LOGIN
-	  </button>
-	  <button id="button_registrar" class="button button-block button-positive" 
-			ng-click="registrar()">
-		CADASTRE-SE
-	  </button>
+      ng-click="login()">
+    LOGIN
+    </button>
+    <button id="button_registrar" class="button button-block button-positive" 
+      ng-click="registrar()">
+    CADASTRE-SE
+    </button>
   </ion-content>
 </ion-view>

@@ -60,14 +60,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
   
-  .state('tab.detalhesDaOcorrencia', {
-      url: '/listarOcorrencias/:ocorrenciaId',
-      views: {
-        'tab-listarOcorrencias': {
-          templateUrl: 'templates/tab-detalhesDaOcorrencia.html',
+  .state('detalhesDaOcorrencia', {
+      url: '/detalhesDaOcorrencia',
+      params: {
+      ocorrenciaId: null
+      },
+          templateUrl: 'templates/detalhesDaOcorrencia.html',
           controller: 'DetalhesDaOcorrenciaCtrl'
-        }
-      }
     })
 
   .state('cadastrarOcorrencia', {

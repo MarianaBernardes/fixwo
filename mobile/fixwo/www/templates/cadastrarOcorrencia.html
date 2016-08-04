@@ -1,12 +1,28 @@
-<ion-view view-title="fixWO - QR Code Scanner">
+<ion-view view-title="Cadastrar ocorrência">
   <ion-content class="padding">
-    <h2>Mire a câmera no QR code do local</h2>
-    		
-		Local: {{location}}
-
-		<button class = "button button-block button-positive button-block"
-			ng-click = "goToFotosState()">
-			Fotos
-		</button>
+	<h3>Local: {{location}}</h3>
+    <p>
+	  <label class="item item-input">
+		<input type="text" placeholder="Título"/>
+	  </label>
+	</p>
+	<p>
+	  <label class="item item-input item-stacked-label">
+		<input type="text" placeholder="Comentários"/>
+	  </label>
+    </p>
+	</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+	<p>
+	<button class = "button button-block button-positive button-block" 
+		ng-click = "adicionarFoto()">
+		Adicionar foto
+	</button>
+	</p>
+	<p>
+	<button class = "button button-block button-positive button-block" 
+		ng-click = "goToCadastrarOcorrenciaState()">
+		Cadastrar Ocorrência
+	</button>
+	</p>
   </ion-content>
 </ion-view>
