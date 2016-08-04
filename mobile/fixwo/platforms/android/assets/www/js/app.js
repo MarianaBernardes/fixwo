@@ -5,9 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
+
+var db;
+
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $cordovaSQLite) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,6 +23,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    try {
+      db = $cordovaSQLite.openDB({name:"ocorrencias.db", location:'default', createFromLocation: 1});
+    } catch (error) {
+      alert(error);
+    }
+
+    $cordovaSQLite.execute(db,
+      'CREATE TABLE IF NOT EXISTS ocorrencias (id INTEGER PRIMARY KEY,'+
+      'titulo TEXT, comentarios TEXT, estado TEXT,'+
+      'data TEXT, geolocalizacao TEXT, qrcodelocalizacao TEXT); '
+    );
   });
 })
 

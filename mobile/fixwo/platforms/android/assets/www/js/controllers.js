@@ -6,7 +6,7 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	$cordovaBarcodeScanner.scan().then
 	  (
 	    function(imageData) {
-				$state.go('^.^.qrCodeScanner', {location: imageData.text});
+				$state.go('^.^.cadastrarOcorrencia', {qrcode: imageData.text});
 	      console.log("Barcode Format -> " + imageData.format);
 	      console.log("Cancelled -> " + imageData.cancelled);
 	    },
