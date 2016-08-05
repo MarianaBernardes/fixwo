@@ -6,7 +6,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/easybpms-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/jbpm-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/easybpms-1.0.jar" sourcepath="/easybpms"/>
+	<classpathentry kind="lib" path="lib/jbpm-1.0.jar" sourcepath="/jbpm"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

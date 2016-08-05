@@ -1,9 +1,13 @@
 
+import com.fixwo.domain.Cliente
+
 class BootStrap {
 
     def init = { servletContext ->
 		
-		println this.class.classLoader.getResource("WEB-INF/context.xml").toString()
+		new Cliente(nome:"The Stand").save(flush:true)
+		new Cliente(nome:"The Shining").save(flush:true)
+
     }
     def destroy = {
     }

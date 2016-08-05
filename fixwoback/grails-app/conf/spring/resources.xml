@@ -65,7 +65,7 @@
 
   <bean id="process" factory-method="newClassPathResource" class="org.kie.internal.io.ResourceFactory">
 	  <constructor-arg>
-    	<value>sample.bpmn</value>
+    	<value>fixwo.bpmn2</value>
   	  </constructor-arg>
   </bean>
 </beans>
