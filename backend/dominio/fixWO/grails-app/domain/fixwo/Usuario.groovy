@@ -10,7 +10,7 @@ class Usuario {
     String hashSenha
     String email
     int ativo=0;
-    static hasMany = [grupos:Grupo]
+    static hasMany = [grupo:Grupo]
     static belongsTo = [Grupo]
 
     static constraints = {

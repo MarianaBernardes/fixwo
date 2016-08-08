@@ -5,7 +5,8 @@ import grails.rest.*
 @Resource(uri="/grupos", readOnly=false, formats=["json","xml"])
 class Grupo {
 	Cliente cliente;
+	String descricao;
 
-	static hasMany = [usuarios:Usuario]
+	static hasMany = [usuario:Usuario]
 	
 }
