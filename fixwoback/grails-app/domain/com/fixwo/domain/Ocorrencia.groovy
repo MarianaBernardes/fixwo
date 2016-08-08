@@ -20,6 +20,7 @@ class Ocorrencia {
     static belongsTo = [Area]
     Local local
 
+	String tenancy
     static constraints = {
         setor (nullable:true, blank:true)
         local (nullable:true, blank:true)
