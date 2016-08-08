@@ -27,7 +27,7 @@
       </props>
     </property>
   </bean>
-
+  
   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 <!-- <property name="pooled" value="true"/>
     <property name="jmxExport" value="true"/>

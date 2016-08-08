@@ -60,6 +60,7 @@ dependencies {
 	compile group: 'org.jbpm', name: 'jbpm-runtime-manager', version: jbpmVersion
 	compile group: 'org.jbpm', name: 'jbpm-persistence-jpa', version: jbpmVersion
 	compile group: 'org.jbpm', name: 'jbpm-shared-services', version: jbpmVersion
+	compile group: 'org.jbpm', name: 'jbpm-human-task-audit', version: jbpmVersion
 	runtime group: 'org.kie', name: 'kie-spring', version: jbpmVersion
 	compile group: 'org.codehaus.btm', name: 'btm', version: '2.1.4'
 	compile group: 'commons-dbcp',name:'commons-dbcp',version:'1.4'
@@ -69,8 +70,9 @@ dependencies {
     console "org.grails:grails-console"
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.8.2"
+//compile files('lib/easybpms-0.1.0.jar', 'lib/easybpms-jbpm-0.1.0.jar')
 	compile files('lib/easybpms-0.1.0.jar', 'lib/jbpm-1.0.jar')
-    runtime "com.h2database:h2"
+//    runtime "com.h2database:h2"
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"

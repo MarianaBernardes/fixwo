@@ -14,13 +14,15 @@ class Ocorrencia {
     Byte fotos
     String point
     Setor setor
-	String feedback
-	String avaliacao
     static hasMany = [areas:Area]
     static belongsTo = [Area]
     Local local
 
+	String feedback
+	String avaliacao
 	String tenancy
+	String replica
+	
     static constraints = {
         setor (nullable:true, blank:true)
         local (nullable:true, blank:true)
