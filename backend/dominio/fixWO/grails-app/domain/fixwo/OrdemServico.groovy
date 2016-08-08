@@ -1,8 +1,8 @@
 package fixwo
 
-import grails.rest.*
+//import grails.rest.*
 
-@Resource(uri="/ordenservicos", readOnly=false, formats=["json"])
+//@Resource(uri="/ordenservicos", readOnly=false, formats=["json"])
 class OrdemServico {
 
     String titulo
@@ -14,11 +14,14 @@ class OrdemServico {
     String avaliacao
     String feedback
     Byte fotos
-    String point
+    String lat
+    String lon
     Setor setor
+    Local local
+
+
     static hasMany = [areas:Area]
     static belongsTo = [Area]
-    Local local
 
     static constraints = {
         setor (nullable:true, blank:true)
