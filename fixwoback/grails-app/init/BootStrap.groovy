@@ -1,13 +1,9 @@
 
-import com.fixwo.domain.Cliente
+import com.fixwo.domain.Grupo
 
 class BootStrap {
 
     def init = { servletContext ->
-		
-		new Cliente(nome:"The Stand").save(flush:true)
-		new Cliente(nome:"The Shining").save(flush:true)
-
     }
     def destroy = {
     }

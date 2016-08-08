@@ -9,6 +9,7 @@
     	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
     	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 
+<!--  POSTGRES -->
   <bean class="bitronix.tm.resource.jdbc.PoolingDataSource"
         destroy-method="close"
         id="jbpmDataSource"
@@ -26,6 +27,37 @@
       </props>
     </property>
   </bean>
+
+  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+<!-- <property name="pooled" value="true"/>
+    <property name="jmxExport" value="true"/>
+    <property name="dbCreate" value="create-drop"/>
+ -->    
+     <property name="driverClassName" value="org.postgresql.Driver"/>
+    <property name="username" value="postgres"/>
+    <property name="password" value="postgres"/>
+    <property name="url" value="jdbc:postgresql://localhost:5432/fixwo"/>
+  </bean>
+
+   <!-- MYSQL 
+  <bean class="bitronix.tm.resource.jdbc.PoolingDataSource"
+        destroy-method="close"
+        id="jbpmDataSource"
+        init-method="init">
+    <property name="uniqueName" value="jdbc/jbpm-ds"/>
+    <property name="allowLocalTransactions" value="true"/>
+    <property name="className" value="bitronix.tm.resource.jdbc.lrc.LrcXADataSource"/>
+    <property name="maxPoolSize" value="3"/>
+    <property name="driverProperties">
+      <props>
+        <prop key="user">root</prop>
+        <prop key="password">root</prop>
+        <prop key="url">jdbc:mysql://localhost:3306/jbpmdb</prop>
+        <prop key="driverClassName">com.mysql.jdbc.Driver</prop>
+      </props>
+    </property>
+  </bean>
+-->
 
   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="persistenceXmlLocation" value="META-INF/jbpm-persistence.xml"/>
@@ -68,4 +100,5 @@
     	<value>fixwo.bpmn2</value>
   	  </constructor-arg>
   </bean>
+
 </beans>

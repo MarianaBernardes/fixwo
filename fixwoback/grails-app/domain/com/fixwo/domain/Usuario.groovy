@@ -1,14 +1,20 @@
 package com.fixwo.domain
 
-import grails.rest.*
+import grails.rest.Resource
 
-@Resource(uri="/usuarios", readOnly=false, formats=["json","xml"])
+import java.util.List;
+
+import com.easybpms.domain.IUser
+import com.easybpms.integration.grails.controller.EasyBPMSUserRestfulController
+
+@Resource(uri="/usuarios", readOnly=false, formats=["json","xml"], superClass=EasyBPMSUserRestfulController)
 class Usuario {
 
     String nome
     String login
     String hashSenha
     String email
+	Cliente cliente
     int ativo=0;
     static hasMany = [grupos:Grupo]
     static belongsTo = [Grupo]
@@ -18,7 +24,5 @@ class Usuario {
 		email(email:true, nullable:false, blank:false)
 		login(nullable:false, blank:false, unique:true)
 		hashSenha(nullable:false, blank:false, password:true)
-		grupo(nullable:true, blank:true)
-    }
-
-}
+		grupos(nullable:true, blank:true)
+    }}

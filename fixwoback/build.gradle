@@ -62,13 +62,15 @@ dependencies {
 	compile group: 'org.jbpm', name: 'jbpm-shared-services', version: jbpmVersion
 	runtime group: 'org.kie', name: 'kie-spring', version: jbpmVersion
 	compile group: 'org.codehaus.btm', name: 'btm', version: '2.1.4'
+	compile group: 'commons-dbcp',name:'commons-dbcp',version:'1.4'
 	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '4.3.11.Final'
 	runtime group: 'org.postgresql', name: 'postgresql', version: postgresJdbcVersion
+	compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.3'
     console "org.grails:grails-console"
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.8.2"
-	compile files('libs/easybpms-1.0.jar', 'libs/jbpm-1.0.jar')
-//    runtime "com.h2database:h2"
+	compile files('lib/easybpms-0.1.0.jar', 'lib/jbpm-1.0.jar')
+    runtime "com.h2database:h2"
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
@@ -86,7 +88,6 @@ assets {
 }
 
 bootRun {
-//	jvmArgs = ['-Xms1024m', '-Xmx4096m', '-Djava.awt.headless=false', '-Dorg.gradle.debug=true', '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5006']
 	jvmArgs = ['-Djava.awt.headless=false', '-Dorg.gradle.debug=true', '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5006']
 }
 

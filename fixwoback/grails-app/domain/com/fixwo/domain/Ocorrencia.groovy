@@ -1,9 +1,10 @@
 package com.fixwo.domain
 
 import grails.rest.*
+import com.easybpms.integration.grails.controller.ObservableRestfulController
 
-@Resource(uri="/ordenservicos", readOnly=false, formats=["json","xml"])
-class OrdemServico {
+@Resource(uri="/ocorrencia", readOnly=false, formats=["json","xml"], superClass=ObservableRestfulController)
+class Ocorrencia {
 
     String titulo
     String descricao
@@ -13,6 +14,8 @@ class OrdemServico {
     Byte fotos
     String point
     Setor setor
+	String feedback
+	String avaliacao
     static hasMany = [areas:Area]
     static belongsTo = [Area]
     Local local

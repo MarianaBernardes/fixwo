@@ -1,18 +1,22 @@
 package com.easybpms.codegen;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Observer;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Observer;
 
+import com.bpms.jbpm .ConcreteBpmsInterface;
+import com.easybpms.bd.dao.CRUDEntity;
+import com.easybpms.bd.dao.CRUDUserGroup;
+import com.easybpms.bpms.AbstractBpmsInterface;
+import com.easybpms.domain.Activity;
+import com.easybpms.domain.Parameter;
 import com.easybpms.domain.Process;
-import com.easybpms.domain.*;
-import com.easybpms.bd.dao.*;
+import com.easybpms.domain.Property;
+import com.easybpms.domain.UserGroup;
 import com.easybpms.event.StartProcessObserver;
 import com.easybpms.event.TaskExecutedObserver;
-import com.easybpms.bpms.AbstractBpmsInterface;
-import com.bpms.jbpm .ConcreteBpmsInterface;
 
 public class Context extends AbstractContext {
 
@@ -78,7 +82,7 @@ public class Context extends AbstractContext {
 		process = new Process();
 		process.setName("fixwo");
 		process.setIdBpms("com_fixwo_domain_Ocorrencia");
-		processPaths.add("C:\\workspace\\mars\\fixwo\\backend\\processo\\fixWO\\src\\main\\resources\\BPMN_Model\\fixwo.bpmn2");
+		processPaths.add("C:\\Users\\Andre Saude\\Documents\\GitLocal\\fixwo\\fixwoback\\src\\main\\resources\\fixwo.bpmn2");
 
 		//Variaveis do Processo fixwo  
 		property = new Property();
@@ -124,7 +128,8 @@ public class Context extends AbstractContext {
 		//Grupos de Usuario da Atividade Feedback ao solicitante
 		userGroup = new UserGroup();
 		userGroup.setName("ResponsavelArea");
-		userGroupAux = new UserGroup();
+//////	userGroupAux = new UserGroup();
+		userGroupAux = null;
 		try {
 			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
 			activity.setUserGroup(userGroupAux);
@@ -165,7 +170,8 @@ public class Context extends AbstractContext {
 		//Grupos de Usuario da Atividade Classificar e encaminhar WO
 		userGroup = new UserGroup();
 		userGroup.setName("Triador");
-		userGroupAux = new UserGroup();
+//////		userGroupAux = new UserGroup();
+		userGroupAux = null;
 		try {
 			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
 			activity.setUserGroup(userGroupAux);
@@ -206,7 +212,8 @@ public class Context extends AbstractContext {
 		//Grupos de Usuario da Atividade Avaliar solução
 		userGroup = new UserGroup();
 		userGroup.setName("Usuario");
-		userGroupAux = new UserGroup();
+//////		userGroupAux = new UserGroup();
+		userGroupAux = null;
 		try {
 			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
 			activity.setUserGroup(userGroupAux);
@@ -247,7 +254,8 @@ public class Context extends AbstractContext {
 		//Grupos de Usuario da Atividade Envia réplica ao responsável
 		userGroup = new UserGroup();
 		userGroup.setName("Usuario");
-		userGroupAux = new UserGroup();
+//////		userGroupAux = new UserGroup();
+		userGroupAux = null;
 		try {
 			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
 			activity.setUserGroup(userGroupAux);
