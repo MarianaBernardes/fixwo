@@ -1,8 +1,8 @@
 package fixwo
 
-import grails.rest.*
+//import grails.rest.*
 
-@Resource(uri="/testes", readOnly=false, formats=["json","xml"])
+//@Resource(uri="/testes", readOnly=false, formats=["json","xml"])
 class Teste {
 
     String nome
