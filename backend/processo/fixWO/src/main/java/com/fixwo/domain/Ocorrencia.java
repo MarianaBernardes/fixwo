@@ -8,16 +8,14 @@ public class Ocorrencia implements IDomainEntity {
 	private String tenancy = "";
 	private String status = "";
 	private String feedback = "";
-	private String avaliacao = "";
+	private boolean avaliacao = false;
 	private String replica = "";
 
-	@Override
 	public int getId() {
 		// TODO Auto-generated method stub
 		return this.id;
 	}
 
-	@Override
 	public String getTenancy() {
 		// TODO Auto-generated method stub
 		return this.tenancy;
@@ -47,11 +45,11 @@ public class Ocorrencia implements IDomainEntity {
 		this.feedback = feedback;
 	}
 
-	public String getAvaliacao() {
+	public boolean getAvaliacao() {
 		return avaliacao;
 	}
 
-	public void setAvaliacao(String avaliacao) {
+	public void setAvaliacao(boolean avaliacao) {
 		this.avaliacao = avaliacao;
 	}
 

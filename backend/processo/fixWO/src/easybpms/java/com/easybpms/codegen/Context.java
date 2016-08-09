@@ -184,10 +184,10 @@ public class Context extends AbstractContext {
 	         		process.addActivity(activity);
 	                
 				            		activity = new Activity();
-               		activity.setName("Avaliar solução");
+               		activity.setName("Avaliar solucao");
                		activity.setIdBpms("UserTask_6");
           
-					//Parametros de Entrada da Atividade Avaliar solução   
+					//Parametros de Entrada da Atividade Avaliar solucao   
 	                	                    parameter = new Parameter();
 	                    parameter.setName("easybpms_com_fixwo_domain_Ocorrencia_id");
 	                    parameter.setType("input");
@@ -197,13 +197,13 @@ public class Context extends AbstractContext {
 	                    parameter.setType("input");
 	                    activity.addParameter(parameter);	
 	                					
-					//Parametros de Saida da Atividade Avaliar solução
+					//Parametros de Saida da Atividade Avaliar solucao
 	                	                    parameter = new Parameter();
 	                    parameter.setName("easybpms_com_fixwo_domain_Ocorrencia_avaliacao");
 	                    parameter.setType("output");
 	        			activity.addParameter(parameter);
 	                
-	                //Grupos de Usuario da Atividade Avaliar solução
+	                //Grupos de Usuario da Atividade Avaliar solucao
 	                	            		userGroup = new UserGroup();
 	                	userGroup.setName("Usuario");
 	                	userGroupAux = new UserGroup();
@@ -225,10 +225,10 @@ public class Context extends AbstractContext {
 	         		process.addActivity(activity);
 	                
 				            		activity = new Activity();
-               		activity.setName("Envia réplica ao responsável");
+               		activity.setName("Envia replica ao responsavel");
                		activity.setIdBpms("UserTask_5");
           
-					//Parametros de Entrada da Atividade Envia réplica ao responsável   
+					//Parametros de Entrada da Atividade Envia replica ao responsavel   
 	                	                    parameter = new Parameter();
 	                    parameter.setName("easybpms_com_fixwo_domain_Ocorrencia_id");
 	                    parameter.setType("input");
@@ -238,13 +238,13 @@ public class Context extends AbstractContext {
 	                    parameter.setType("input");
 	                    activity.addParameter(parameter);	
 	                					
-					//Parametros de Saida da Atividade Envia réplica ao responsável
+					//Parametros de Saida da Atividade Envia replica ao responsavel
 	                	                    parameter = new Parameter();
 	                    parameter.setName("easybpms_com_fixwo_domain_Ocorrencia_replica");
 	                    parameter.setType("output");
 	        			activity.addParameter(parameter);
 	                
-	                //Grupos de Usuario da Atividade Envia réplica ao responsável
+	                //Grupos de Usuario da Atividade Envia replica ao responsavel
 	                	            		userGroup = new UserGroup();
 	                	userGroup.setName("Usuario");
 	                	userGroupAux = new UserGroup();

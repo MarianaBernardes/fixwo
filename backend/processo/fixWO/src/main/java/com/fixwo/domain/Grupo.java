@@ -10,7 +10,6 @@ public class Grupo implements IUserGroup {
 		this.name = name;
 	}
 
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return name;

@@ -11,25 +11,21 @@ public class Usuario implements IUser{
 	private String tenancy = "";
 	private List<String> userGroupNames;
 	
-	@Override
 	public String getIdApp() {
 		// TODO Auto-generated method stub
 		return id;
 	}
 
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return name;
 	}
 
-	@Override
 	public String getTenancy() {
 		// TODO Auto-generated method stub
 		return tenancy;
 	}
 
-	@Override
 	public List<String> getUserGroupNames() {
 		// TODO Auto-generated method stub
 		return userGroupNames;
