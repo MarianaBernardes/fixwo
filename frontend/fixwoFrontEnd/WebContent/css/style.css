@@ -1,0 +1,203 @@
+@charset "utf-8";
+/* CSS Document */
+/*CONFIGURAÇÕES DO MENU*/		
+	body{
+		background-image: url("images/background.jpg");
+		}
+	
+	h1{
+		text-align: center;
+	}
+	
+	
+	table#menu{
+		 width:100%
+	}
+	
+	table#menu a{
+		color:white; /*terá cor preta no link (letra)*/
+		text-decoration: none; /*retira o sublinhado do link (letra)*/
+		font-family: arial;
+		font-size: 12px;
+	}
+			
+	table#menu a:hover{
+		text-decoration: underline; /*sublinha o link somente qdo o mouse estiver sobreposto*/
+	}
+	
+	table#menu td{
+		border-right: 1px solid white;
+		padding: 10px;
+		background-color: #AC0101;
+		height:10%;
+	}
+	
+	table#menu col.menu_profile{
+		width: 20%;	
+		
+		
+	}
+	
+	nav#menu col.menu_listareclamacoes{
+		width: 10%;	
+		
+		
+	}
+	
+	nav#menu col.menu_mapa{
+		width: 10%;	
+		
+		
+	}
+	
+	nav#menu col.menu_imprimirqr{
+		width: 20%;	
+		
+		
+	}
+	
+	nav#menu col.menu_busca{
+		width: 20%;	
+		
+		
+	}
+	
+	nav#menu col.menu_logout{
+		width: 20%;	
+		
+		
+	}
+	
+	img#fotoPerfil{
+		width:15px;
+		
+	}
+	
+	#tab_home{
+		border: 3px solid	red;
+	}
+	
+	#tab_home td{
+		border: 3px solid	red;
+	}
+	
+	table#tab_reclamacoes{
+		width:98%;
+		height:100%;
+		margin: auto;
+		text-align: center;
+	}
+	
+	.tab_foto{
+		width:10%;
+		height:300px;
+	}
+	
+	.tab_tipo{
+		width:10%;
+		text-align: center;
+	}
+	
+	.tab_data{
+		width:10%;
+		text-align: center;
+	}
+	
+	.tab_requisicoes{
+		width:10%;
+		text-align: center;
+	}
+	
+	.tab_situacao{
+		width:10%;
+		text-align: center;
+	}
+	
+	.tab_detalhes{
+		width:10%;
+		text-align: center;
+	}
+	
+	#tab_reclamacoes td{
+	height: 150px;
+	}
+	
+	table#tab2{
+		width:50%;
+		height:10%;
+		position: center;
+	}
+
+table#menu{
+		 width:100%
+	}
+	
+	table#menu a{
+		color:white; /*terá cor preta no link (letra)*/
+		text-decoration: none; /*retira o sublinhado do link (letra)*/
+		font-family: arial;
+		font-size: 12px;
+	}
+			
+	table#menu a:hover{
+		text-decoration: underline; /*sublinha o link somente qdo o mouse estiver sobreposto*/
+	}
+	
+	table#menu td{
+		border-right: 1px solid white;
+		padding: 10px;
+		background-color: #AC0101;
+		height:10%;
+		text-align:center;
+	}
+	
+	table#menu col.menu_profile{
+		width: 20%;	
+		
+		
+	}
+	
+	table#menu col.menu_listareclamacoes{
+		width: 10%;	
+		
+		
+	}
+	
+	table#menu col.menu_mapa{
+		width: 10%;	
+		
+		
+	}
+	
+	table#menu col.menu_imprimirqr{
+		width: 20%;	
+		
+		
+	}
+	
+	table#menu col.menu_busca{
+		width: 20%;	
+		
+		
+	}
+	
+	table#menu col.menu_logout{
+		width: 20%;	
+		
+		
+	}
+	
+	img#fotoPerfil{
+		width:15px;
+		
+	}
+	
+		
+	h2{
+		font-family: arial;
+		font-size: 12px;
+	}
+	
+	form{
+		text-align:center;
+	}

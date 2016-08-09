@@ -10,5 +10,6 @@ class Area {
     static hasMany = [ordensServico:OrdemServico]
     static constraints = {
 		cliente (nullable:true, blank:true)
+		idWikiMapia(unique:true)
 	}
 }
