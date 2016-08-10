@@ -70,18 +70,11 @@ dependencies {
     console "org.grails:grails-console"
     profile "org.grails.profiles:web"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.8.2"
-//compile files('lib/easybpms-0.1.0.jar', 'lib/easybpms-jbpm-0.1.0.jar')
-	compile files('lib/easybpms-0.1.0.jar', 'lib/jbpm-1.0.jar')
-//    runtime "com.h2database:h2"
+	compile files('lib/easybpms-0.1.0.jar', 'lib/easybpms-jbpm-0.1.0.jar')
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
-//	compile group: 'org.jbpm', name: 'jbpm-test', version: jbpmVersion
-//	runtime group: 'org.jbpm', name: 'jbpm-flow', version: jbpmVersion
-//	runtime group: 'org.jbpm', name: 'jbpm-flow-builder', version: jbpmVersion
-//	runtime group: 'org.jbpm', name: 'jbpm-bpmn2', version: jbpmVersion
-//	runtime group: 'org.drools', name: 'droolsjbpm-integration-distribution', version: jbpmVersion, ext: 'pom'
 }
 
 assets {

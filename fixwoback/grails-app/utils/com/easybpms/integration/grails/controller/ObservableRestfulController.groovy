@@ -19,9 +19,13 @@ import static org.springframework.http.HttpStatus.*
  * @author André Saúde
  * @since 3.1.10
  */
-//@Artefact("Controller")
-//@Transactional(readOnly = true)
+@Artefact("Controller")
+@Transactional(readOnly = true)
 class ObservableRestfulController<T> extends RestfulController {
+	
+	def bpmsSession
+	
+	static AbstractContext context
 	
 	Observable observable = new Observable()
 	
@@ -31,13 +35,6 @@ class ObservableRestfulController<T> extends RestfulController {
 
 	ObservableRestfulController(Class<T> resource, boolean readOnly) {
 		super(resource,readOnly)
-		
-		AbstractContext context = AbstractContext.getContext()
-		ArrayList<Observer> observers =
-			(ArrayList<Observer>)context.getObservers("CRUD" + this.resource.getSimpleName());
-		for(Observer observer : observers) {
-			observable.addObserver(observer)
-		}
 	}
 
 	/**
@@ -45,6 +42,16 @@ class ObservableRestfulController<T> extends RestfulController {
 	 */
 	@Transactional
 	def save() {
+		if (context == null) {
+			context = AbstractContext.getContext()
+
+			ArrayList<Observer> observers =
+					(ArrayList<Observer>)context.getObservers("CRUD" + this.resource.getSimpleName());
+			for(Observer observer : observers) {
+				observable.addObserver(observer)
+			}
+			context.setBpmsSession(bpmsSession)
+		}
 		if(handleReadOnly()) {
 			return
 		}
@@ -73,15 +80,6 @@ class ObservableRestfulController<T> extends RestfulController {
 			}
 		}
 	}
-
-//	/**
-//	 * Saves a resource
-//	 */
-////	@Transactional
-//	def save() {
-//		super.save()
-//		notifyObservers(this)
-//	}
 
 	def notifyObservers(arg) {
         observable.setChanged();

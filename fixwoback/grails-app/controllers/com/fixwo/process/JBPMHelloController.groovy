@@ -12,7 +12,7 @@ import org.kie.api.task.model.TaskSummary;
 class JBPMHelloController {
 
 	// inject jbpmBean from Spring configuration
-	def jbpmBean
+	def bpmsSession
 	
 	// count hello executions
 	static execution = 1
@@ -25,8 +25,8 @@ class JBPMHelloController {
 	def beanTestProcess() {
 		String feedback = "HELLO Grails 3 + jBPM! <p> Process test (execution=" + execution++ + ":\n\n"
 
-		KieSession ksession = jbpmBean.getKieSession()
-		TaskService taskService = jbpmBean.getTaskService()
+		KieSession ksession = bpmsSession.getKieSession()
+		TaskService taskService = bpmsSession.getTaskService()
 		
 		ProcessInstance processInstance = ksession.startProcess("com.sample.bpmn.hello")
 

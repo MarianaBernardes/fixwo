@@ -27,13 +27,27 @@
       </props>
     </property>
   </bean>
+
+  <bean class="bitronix.tm.resource.jdbc.PoolingDataSource"
+        destroy-method="close"
+        id="easyBpmsDataSource"
+        init-method="init">
+    <property name="uniqueName" value="jdbc/easybpms-ds"/>
+    <property name="allowLocalTransactions" value="true"/>
+    <property name="className" value="bitronix.tm.resource.jdbc.lrc.LrcXADataSource"/>
+    <property name="maxPoolSize" value="3"/>
+    <property name="driverProperties">
+      <props>
+        <prop key="user">postgres</prop>
+        <prop key="password">postgres</prop>
+        <prop key="url">jdbc:postgresql://localhost:5432/easybpms</prop>
+        <prop key="driverClassName">org.postgresql.Driver</prop>
+      </props>
+    </property>
+  </bean>
   
   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-<!-- <property name="pooled" value="true"/>
-    <property name="jmxExport" value="true"/>
-    <property name="dbCreate" value="create-drop"/>
- -->    
-     <property name="driverClassName" value="org.postgresql.Driver"/>
+    <property name="driverClassName" value="org.postgresql.Driver"/>
     <property name="username" value="postgres"/>
     <property name="password" value="postgres"/>
     <property name="url" value="jdbc:postgresql://localhost:5432/fixwo"/>
@@ -59,13 +73,30 @@
   </bean>
 -->
 
-  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+  <bean id="jbpmEMF" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="persistenceXmlLocation" value="META-INF/jbpm-persistence.xml"/>
     <property name="jtaDataSource" ref="jbpmDataSource"/>
  	<property name="persistenceUnitName" value="org.jbpm.persistence.jpa"/>
   </bean>
 
-  <bean id="bitronixConfiguration" factory-method="getConfiguration" class="bitronix.tm.TransactionManagerServices"/>
+  <bean id="bpmsSession" class="com.easybpms.jbpm.JbpmSession">
+    <property name="runtimeManager" ref="runtimeManager"/>
+  </bean>
+
+  <bean id="easyBpmsEMF" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="persistenceXmlLocation" value="META-INF/jbpm-persistence.xml"/>
+    <property name="jtaDataSource" ref="easyBpmsDataSource"/>
+ 	<property name="persistenceUnitName" value="com.easybpms.persistence.jpa"/>
+  </bean>
+
+  <bean id="easyBpmsSession" class="com.easybpms.bd.Session">
+    <property name="entityManagerFactory" ref="easyBpmsEMF"/>
+  </bean>
+  
+  <bean id="bitronixConfiguration" factory-method="getConfiguration" class="bitronix.tm.TransactionManagerServices">
+<!-- 	<property name="transactionTimeout" value="600"/>
+ -->  
+  	</bean>
 
   <bean id="bitronixTransactionManager" factory-method="getTransactionManager"
 		class="bitronix.tm.TransactionManagerServices" depends-on="bitronixConfiguration" destroy-method="shutdown"/>
@@ -77,7 +108,7 @@
 
   <bean id="runtimeEnvironment" class="org.kie.spring.factorybeans.RuntimeEnvironmentFactoryBean">
     <property name="type" value="DEFAULT"/>
-    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    <property name="entityManagerFactory" ref="jbpmEMF"/>
     <property name="transactionManager" ref="transactionManager"/>
     <property name="assets">
       <map>
@@ -91,10 +122,6 @@
     <property name="runtimeEnvironment" ref="runtimeEnvironment"/>
   </bean>
   
-   <bean id="jbpmBean" class="com.fixwo.process.JBPMSessionBean">
-    <property name="runtimeManager" ref="runtimeManager"/>
-  </bean>
-
   <bean id="process" factory-method="newClassPathResource" class="org.kie.internal.io.ResourceFactory">
 	  <constructor-arg>
     	<value>fixwo.bpmn2</value>

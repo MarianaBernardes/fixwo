@@ -16,13 +16,13 @@ import com.easybpms.integration.auth.UserImpl
  * @author André Saúde
  * @since 3.1.10
  */
-class EasyBPMSUserRestfulController<T> extends RestfulController {
+class EasyBpmsUserRestfulController<T> extends RestfulController {
 	
-	EasyBPMSUserRestfulController(Class<T> resource) {
+	EasyBpmsUserRestfulController(Class<T> resource) {
 		this(resource, false)
 	}
 
-	EasyBPMSUserRestfulController(Class<T> resource, boolean readOnly) {
+	EasyBpmsUserRestfulController(Class<T> resource, boolean readOnly) {
 		super(resource,readOnly)
 	}
 

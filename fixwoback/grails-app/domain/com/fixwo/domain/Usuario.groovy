@@ -5,9 +5,9 @@ import grails.rest.Resource
 import java.util.List;
 
 import com.easybpms.domain.IUser
-import com.easybpms.integration.grails.controller.EasyBPMSUserRestfulController
+import com.easybpms.integration.grails.controller.EasyBpmsUserRestfulController
 
-@Resource(uri="/usuarios", readOnly=false, formats=["json","xml"], superClass=EasyBPMSUserRestfulController)
+@Resource(uri="/usuarios", readOnly=false, formats=["json","xml"], superClass=EasyBpmsUserRestfulController)
 class Usuario {
 
     String nome

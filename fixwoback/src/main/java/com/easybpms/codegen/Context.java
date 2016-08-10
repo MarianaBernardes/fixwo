@@ -6,10 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observer;
 
-import com.bpms.jbpm .ConcreteBpmsInterface;
 import com.easybpms.bd.dao.CRUDEntity;
 import com.easybpms.bd.dao.CRUDUserGroup;
-import com.easybpms.bpms.AbstractBpmsInterface;
+import com.easybpms.bpms.BpmsSession;
 import com.easybpms.domain.Activity;
 import com.easybpms.domain.Parameter;
 import com.easybpms.domain.Process;
@@ -17,6 +16,8 @@ import com.easybpms.domain.Property;
 import com.easybpms.domain.UserGroup;
 import com.easybpms.event.StartProcessObserver;
 import com.easybpms.event.TaskExecutedObserver;
+import com.easybpms.jbpm.ConcreteBpmsInterface;
+import com.easybpms.jbpm.JbpmSession;
 
 public class Context extends AbstractContext {
 
@@ -34,7 +35,7 @@ public class Context extends AbstractContext {
 		Process aux;
 		boolean existProcess;
 
-		AbstractBpmsInterface bpms = new ConcreteBpmsInterface();
+//////		AbstractBpmsInterface bpms = new ConcreteBpmsInterface();
 		List<String> processPaths = new ArrayList<String>();
 
 
@@ -294,8 +295,14 @@ public class Context extends AbstractContext {
 
 		//Fim do processo fixwo
 
-		bpms.startBPMS(processPaths);
+//////		bpms.startBPMS(processPaths);
 
+	}
+
+////// novo metodo
+	public void setBpmsSession(BpmsSession bpmsSession) {
+		ConcreteBpmsInterface bpms = new ConcreteBpmsInterface();
+		bpms.setBpmsSession((JbpmSession)bpmsSession);
 	}
 
 	private void addMapping(String key, List<Observer> observers) {
@@ -305,7 +312,9 @@ public class Context extends AbstractContext {
 			this.mapObservers.put(key, observers);
 		}
 	}
+	
 	public List<Observer> getObservers(String nameClasse){
 		return this.mapObservers.get(nameClasse);
 	}
+
 }
