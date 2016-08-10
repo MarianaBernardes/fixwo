@@ -1,8 +1,20 @@
 angular.module('starter.services', [])
 
-.factory('Ocorrencias', function() {
+.factory('Ocorrencias', function($cordovaSQLite) {
   // Might use a resource here that returns a JSON array
-
+  
+  $cordovaSQLite.execute(db, "insert into ocorrencias values(?,?,?,?,?,?,?,?)",
+  	[666,"teste","","","","","",""]).then(
+  	function(res){
+  		alert("tem coisas");
+  	},
+  	function(error){
+  		alert("erro"+error);
+  	});//*/
+  	
+  ocorrencias = $cordovaSQLite.execute(db, 'select * from ocorrencias').rows;
+	alert(ocorrencias.item(0).id);
+  /*
   // Some fake testing data
   var ocorrencias = [
         { id: 0,
@@ -76,7 +88,7 @@ angular.module('starter.services', [])
 		data: '23/07/2016',
 		comentario: 'Fiação no chao e caótica. Continua terra de ninguem. Alem da placa entortada. ',
 		imagem: 'img/128947_1468342381.jpg' }
-	]
+	]//*/
 
   return {
     all: function() {

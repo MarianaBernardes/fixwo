@@ -1,5 +1,11 @@
 angular.module('starter.controllers', ['ionic','ngCordova'])
 
+.controller('NavBackButtonCtrl', function($scope, $ionicHistory) {
+  $scope.goBack = function() {
+    $ionicHistory.goBack();
+  };
+})
+
 .controller('TabCadastrarOcorrenciaCtrl', function($scope, $state, $cordovaBarcodeScanner) {
 	
 	$scope.goToQrCodeState = function() {
@@ -31,15 +37,24 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	$scope.qrcodeJson = JSON.parse($state.params.qrcode);
 	$scope.location = $scope.qrcodeJson.location;
 
-	$scope.goToFotosState = function() {
-		$state.go('^.fotos');
+	$scope.goToCadastrarOcorrenciaState = function() {
+		$state.go('^.tab.cadastrarOcorrencia');
+	};
+
+	$scope.adicionarFoto = function() {
+		console.log("Adicionar foto");
 	};
 })
 
 .controller('ListarOcorrenciasCtrl', function($scope, $state, Ocorrencias) {
 	
 	$scope.ocorrencias = Ocorrencias.all();
-	
+
+	$scope.detalhesDaOcorrencia = function(ocorrId) {
+		console.log(ocorrId);
+		$state.go('^.^.detalhesDaOcorrencia', {ocorrenciaId : ocorrId});
+	};
+
 })
 
 .controller('FotosCtrl', function($scope, $state) {
@@ -58,9 +73,14 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 		
 })
 
+
 .controller('LoginCtrl', function($scope, $state) {
 
+	$scope.usuario = { nome: null, cpf:null, email:null, senha: null};
+
 	$scope.login = function() {
+		console.log("nome: "+$scope.usuario.nome + ";cpf: "+$scope.usuario.cpf+
+			";email: "+$scope.usuario.email+";senha: "+$scope.usuario.senha);
 		$state.go('^.tab.cadastrarOcorrencia');
 	};
 
@@ -72,12 +92,17 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 .controller('RegistrarCtrl', function($scope, $state) {
 
+	$scope.usuario = { nome: null, cpf:null, email:null, senha: null};
+
 	$scope.registrar = function() {
+		console.log("nome: "+$scope.usuario.nome + ";cpf: "+$scope.usuario.cpf+
+			";email: "+$scope.usuario.email+";senha: "+$scope.usuario.senha);
 		$state.go('^.tab.cadastrarOcorrencia');
 	};
 		
 })
 
 .controller('DetalhesDaOcorrenciaCtrl', function($scope, $state, $stateParams, Ocorrencias) {
-	  $scope.ocorrencia = Ocorrencias.get($stateParams.ocorrenciaId);
+	console.log($state.params.ocorrenciaId);
+	  $scope.ocorrencia = Ocorrencias.get($state.params.ocorrenciaId);
 });

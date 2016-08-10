@@ -1,22 +1,32 @@
-<ion-view view-title="fixWO - Cadastrar">
+<ion-view view-title="Cadastrar">
   <ion-content class="padding">
       <div class="list list-inset">
-          <label class="item item-input">
-              <input type="text" placeholder="nome" ng-model="data.name"></input>
-          </label>
-          <label class="item item-input">
-              <input type="password" placeholder="cpf" ng-model="data.cpf"></input>
-          </label>
-          <label class="item item-input">
-              <input type="password" placeholder="email" ng-model="data.email"></input>
-          </label>
-          <label class="item item-input">
-              <input type="password" placeholder="senha" ng-model="data.senha"></input>
-          </label>
-          <label class="item item-input">
-              <input type="password" placeholder="confirmar senha" ng-model="data.senhaConfir"></input>
-          </label>
+      <p>
+              <label class="item item-input">
+                  <input type="text" placeholder="nome" ng-model="usuario.nome"></input>
+              </label>
+      </p>
+      <p>
+              <label class="item item-input">
+                  <input type="text" placeholder="cpf" ng-model="usuario.cpf"></input>
+              </label>
+      </p>
+      <p>
+              <label class="item item-input">
+                  <input type="text" placeholder="email" ng-model="usuario.email"></input>
+              </label>
+      </p>
+      <p>
+              <label class="item item-input">
+                  <input type="password" placeholder="senha" ng-model="usuario.senha"></input>
+              </label>
+      </p>
+      <p>
+              <label class="item item-input">
+                  <input type="password" placeholder="confirmar senha" ng-model="usuario.senhaConfir"></input>
+              </label>
+      </p>
       </div>
-	  <button class="button button-block button-positive" ng-click="registrar()">CADASTRAR</button>
+    <button class="button button-block button-positive" ng-click="registrar()">CADASTRAR</button>
   </ion-content>
 </ion-view>

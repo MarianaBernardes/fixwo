@@ -32,9 +32,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
     $cordovaSQLite.execute(db,
       'CREATE TABLE IF NOT EXISTS ocorrencias (id INTEGER PRIMARY KEY,'+
-      'titulo TEXT, comentarios TEXT, estado TEXT,'+
-      'data TEXT, geolocalizacao TEXT, qrcodelocalizacao TEXT); '
-    );
+      'titulo TEXT, localizacao TEXT, estado TEXT, classificacao TEXT, '+
+      'data TEXT, comentario TEXT, imagem TEXT)');
   });
 })
 
@@ -75,14 +74,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
   
-  .state('tab.detalhesDaOcorrencia', {
-      url: '/listarOcorrencias/:ocorrenciaId',
-      views: {
-        'tab-listarOcorrencias': {
-          templateUrl: 'templates/tab-detalhesDaOcorrencia.html',
+  .state('detalhesDaOcorrencia', {
+      url: '/detalhesDaOcorrencia',
+      params: {
+      ocorrenciaId: null
+      },
+          templateUrl: 'templates/detalhesDaOcorrencia.html',
           controller: 'DetalhesDaOcorrenciaCtrl'
-        }
-      }
     })
 
   .state('cadastrarOcorrencia', {
