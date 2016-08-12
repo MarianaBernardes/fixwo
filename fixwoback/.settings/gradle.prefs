@@ -1,8 +1,8 @@
 {
   "1.0": {
     "project_path": ":",
-    "project_dir": "C:\\Users\\Andre Saude\\Documents\\GitLocal\\fixwo\\fixwoback",
-    "connection_project_dir": "C:\\Users\\Andre Saude\\Documents\\GitLocal\\fixwo\\fixwoback",
+    "project_dir": "/home/saude/Documentos/GitHubLocal/fixwo/fixwoback",
+    "connection_project_dir": "/home/saude/Documentos/GitHubLocal/fixwo/fixwoback",
     "connection_gradle_user_home": null,
     "connection_gradle_distribution": "GRADLE_DISTRIBUTION(WRAPPER)",
     "connection_java_home": null,

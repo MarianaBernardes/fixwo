@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 import java.util.Observer;
 
 import com.easybpms.bd.dao.CRUDEntity;
@@ -21,14 +22,14 @@ import com.easybpms.jbpm.JbpmSession;
 
 public class Context extends AbstractContext {
 
-	private Map<String, List<Observer>> mapObservers;
-
+//////	private Map<String, List<Observer>> mapObservers;
+	
 	public Context() {
-
+		
 		Process process;
 		Property property;
 		UserGroup userGroup;
-		UserGroup userGroupAux;
+//////		UserGroup userGroupAux;
 		Activity activity;
 		Parameter parameter;
 
@@ -39,7 +40,7 @@ public class Context extends AbstractContext {
 		List<String> processPaths = new ArrayList<String>();
 
 
-		this.mapObservers = new HashMap<String, List<Observer>>();
+////		this.mapObservers = new HashMap<String, List<Observer>>();
 		ArrayList<Observer> listObservers = new ArrayList<Observer>();
 
 
@@ -130,22 +131,23 @@ public class Context extends AbstractContext {
 		userGroup = new UserGroup();
 		userGroup.setName("ResponsavelArea");
 //////	userGroupAux = new UserGroup();
-		userGroupAux = null;
-		try {
-			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
-			activity.setUserGroup(userGroupAux);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if (userGroupAux==null){
-			try {
-				CRUDUserGroup.create(userGroup);
-				activity.setUserGroup(userGroup);
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
+//		userGroupAux = null;
+//		try {
+//			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
+//			activity.setUserGroup(userGroupAux);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		if (userGroupAux==null){
+//			try {
+//				CRUDUserGroup.create(userGroup);
+//				activity.setUserGroup(userGroup);
+//			}catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+		setUserGroup(userGroup,activity);
+		
 		process.addActivity(activity);
 
 		activity = new Activity();
@@ -171,30 +173,31 @@ public class Context extends AbstractContext {
 		//Grupos de Usuario da Atividade Classificar e encaminhar WO
 		userGroup = new UserGroup();
 		userGroup.setName("Triador");
-//////		userGroupAux = new UserGroup();
-		userGroupAux = null;
-		try {
-			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
-			activity.setUserGroup(userGroupAux);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if (userGroupAux==null){
-			try {
-				CRUDUserGroup.create(userGroup);
-				activity.setUserGroup(userGroup);
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//////
+//		userGroupAux = new UserGroup();
+//		try {
+//			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
+//			activity.setUserGroup(userGroupAux);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		if (userGroupAux==null){
+//			try {
+//				CRUDUserGroup.create(userGroup);
+//				activity.setUserGroup(userGroup);
+//			}catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+		setUserGroup(userGroup,activity);
 
 		process.addActivity(activity);
 
 		activity = new Activity();
-		activity.setName("Avaliar solução");
+		activity.setName("Avaliar solucao");
 		activity.setIdBpms("UserTask_6");
 
-		//Parametros de Entrada da Atividade Avaliar solução   
+		//Parametros de Entrada da Atividade Avaliar soluï¿½ï¿½o   
 		parameter = new Parameter();
 		parameter.setName("easybpms_com_fixwo_domain_Ocorrencia_id");
 		parameter.setType("input");
@@ -204,39 +207,40 @@ public class Context extends AbstractContext {
 		parameter.setType("input");
 		activity.addParameter(parameter);	
 
-		//Parametros de Saida da Atividade Avaliar solução
+		//Parametros de Saida da Atividade Avaliar soluï¿½ï¿½o
 		parameter = new Parameter();
 		parameter.setName("easybpms_com_fixwo_domain_Ocorrencia_avaliacao");
 		parameter.setType("output");
 		activity.addParameter(parameter);
 
-		//Grupos de Usuario da Atividade Avaliar solução
+		//Grupos de Usuario da Atividade Avaliar soluï¿½ï¿½o
 		userGroup = new UserGroup();
 		userGroup.setName("Usuario");
 //////		userGroupAux = new UserGroup();
-		userGroupAux = null;
-		try {
-			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
-			activity.setUserGroup(userGroupAux);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if (userGroupAux==null){
-			try {
-				CRUDUserGroup.create(userGroup);
-				activity.setUserGroup(userGroup);
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		userGroupAux = null;
+//		try {
+//			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
+//			activity.setUserGroup(userGroupAux);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		if (userGroupAux==null){
+//			try {
+//				CRUDUserGroup.create(userGroup);
+//				activity.setUserGroup(userGroup);
+//			}catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+		setUserGroup(userGroup,activity);
 
 		process.addActivity(activity);
 
 		activity = new Activity();
-		activity.setName("Envia réplica ao responsável");
+		activity.setName("Envia replica ao responsavel");
 		activity.setIdBpms("UserTask_5");
 
-		//Parametros de Entrada da Atividade Envia réplica ao responsável   
+		//Parametros de Entrada da Atividade Envia rï¿½plica ao responsï¿½vel   
 		parameter = new Parameter();
 		parameter.setName("easybpms_com_fixwo_domain_Ocorrencia_id");
 		parameter.setType("input");
@@ -246,31 +250,32 @@ public class Context extends AbstractContext {
 		parameter.setType("input");
 		activity.addParameter(parameter);	
 
-		//Parametros de Saida da Atividade Envia réplica ao responsável
+		//Parametros de Saida da Atividade Envia rï¿½plica ao responsï¿½vel
 		parameter = new Parameter();
 		parameter.setName("easybpms_com_fixwo_domain_Ocorrencia_replica");
 		parameter.setType("output");
 		activity.addParameter(parameter);
 
-		//Grupos de Usuario da Atividade Envia réplica ao responsável
+		//Grupos de Usuario da Atividade Envia rï¿½plica ao responsï¿½vel
 		userGroup = new UserGroup();
 		userGroup.setName("Usuario");
 //////		userGroupAux = new UserGroup();
-		userGroupAux = null;
-		try {
-			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
-			activity.setUserGroup(userGroupAux);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if (userGroupAux==null){
-			try {
-				CRUDUserGroup.create(userGroup);
-				activity.setUserGroup(userGroup);
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		userGroupAux = null;
+//		try {
+//			userGroupAux = (UserGroup) CRUDUserGroup.read(userGroup);
+//			activity.setUserGroup(userGroupAux);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		if (userGroupAux==null){
+//			try {
+//				CRUDUserGroup.create(userGroup);
+//				activity.setUserGroup(userGroup);
+//			}catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+		setUserGroup(userGroup,activity);
 
 		process.addActivity(activity);
 
@@ -299,22 +304,23 @@ public class Context extends AbstractContext {
 
 	}
 
-////// novo metodo
+	////// in superclass
+//	private void addMapping(String key, List<Observer> observers) {
+//		if(this.mapObservers.containsKey(key)){
+//			this.mapObservers.get(key).addAll(observers);
+//		}else{
+//			this.mapObservers.put(key, observers);
+//		}
+//	}
+//	
+//	public List<Observer> getObservers(String nameClasse){
+//		return this.mapObservers.get(nameClasse);
+//	}
+
+	//////novo metodo
+	@Override
 	public void setBpmsSession(BpmsSession bpmsSession) {
 		ConcreteBpmsInterface bpms = new ConcreteBpmsInterface();
 		bpms.setBpmsSession((JbpmSession)bpmsSession);
 	}
-
-	private void addMapping(String key, List<Observer> observers) {
-		if(this.mapObservers.containsKey(key)){
-			this.mapObservers.get(key).addAll(observers);
-		}else{
-			this.mapObservers.put(key, observers);
-		}
-	}
-	
-	public List<Observer> getObservers(String nameClasse){
-		return this.mapObservers.get(nameClasse);
-	}
-
 }

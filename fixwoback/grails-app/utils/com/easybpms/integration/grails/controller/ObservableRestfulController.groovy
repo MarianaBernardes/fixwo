@@ -1,33 +1,34 @@
 package com.easybpms.integration.grails.controller
 
-import java.util.ArrayList;
-import java.util.Observer
-
-import com.easybpms.codegen.AbstractContext
-
-import grails.web.http.HttpHeaders
-import grails.artefact.Artefact;
+import static org.springframework.http.HttpStatus.*
 import grails.rest.RestfulController
 import grails.transaction.Transactional
-import grails.util.GrailsNameUtils;;
-import static org.springframework.http.HttpStatus.*
+import grails.web.http.HttpHeaders
+
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
+
+import com.easybpms.bd.Session
+import com.easybpms.codegen.AbstractContext
 
 /**
  * Base class that can be extended to get the basic observable CRUD operations needed for a
  * process aware RESTful API.
  *
- * @author André Saúde
+ * @author Andre Saude
  * @since 3.1.10
  */
-@Artefact("Controller")
-@Transactional(readOnly = true)
+//@Artefact("Controller")
+@Transactional(readOnly = false)
 class ObservableRestfulController<T> extends RestfulController {
 	
 	def bpmsSession
 	
 	static AbstractContext context
-	
-	Observable observable = new Observable()
+//	
+//	Observable observable = new Observable()
+	@PersistenceContext(unitName="com.easybpms.persistence.jpa")
+	EntityManager emanager;
 	
 	ObservableRestfulController(Class<T> resource) {
 		this(resource, false)
@@ -40,18 +41,11 @@ class ObservableRestfulController<T> extends RestfulController {
 	/**
 	 * Saves a resource. Adaption of RestfulController save method.
 	 */
-	@Transactional
+	@Transactional(readOnly=false)
 	def save() {
-		if (context == null) {
-			context = AbstractContext.getContext()
 
-			ArrayList<Observer> observers =
-					(ArrayList<Observer>)context.getObservers("CRUD" + this.resource.getSimpleName());
-			for(Observer observer : observers) {
-				observable.addObserver(observer)
-			}
-			context.setBpmsSession(bpmsSession)
-		}
+		Session.setEntityManager(emanager)
+		
 		if(handleReadOnly()) {
 			return
 		}
@@ -81,8 +75,52 @@ class ObservableRestfulController<T> extends RestfulController {
 		}
 	}
 
+	/**
+	 * Updates a resource for the given id
+	 * @param id
+	 */
+	@Transactional(readOnly=false)
+	def update() {
+
+		Session.setEntityManager(emanager)
+		
+		if(handleReadOnly()) {
+			return
+		}
+
+		T instance = queryForResource(params.id)
+		if (instance == null) {
+			transactionStatus.setRollbackOnly()
+			notFound()
+			return
+		}
+
+		instance.properties = getObjectToBind()
+
+		if (instance.hasErrors()) {
+			transactionStatus.setRollbackOnly()
+			respond instance.errors, view:'edit' // STATUS CODE 422
+			return
+		}
+
+		updateResource instance
+		notifyObservers(instance)
+		
+		request.withFormat {
+			form multipartForm {
+				flash.message = message(code: 'default.updated.message', args: [message(code: "${resourceName}.label".toString(), default: resourceClassName), instance.id])
+				redirect instance
+			}
+			'*'{
+				response.addHeader(HttpHeaders.LOCATION,
+						grailsLinkGenerator.link( resource: this.controllerName, action: 'show',id: instance.id, absolute: true,
+											namespace: hasProperty('namespace') ? this.namespace : null ))
+				respond instance, [status: OK]
+			}
+		}
+	}
+
 	def notifyObservers(arg) {
-        observable.setChanged();
-		observable.notifyObservers(arg);
+		AbstractContext.getContext().notifyObservers(this.resource.getSimpleName(), arg)
 	}
 }

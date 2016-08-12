@@ -194,7 +194,7 @@
     <bpmn2:endEvent id="EndEvent_1" name="WO encerrada">
       <bpmn2:incoming>SequenceFlow_26</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:userTask id="UserTask_5" name="Envia réplica ao responsável">
+    <bpmn2:userTask id="UserTask_5" name="Envia replica ao responsavel">
       <bpmn2:incoming>SequenceFlow_21</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_35</bpmn2:outgoing>
       <bpmn2:ioSpecification id="InputOutputSpecification_19">
@@ -310,7 +310,7 @@
       <bpmn2:incoming>SequenceFlow_35</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_35" tns:priority="1" name="" sourceRef="UserTask_5" targetRef="EndEvent_3"/>
-    <bpmn2:userTask id="UserTask_6" name="Avaliar solução">
+    <bpmn2:userTask id="UserTask_6" name="Avaliar solucao">
       <bpmn2:incoming>SequenceFlow_36</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_23</bpmn2:outgoing>
       <bpmn2:ioSpecification id="InputOutputSpecification_14">
@@ -346,7 +346,7 @@
       <bpmn2:dataInputAssociation id="DataInputAssociation_46">
         <bpmn2:targetRef>DataInput_46</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_32">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_64">Avaliar solução</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_64">Avaliar solucao</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_67">DataInput_46</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>

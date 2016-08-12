@@ -34,14 +34,15 @@
         init-method="init">
     <property name="uniqueName" value="jdbc/easybpms-ds"/>
     <property name="allowLocalTransactions" value="true"/>
-    <property name="className" value="bitronix.tm.resource.jdbc.lrc.LrcXADataSource"/>
+    <property name="className" value="org.postgresql.xa.PGXADataSource"/>
     <property name="maxPoolSize" value="3"/>
     <property name="driverProperties">
       <props>
         <prop key="user">postgres</prop>
         <prop key="password">postgres</prop>
-        <prop key="url">jdbc:postgresql://localhost:5432/easybpms</prop>
-        <prop key="driverClassName">org.postgresql.Driver</prop>
+        <prop key="serverName">localhost</prop>
+        <prop key="portNumber">5432</prop>
+        <prop key="databaseName">easybpms</prop>
       </props>
     </property>
   </bean>
@@ -52,26 +53,6 @@
     <property name="password" value="postgres"/>
     <property name="url" value="jdbc:postgresql://localhost:5432/fixwo"/>
   </bean>
-
-   <!-- MYSQL 
-  <bean class="bitronix.tm.resource.jdbc.PoolingDataSource"
-        destroy-method="close"
-        id="jbpmDataSource"
-        init-method="init">
-    <property name="uniqueName" value="jdbc/jbpm-ds"/>
-    <property name="allowLocalTransactions" value="true"/>
-    <property name="className" value="bitronix.tm.resource.jdbc.lrc.LrcXADataSource"/>
-    <property name="maxPoolSize" value="3"/>
-    <property name="driverProperties">
-      <props>
-        <prop key="user">root</prop>
-        <prop key="password">root</prop>
-        <prop key="url">jdbc:mysql://localhost:3306/jbpmdb</prop>
-        <prop key="driverClassName">com.mysql.jdbc.Driver</prop>
-      </props>
-    </property>
-  </bean>
--->
 
   <bean id="jbpmEMF" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="persistenceXmlLocation" value="META-INF/jbpm-persistence.xml"/>
@@ -92,11 +73,12 @@
   <bean id="easyBpmsSession" class="com.easybpms.bd.Session">
     <property name="entityManagerFactory" ref="easyBpmsEMF"/>
   </bean>
-  
+   
   <bean id="bitronixConfiguration" factory-method="getConfiguration" class="bitronix.tm.TransactionManagerServices">
-<!-- 	<property name="transactionTimeout" value="600"/>
- -->  
-  	</bean>
+  <!-- 
+	 -->
+	<property name="defaultTransactionTimeout" value="6000"/>
+  </bean>
 
   <bean id="bitronixTransactionManager" factory-method="getTransactionManager"
 		class="bitronix.tm.TransactionManagerServices" depends-on="bitronixConfiguration" destroy-method="shutdown"/>

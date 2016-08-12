@@ -1,22 +1,28 @@
 package com.easybpms.integration.grails.controller
 
+import static org.springframework.http.HttpStatus.*
 import grails.rest.RestfulController
 import grails.transaction.Transactional
 import grails.web.http.HttpHeaders
-import static org.springframework.http.HttpStatus.*
 
 import com.easybpms.bd.CRUDException
+import com.easybpms.bd.Session
 import com.easybpms.bd.dao.CRUDUser
+import com.easybpms.codegen.AbstractContext
 import com.easybpms.integration.auth.UserImpl
 
 /**
  * Base class that can be extended to get the basic observable CRUD operations needed for a
  * process aware RESTful API.
  *
- * @author André Saúde
+ * @author Andrï¿½ Saï¿½de
  * @since 3.1.10
  */
 class EasyBpmsUserRestfulController<T> extends RestfulController {
+	
+	def bpmsSession
+	
+	static AbstractContext context
 	
 	EasyBpmsUserRestfulController(Class<T> resource) {
 		this(resource, false)
@@ -31,6 +37,9 @@ class EasyBpmsUserRestfulController<T> extends RestfulController {
 	 */
 	@Transactional
 	def save() {
+
+		Session.startSession()
+
 		if(handleReadOnly()) {
 			return
 		}
