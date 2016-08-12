@@ -1,4 +1,5 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['ionic','ngCordova'])
+
 
 .factory('Ocorrencias', function($cordovaSQLite) {
   // adicionando um de exemplo
@@ -11,6 +12,12 @@ angular.module('starter.services', [])
   "Esse banheiro SEMPRE fica sem papel higiênico!",
   "img/Wikipedia_mobile_en.png"];
 
+  // inserir webservice para recuperação de dados aqui
+  // inserindo ou atualizando banco
+	// INSERT INTO TABLE ocorrencia (id, titulo, localizacao, estado, classificacao,
+	// data, comentario, imagem) VALUES(?,?,?,?,?,?,?,?) 
+	// ON DUPLICATE KEY UPDATE estado=?
+	
   var query = "INSERT INTO ocorrencias VALUES (?,?,?,?,?,?,?,?)";
 
   	$cordovaSQLite.execute(db, query, values).then
@@ -19,7 +26,8 @@ angular.module('starter.services', [])
   		function(error){
   			alert('erro no insert: '+error.message);
   		}
-  	);//*/
+  	);
+
 	var ocorrencias = [];
 
   return {
@@ -37,7 +45,7 @@ angular.module('starter.services', [])
   			}
   		);
   		//alert(ocorrencias);
-  		return ocorrencias;//*/
+  		return ocorrencias;
   		//return $cordovaSQLite.execute(db, 'SELECT * FROM ocorrencias').rows;
   	}
   };

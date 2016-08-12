@@ -1,4 +1,5 @@
-angular.module('starter.services', [])
+angular.module('starter.services', ['ionic','ngCordova'])
+
 
 .factory('Ocorrencias', function($cordovaSQLite) {
   // adicionando um de exemplo
@@ -25,7 +26,7 @@ angular.module('starter.services', [])
   		function(error){
   			alert('erro no insert: '+error.message);
   		}
-  	);//*/
+  	);
 
 	var ocorrencias = [];
 
@@ -44,7 +45,7 @@ angular.module('starter.services', [])
   			}
   		);
   		//alert(ocorrencias);
-  		return ocorrencias;//*/
+  		return ocorrencias;
   		//return $cordovaSQLite.execute(db, 'SELECT * FROM ocorrencias').rows;
   	}
   };

@@ -30,10 +30,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       createFromLocation: 1});//*/
     }
     catch (error) {
-      alert('ERROR');
+      alert('Não conseguiu abrir o banco!');
     }
     
-    $cordovaSQLite.execute(db,'drop table ocorrencias');
+    $cordovaSQLite.execute(db,'DROP TABLE ocorrencias');
     //CREATE TABLE 
     $cordovaSQLite.execute(db,
       'CREATE TABLE IF NOT EXISTS ocorrencias (id INTEGER PRIMARY KEY,'+

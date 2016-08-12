@@ -11,7 +11,11 @@
 		<input type="text" placeholder="Comentários"/>
 	  </label>
     </p>
-	</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+	<div  class="gallery">
+		<span ng-repeat="foto in fotos">
+	    	<img src="{{foto}}" width="110px">
+	  	</span>
+	</div>
 	<p>
 	<button class = "button button-block button-positive button-block" 
 		ng-click = "adicionarFoto()">
@@ -24,5 +28,6 @@
 		Cadastrar Ocorrência
 	</button>
 	</p>
+	</ion-content>
   </ion-content>
 </ion-view>

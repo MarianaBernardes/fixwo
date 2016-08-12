@@ -12,12 +12,12 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	$cordovaBarcodeScanner.scan().then
 	  (
 	    function(imageData) {
-				$state.go('^.^.cadastrarOcorrencia', {qrcode: imageData.text});
-	      console.log("Barcode Format -> " + imageData.format);
-	      console.log("Cancelled -> " + imageData.cancelled);
+			$state.go('^.^.cadastrarOcorrencia', {qrcode: imageData.text});
+	      	console.log("Barcode Format -> " + imageData.format);
+	      	console.log("Cancelled -> " + imageData.cancelled);
 	    },
 	    function(error) {
-	      console.log("An error happened -> " + error);
+	      	console.log("An error happened -> " + error);
 	    }          
 	  );
 	}
@@ -27,22 +27,38 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 		$state.go('^.^.cadastrarOcorrencia', {qrcode : text} );
 	}
 
-	$scope.goToGeolocalizacaoState = function() {
-		$state.go('^.^.fotos');
-	};	
 })
 
-.controller('CadastrarOcorrenciaCtrl', function($scope, $state, $stateParams) {
+.controller('CadastrarOcorrenciaCtrl', function($scope, $state, $cordovaCamera, $stateParams) {
 
 	$scope.qrcodeJson = JSON.parse($state.params.qrcode);
 	$scope.location = $scope.qrcodeJson.location;
+	$scope.fotos = [];
 
 	$scope.goToCadastrarOcorrenciaState = function() {
 		$state.go('^.tab.cadastrarOcorrencia');
 	};
 
 	$scope.adicionarFoto = function() {
-		console.log("Adicionar foto");
+		var cameraOptions = {
+	      quality: 80,
+	      destinationType: 1,
+	      allowEdit: false,
+	      correctOrientation: true
+	    };
+	    document.addEventListener(
+	    	"deviceready",   
+	      	function () {
+	        	$cordovaCamera.getPicture(cameraOptions).then(
+	        		function (imageURI) {
+	          			$scope.fotos.push(imageURI);
+	      			}, 
+	      			function(error) {
+	      				alert(error.message);
+	      			}
+	    		)
+			}, false
+		);
 	};
 })
 
@@ -104,5 +120,5 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 .controller('DetalhesDaOcorrenciaCtrl', function($scope, $state, $stateParams, Ocorrencias) {
 	console.log($state.params.ocorrenciaId);
-	  $scope.ocorrencia = Ocorrencias.get($state.params.ocorrenciaId);
+	$scope.ocorrencia = Ocorrencias.get($state.params.ocorrenciaId);
 });
