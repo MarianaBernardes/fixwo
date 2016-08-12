@@ -6,9 +6,9 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-var db;
+var db = null;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
 
 .run(function($ionicPlatform, $cordovaSQLite) {
   $ionicPlatform.ready(function() {
@@ -25,11 +25,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
 
     try {
-      db = $cordovaSQLite.openDB({name:"ocorrencias.db", location:'default', createFromLocation: 1});
-    } catch (error) {
-      alert(error);
+      db = $cordovaSQLite.openDB({name:"my.db", location:'default'});
+      /*db = $cordovaSQLite.openDB({name:"ocorrencias.db", location:'default',
+      createFromLocation: 1});//*/
     }
-
+    catch (error) {
+      alert('Não conseguiu abrir o banco!');
+    }
+    
+    $cordovaSQLite.execute(db,'DROP TABLE ocorrencias');
+    //CREATE TABLE 
     $cordovaSQLite.execute(db,
       'CREATE TABLE IF NOT EXISTS ocorrencias (id INTEGER PRIMARY KEY,'+
       'titulo TEXT, localizacao TEXT, estado TEXT, classificacao TEXT, '+

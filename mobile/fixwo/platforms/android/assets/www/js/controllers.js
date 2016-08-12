@@ -47,8 +47,10 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 })
 
 .controller('ListarOcorrenciasCtrl', function($scope, $state, Ocorrencias) {
-	
+	alert('controller');
 	$scope.ocorrencias = Ocorrencias.all();
+	alert('ocorrencias: ' + $scope.ocorrencias.length);
+	
 
 	$scope.detalhesDaOcorrencia = function(ocorrId) {
 		console.log(ocorrId);
