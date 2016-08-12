@@ -30,9 +30,11 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 })
 
 .controller('CadastrarOcorrenciaCtrl', function($scope, $state, $cordovaCamera, $stateParams) {
-
+	alert('1');
 	$scope.qrcodeJson = JSON.parse($state.params.qrcode);
+	alert('2');
 	$scope.location = $scope.qrcodeJson.location;
+	alert('3');
 	$scope.fotos = [];
 
 	$scope.goToCadastrarOcorrenciaState = function() {

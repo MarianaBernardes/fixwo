@@ -12,6 +12,21 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ionicframework.fixwo233272"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
+        },
+        "cordova-plugin-filepath": {
+            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
         }
     },
     "dependent_plugins": {

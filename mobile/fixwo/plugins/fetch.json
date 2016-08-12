@@ -18,8 +18,9 @@
     },
     "cordova-sqlite-storage": {
         "source": {
-            "type": "registry",
-            "id": "cordova-sqlite-storage"
+            "type": "git",
+            "url": "https://github.com/brodysoft/Cordova-SQLitePlugin.git",
+            "subdir": "."
         },
         "is_top_level": true,
         "variables": {}
@@ -92,6 +93,14 @@
         "source": {
             "type": "registry",
             "id": "ionic-plugin-keyboard"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-geolocation": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-geolocation"
         },
         "is_top_level": true,
         "variables": {}
