@@ -7,34 +7,7 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-camera": {
-            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
-        },
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
-        },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
-        },
-        "cordova-plugin-file": {
-            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
-        },
-        "cordova-plugin-filepath": {
-            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
-        },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
-        },
-        "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
-        },
         "cordova-sqlite-storage": {
-            "PACKAGE_NAME": "com.ionicframework.fixwo233272"
-        },
-        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.fixwo233272"
         },
         "phonegap-plugin-barcodescanner": {
