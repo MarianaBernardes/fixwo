@@ -1,77 +1,53 @@
-<!DOCTYPE html><!-- HTML5 -->
-<html lang="pt-BR" dir="ltr">
-	<head>
-		<title>Kelly&#39;s Secret</title>
-		<meta charset="utf-8" />
-		<!--[if IE]><meta http-equiv="ImageToolbar" content="False" /><![endif]-->
-		<meta name="description" content="Você não precisa de um copo &quot;perfeito&quot;, você precisa da lingerie perfeita para o seu corpo." />
-		<meta name="generator" content="Incomedia WebSite X5 Home 11.0.8.31 - www.websitex5.com" />
-		<meta name="viewport" content="width=978" />
-		<link rel="icon" href="favicon.png" type="image/png" />
-		<link rel="stylesheet" type="text/css" href="style/reset.css" media="screen,print" />
-		<link rel="stylesheet" type="text/css" href="style/print.css" media="print" />
-		<link rel="stylesheet" type="text/css" href="style/style.css" media="screen,print" />
-		<link rel="stylesheet" type="text/css" href="style/template.css" media="screen" />
-		<link rel="stylesheet" type="text/css" href="style/menu.css" media="screen" />
-		<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="style/ie.css" media="screen" /><![endif]-->
-		
-		<script type="text/javascript" src="res/jquery.js?31"></script>
-		<script type="text/javascript" src="res/x5engine.js?31"></script>
-		
-	</head>
-	<body>
-		<div id="imHeaderBg"></div>
-		<div id="imFooterBg"></div>
-		<div id="imPage">
-			<div id="imHeader">
-				<h1 class="imHidden">Kelly&#39;s Secret</h1>
-				
-			</div>
-			<a class="imHidden" href="#imGoToCont" title="Pular o Menu principal">Ir para o conteúdo</a>
-			<a id="imGoToMenu"></a><p class="imHidden">Menu principal:</p>
-			<div id="imMnMnGraphics"></div>
-			<div id="imMnMn" class="auto">
-				<ul class="auto">
-					<li id="imMnMnNode0" class="imMnMnCurrent">
-						<a href="index.html">
-							<span class="imMnMnFirstBg">
-								<span class="imMnMnTxt"><span class="imMnMnImg"></span><span class="imMnMnTextLabel">Login</span></span>
-							</span>
-						</a>
-					</li><li id="imMnMnNode3">
-						<a href="pagina-1.html">
-							<span class="imMnMnFirstBg">
-								<span class="imMnMnTxt"><span class="imMnMnImg"></span><span class="imMnMnTextLabel">Criar Conta</span></span>
-							</span>
-						</a>
-					</li><li id="imMnMnNode4">
-						<a href="pagina-2.html">
-							<span class="imMnMnFirstBg">
-								<span class="imMnMnTxt"><span class="imMnMnImg"></span><span class="imMnMnTextLabel">Catálogo</span></span>
-							</span>
-						</a>
-					</li><li id="imMnMnNode5">
-						<a href="pagina-3.html">
-							<span class="imMnMnFirstBg">
-								<span class="imMnMnTxt"><span class="imMnMnImg"></span><span class="imMnMnTextLabel">Contato</span></span>
-							</span>
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div id="imContentGraphics"></div>
-			<div id="imContent">
-				<a id="imGoToCont"></a>
-				<div style="height: 15px;">&nbsp;</div>
-				<div id="imFooPad" style="height: 350px; float: left;">&nbsp;</div><div id="imBtMn"><a href="index.html">Login</a> | <a href="pagina-1.html">Criar Conta</a> | <a href="pagina-2.html">Catálogo</a> | <a href="pagina-3.html">Contato</a> | <a href="imsitemap.html">Mapa geral do site</a></div>
-				<div class="imClear"></div>
-			</div>
-			<div id="imFooter">
-				
-			</div>
-		</div>
-		<span class="imHidden"><a href="#imGoToCont" title="Ler esta página novamente">Voltar para o conteúdo</a> | <a href="#imGoToMenu" title="Navegar de novo para a página">Voltar para o Menu principal</a></span>
-		
-		<noscript class="imNoScript"><div class="alert alert-red">Para usar este site, você deve habilitar o JavaScript</div></noscript>
-	</body>
-</html>
+<!doctype html>
+<html ng-app="fixWO">
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<meta charset="utf-8">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+      <!-- SPELLS -->
+      <!-- load angular and angular route via CDN -->
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+      <script src="/app.js"></script>
+</head>
+<body ng-controller="Main">
+	
+	 <header>
+            <nav class="navbar navbar-default">
+            <div class="container">
+                <table id="menu" width="100%">
+    
+				    <colgroup>
+				    <col class="menu_profile">
+				    <col class="menu_listareclamacoes">
+				    <col class="menu_mapa">
+				    <col class="menu_imprimirqr">
+				    <col class="menu_busca">
+				    <col class="menu_logout">
+				    </colgroup>
+						<tr>
+							<td><a href="#"> Home</a></td>
+							<td><a href="#reclamacoes">Reclamações</a></td>
+							<td><a href="#mapa">Minha Área</a></td>
+							<td><a href="#qrcode">QR Code</a></td>
+							<td><form method=GET action=http://www.google.com/search><input type=hidden name=sitesearch value=http://dicaslegais.weebly.com/><input type=text name=q size=20><input type=submit value=Procurar></form></td>
+                            <td><a href="#logout">Logout</a></td>
+						</tr>
+				</table>
+            </div>
+            </nav>
+        </header>
+        
+        
+         <!-- MAIN CONTENT AND INJECTED VIEWS -->
+        <div id="main">
+
+            <!-- angular templating -->
+            <!-- this is where content will be injected -->
+            <div ng-view></div>
+
+        </div>
+        </body>
+        </html>

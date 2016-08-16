@@ -1,0 +1,67 @@
+﻿<!doctype html>
+<html ng-app="fixWO">
+<head>
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
+		<script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
+		<script src="http://leaflet.github.com/Leaflet.label/leaflet.label.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    	<script src="http://code.angularjs.org/1.0.3/angular-resource.min.js"></script>
+		
+		<script src="../services.js"></script>
+    	<script src="../app.js"></script>
+<title>Cadastrar Local</title>
+</head>
+
+<body ng-controller="Main">
+	
+    <form>
+    	<h1>Cadastrar Local</h1>
+    	
+    	<form name="saveDataLocal" action="#" ng-controller="FormCtrlLocal" ng-submit="submitForm()">
+        
+    	<h2>Nome do Local: <input type="text" ng-model="form.descricao"></h2>
+    	
+    	<h2>Selecione a área do local:</h2>
+    	<div id="mapa1" style="width:80%; height:300px;">
+		<script type="text/javascript">
+			var map = L.map('mapa1');
+			L.control.scale().addTo(map);
+			
+			L.tileLayer('http://{s}{hash}.wikimapia.org/?x={x}&y={y}&zoom={z}&type=&lng=3', {
+				hash: function (data) {
+			          return data.x % 4 + (data.y % 4) *4;
+			        }
+				, subdomains : 'i'
+		        , maxZoom: 21
+		        , attribution: '<a href="http://wikimapia.org" target="_blank">Wikimapia.org</a>'
+		      }).addTo(map);
+			
+			window.onload=function(){
+				
+				var loc = angular.element(document.querySelector('[ng-controller="Main"]')).scope().locais;
+				var myPoints = [];
+				for (i = 0; i < loc.length; i++) { 
+					myPoints.push([loc[i].lat,loc[i].lng]);
+					var latlng = L.latLng(parseFloat(loc[i].lat),parseFloat(loc[i].lng));
+					var marker = L.marker(latlng).addTo(map); 
+				}
+				
+				var myBounds = new L.LatLngBounds(myPoints);
+				map.fitBounds(myBounds);
+				
+			}
+        </script>
+        </div>
+        </br>
+        <div ng-controller="pageRedirect">
+        	<input type="submit" value="Concluir" ng-cick="goTo(qrcode)">
+        </div>
+    </form>
+        
+</body>
+
+</html>
