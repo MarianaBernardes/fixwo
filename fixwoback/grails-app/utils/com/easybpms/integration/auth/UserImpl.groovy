@@ -29,11 +29,11 @@ class UserImpl implements IUser {
 
 	@Override
 	public List<String> getUserGroupNames() {
-		List grupos = []
-		for (Grupo gr : usuario.grupos) {
-			grupos.add(gr.name)
+		List grupo = []
+		for (Grupo gr : usuario.grupo) {
+			grupo.add(gr.name)
 		}
-		return grupos
+		return grupo
 	}
 
 }

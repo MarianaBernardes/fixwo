@@ -4,11 +4,19 @@ import grails.transaction.Transactional
 import groovy.json.JsonSlurper;
 import com.easybpms.integration.grails.controller.ObservableRestfulController
 
-class OcorrenciaController extends ObservableRestfulController{
+class OcorrenciaController<T> extends ObservableRestfulController {
+
+	OcorrenciaController(Class<T> resource) {
+		this(resource, false)
+	}
+
+	OcorrenciaController(Class<T> resource, boolean readOnly) {
+		super(resource,readOnly)
+	}
 
     @Transactional(readOnly=false)
     def save(Ocorrencia ocorrencia) {
-
+			
         if (ocorrencia == null) {
             transactionStatus.setRollbackOnly()
             notFound()
