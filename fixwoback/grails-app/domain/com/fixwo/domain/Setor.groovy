@@ -6,5 +6,5 @@ import grails.rest.*
 class Setor {
 
     String nome
-    Grupo responsaveisSetor
+    Grupo responsavelSetor
 }

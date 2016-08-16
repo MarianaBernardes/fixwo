@@ -23,7 +23,7 @@ class Ocorrencia {
 	String replica
 
 
-    static hasMany = [areas:Area]
+    static hasMany = [area:Area]
     static belongsTo = [Area]
 	
     static constraints = {
