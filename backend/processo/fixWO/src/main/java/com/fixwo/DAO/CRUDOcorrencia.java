@@ -1,4 +1,4 @@
-package com.fixo.DAO;
+package com.fixwo.DAO;
 
 import com.easybpms.event.CRUDObservable;
 

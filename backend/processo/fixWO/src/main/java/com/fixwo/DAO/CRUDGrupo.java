@@ -1,4 +1,4 @@
-package com.fixo.DAO;
+package com.fixwo.DAO;
 
 import com.easybpms.bd.CRUDException;
 import com.easybpms.bd.dao.CRUDUserGroup;

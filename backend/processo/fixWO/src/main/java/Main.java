@@ -4,9 +4,9 @@ import java.util.List;
 import com.easybpms.bd.CRUDException;
 import com.easybpms.bd.ScriptBd;
 import com.easybpms.bd.dao.CRUDUser;
-import com.fixo.DAO.CRUDGrupo;
-import com.fixo.DAO.CRUDOcorrencia;
-import com.fixo.DAO.CRUDUsuario;
+import com.fixwo.DAO.CRUDGrupo;
+import com.fixwo.DAO.CRUDOcorrencia;
+import com.fixwo.DAO.CRUDUsuario;
 import com.fixwo.domain.Ocorrencia;
 import com.fixwo.domain.Usuario;
 
