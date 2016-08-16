@@ -4,7 +4,7 @@ import grails.transaction.Transactional
 import groovy.json.JsonSlurper;
 import com.easybpms.integration.grails.controller.ObservableRestfulController
 
-class OrdemServicoController extends ObservableRestfulController{
+class OcorrenciaController extends ObservableRestfulController{
 
     @Transactional(readOnly=false)
     def save(Ocorrencia ocorrencia) {
