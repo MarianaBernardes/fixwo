@@ -1,4 +1,4 @@
-package fixwo
+package com.fixwo.domain
 
 import grails.transaction.Transactional
 import groovy.json.JsonSlurper;
