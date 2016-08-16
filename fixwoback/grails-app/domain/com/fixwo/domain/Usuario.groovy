@@ -24,6 +24,6 @@ class Usuario {
 		email(email:true, nullable:false, blank:false)
 		login(nullable:false, blank:false, unique:true)
 		hashSenha(nullable:false, blank:false, password:true)
-		grupos(nullable:true, blank:true)
+		grupo(nullable:true, blank:true)
     }
 }
