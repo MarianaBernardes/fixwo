@@ -32,12 +32,12 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 					console.log("Barcode Format -> " + imageData.format);
 					console.log("Cancelled -> " + imageData.cancelled);
-					},
-					function(error) {
-						alert("An error happened -> " + error.message);
-						console.log("An error happened -> " + error);
-					}          
-				}
+					}         
+				},
+				function(error) {
+					alert("An error happened -> " + error.message);
+					console.log("An error happened -> " + error);
+				} 
 			);
 	}
 
