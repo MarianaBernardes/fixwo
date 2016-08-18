@@ -24,8 +24,10 @@
     "cordova-plugin-camera",
     "cordova-plugin-geolocation",
     "cordova-sqlite-storage",
+    "cordova-plugin-filepath",
     "cordova-plugin-file",
-    "cordova-plugin-filepath"
+    "cordova-plugin-compat",
+    "cordova-plugin-file-transfer"
   ],
   "cordovaPlatforms": [
     "android"
