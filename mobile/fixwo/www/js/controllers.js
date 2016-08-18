@@ -42,17 +42,21 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 	$scope.readGeolocation = function(){
 
+		// opções para utilização da geolocalização
 		var posOptions = {
 			timeout: 10000,
 			enableHighAccuracy: false
 		};		
 
+		// executando a recuperação da latitude e longitude
 		$cordovaGeolocation
 			.getCurrentPosition(posOptions)
 			.then(function (position) {
 				var curlat = position.coords.latitude;
 				var curlon = position.coords.longitude;
 
+				// após recuperados, monta-se uma estrutura que guarda
+				// atributos importantes para tela de cadastro de ocorrência
 				var params = {
 					qrcode: null,
 					location: curlat.toString()+', '+curlon.toString(),
@@ -61,6 +65,8 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 					option: 'geolocation'
 				};
 
+				// vai para a view de cadastrar ocorrencia,
+				// com parâmetros de geolocalização
 				$state.go('^.^.cadastrarOcorrencia', params);
 			},
 			function(err) {
@@ -71,9 +77,15 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 })
 
 .controller('CadastrarOcorrenciaCtrl', function($scope, $state, $cordovaCamera) {
+	// Recuperando informações do qrcode OU geolocalização
+
+	// será nulo se vier da geolocalização
 	$scope.qrcode 	= $state.params.qrcode;
+	// Será nulo se vier do qrcode
 	$scope.lon 			= $state.params.lon;
 	$scope.lat			= $state.params.lat;
+	// caso for qrcode, será uma string que representa o local
+	// caso for geolocalização, será a lat e long concatenadas
 	$scope.location = $state.params.location;
 	$scope.option = $state.params.qrcodeOrGeolocation;
 
@@ -150,10 +162,6 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 				}
 		);
 	}
-
-
-
-
 
 	$scope.goToCadastrarOcorrenciaState = function() {
 		$state.go('^.tab.cadastrarOcorrencia');
