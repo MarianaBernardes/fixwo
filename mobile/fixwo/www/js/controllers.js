@@ -8,33 +8,63 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 })
 
 .controller('TabCadastrarOcorrenciaCtrl', function($scope, $state, $cordovaBarcodeScanner) {
-	
-	$scope.teste = teste;
-	$scope.goToQrCodeState = function() {
-	$cordovaBarcodeScanner.scan().then
-	  (
-	    function(imageData) {
-			$state.go('^.^.cadastrarOcorrencia', {qrcode: imageData.text});
-	      	console.log("Barcode Format -> " + imageData.format);
-	      	console.log("Cancelled -> " + imageData.cancelled);
-	    },
-	    function(error) {
-	      	console.log("An error happened -> " + error);
-	    }          
-	  );
+
+	$scope.readQrCode = function() {
+		// leio qrcode e em seguida
+		$cordovaBarcodeScanner.scan().then(
+			function(imageData) {
+
+				var qrcodetemp = JSON.parse(imageData.text);
+
+				var params = {
+					qrcode: qrcodetemp,
+					location: qrcodetemp.location,
+					lat: null,
+					lon: null,
+					option: 'qrcode'
+				};//*/
+
+				// recupero localização do qrcode
+				$state.go('^.^.cadastrarOcorrencia', params);
+
+				console.log("Barcode Format -> " + imageData.format);
+				console.log("Cancelled -> " + imageData.cancelled);
+				       
+				},
+
+				function(error) {
+					alert("An error happened -> " + error.message);
+					console.log("An error happened -> " + error);
+				} 
+			);
 	}
 
-	$scope.getCadOcorr = function(){
-		var text = '{"location":"teste"}';
-		$state.go('^.^.cadastrarOcorrencia', {qrcode : text} );
+	//$scope.goToGeolocationState
+
+	$scope.readGeolocation = function(){
+				var curlat = 0;
+				var curlon = 0;
+
+				var params = {
+					qrcode: null,
+					location: curlat.toString()+', '+curlon.toString(),
+					lat: curlat,
+					lon: curlon,
+					option: 'geolocation'
+				};
+
+		$state.go('^.^.cadastrarOcorrencia', params);
 	}
 
 })
 
-.controller('CadastrarOcorrenciaCtrl', function($scope, $state, $cordovaCamera, $stateParams) {
+.controller('CadastrarOcorrenciaCtrl', function($scope, $state, $cordovaCamera) {
+	$scope.qrcode 	= $state.params.qrcode;
+	$scope.lon 			= $state.params.lon;
+	$scope.lat			= $state.params.lat;
+	$scope.location = $state.params.location;
+	$scope.option = $state.params.qrcodeOrGeolocation;
 
-	$scope.qrcodeJson = JSON.parse($state.params.qrcode);
-	$scope.location = $scope.qrcodeJson.location;
 	$scope.fotos = [];
 
 
