@@ -37,6 +37,36 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	$scope.location = $scope.qrcodeJson.location;
 	$scope.fotos = [];
 
+	function connection() {
+		// Wait for Cordova to load
+	    // 
+	    document.addEventListener("deviceready", onDeviceReady, false);
+
+	    // Cordova is loaded and it is now safe to make calls Cordova methods
+	    //
+	    function onDeviceReady() {
+	        checkConnection();
+	    }
+
+	    function checkConnection() {
+	        var networkState = navigator.network.connection.type;
+
+	        var states = {};
+	        states[Connection.UNKNOWN]  = 'Unknown connection';
+	        states[Connection.ETHERNET] = 'Ethernet connection';
+	        states[Connection.WIFI]     = 'WiFi connection';
+	        states[Connection.CELL_2G]  = 'Cell 2G connection';
+	        states[Connection.CELL_3G]  = 'Cell 3G connection';
+	        states[Connection.CELL_4G]  = 'Cell 4G connection';
+	        states[Connection.NONE]     = 'No network connection';
+
+	        alert('[Connection](connection.html) type: ' + states[networkState]);
+	    }
+
+	}
+
+	
+
 
 	$scope.uploadP = function() {
 		document.addEventListener("deviceready", onDeviceReady, error);
@@ -85,9 +115,10 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 	}
 
-	function download() {
+	/*function download() {
 		var fileTransfer = new FileTransfer();
 		var uri = encodeURI("http://xiostorage.com/wp-content/uploads/2015/10/test.png");
+		alert("fileTransfer - OK");
 
 		fileTransfer.download(
 		    uri,
@@ -107,7 +138,57 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 		    }
 		);
-	}
+	}*/
+
+	function download() {
+		document.addEventListener(
+	    	"deviceready",   
+	      	function () {
+		        var remoteFile = "http://xiostorage.com/wp-content/uploads/2015/10/test.png";
+		        var uri = encodeURI("http://xiostorage.com/wp-content/uploads/2015/10/test.png");
+		        var localFileName = remoteFile.substring(remoteFile.lastIndexOf('/')+1);
+		        alert("Download ...");
+		        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
+		        	function(fileSystem) {
+		        		alert('file system open: ' + fileSystem.name);
+		            	fileSystem.root.getFile(localFileName, 
+		            		{create: true, exclusive: false}, 
+		            		function(fileEntry) {
+		            			alert("fileEntry.name: " + fileEntry.name);
+		                		var localPath = fileEntry.fullPath;
+		                		if (device.platform === "Android" && localPath.indexOf("file://") === 0) {
+		                    		localPath = localPath.substring(7);
+		               			}
+		                		var ft = new FileTransfer();
+		                		ft.download(uri, localPath, 
+		                			function(entry) {
+		                				console.log("download complete: " + entry.fullPath);
+		        						alert("download complete: " + entry.fullPath);
+		                				$scope.fotos.push(entry);
+		                        		// var dwnldImg = document.getElementById("dwnldImg");
+		                        		// dwnldImg.src = entry.fullPath;
+		                        		// dwnldImg.style.visibility = "visible";
+		                        		// dwnldImg.style.display = "block";
+		                    		}, function fail(error) { 
+										console.log("download error source " + error.source);
+								        alert("download error source " + error.source);
+								        console.log("download error target " + error.target);
+								        alert("download error target " + error.target);
+								        console.log("upload error code" + error.code);
+								        alert("upload error code" + error.code); 
+									}
+								);
+		            		}, function fail(error) { 
+								alert(error.code); 
+							}
+						);
+		        	}, function fail(error) { 
+						alert(error.code); 
+					}
+				);
+			}, false
+		);
+    }
 
 
 
@@ -119,6 +200,9 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 	$scope.adicionarFoto = function() {
 
+		connection();
+		download();
+		/*
 		var cameraOptions = {
 	      quality: 80,
 	      destinationType: Camera.DestinationType.DATA_URL,
@@ -161,7 +245,7 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	      			}
 	    		)
 			}, false
-		);
+		);*/
 
 	}
 

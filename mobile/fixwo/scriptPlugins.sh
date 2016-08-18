@@ -11,5 +11,7 @@ ionic plugin add cordova-plugin-whitelist
 ionic plugin add cordova-sqlite-storage
 ionic plugin add ionic-plugin-keyboard
 ionic plugin add phonegap-plugin-barcodescanner
+ionic plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
+ionic plugin add cordova-plugin-network-information
 ionic platform remove android
 ionic platform add android
