@@ -83,6 +83,6 @@ assets {
 }
 
 bootRun {
-	jvmArgs = ['-Djava.awt.headless=false', '-Dorg.gradle.debug=true', '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5006']
+	//jvmArgs = ['-Djava.awt.headless=false', '-Dorg.gradle.debug=true', '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5006']
 }
 

@@ -1,0 +1,60 @@
+<!doctype html>
+<html ng-app="fixWO">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+
+<link data-require="bootstrap-css@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" />
+<link rel="stylesheet" href="css/ui-navbar.css" />
+
+<script data-require="angular-animate@1.4.8" data-semver="1.4.8" src="https://code.angularjs.org/1.4.8/angular-animate.js"></script>
+<script data-require="ui-router@0.2.15" data-semver="0.2.15" src="https://cdn.rawgit.com/angular-ui/ui-router/805e69bae319e922e4d3265b7ef565058aaff850/release/angular-ui-router.js"></script>
+<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.1.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="http://code.angularjs.org/1.0.3/angular-resource.min.js"></script>
+		
+<script src="services.js"></script>
+<script src="app.js"></script>
+
+<meta charset="utf-8">
+
+<body>
+	<div>
+    <nav class="navbar" role="navigation">
+        <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
+          <ul class="nav navbar-nav">
+            <li uib-dropdown="">
+              <a href="#">
+                        User
+              </a>
+            </li>
+          <ul class="nav navbar-nav">
+            <li uib-dropdown="">
+              <a href="#">
+                        Reclamações
+              </a>
+            </li>
+            <li uib-dropdown="">
+              <a href="#">
+                        Minha Área
+              </a>
+            </li>
+            <li uib-dropdown="">
+              <a href="#">
+                        Imprimir QR Code
+              </a>
+            </li>
+            <li uib-dropdown="">
+
+            	<form method=GET action="mapa.html"><input type="text" ng-model="searchBox"><input type=submit value=Procurar></form>
+            </li>
+            <li uib-dropdown="">
+              <a href="#">
+                        Logout
+              </a>
+            </li>
+    </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+      </nav>
+    </div>

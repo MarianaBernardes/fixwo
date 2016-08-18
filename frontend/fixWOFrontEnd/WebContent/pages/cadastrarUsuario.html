@@ -1,0 +1,49 @@
+﻿<!doctype html>
+<html ng-app="fixWO">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="../css/style.css"/>]<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    	<script src="http://code.angularjs.org/1.0.3/angular-resource.min.js"></script>
+		
+		<script src="../services.js"></script>
+    	<script src="../app.js"></script>
+<title>Cadastrar Usuário</title>
+</head>
+
+<body ng-controller="Main">
+	
+    <form>
+    	<h1>Cadastrar Usuário</h1>
+    	
+    	<form name="saveDataUser" action="#" ng-controller="FormCtrlUser" ng-submit="submitForm()">
+        
+    	<h2>Login: <input type="text" ng-model="form.login"></h2>
+    
+      	<h2>Senha: <input type="text" ng-model="form.senha"></h2>
+    
+    	<h2>Insira a senha novamente: <input type="text" ng-model="form.senha"></h2>
+        
+        <h2>Nome: <input type="text" ng-model="form.nome"></h2>
+   
+    	<h2>Email: <input type="text" ng-model="form.email"></h2>
+    
+    	<h2>Insira o email novamente: <input type="text" ng-model="form.email"></h2>
+    	
+    	<h2>Tipo de Usuário: </h2></br>
+    	
+    	<input type="radio" ng-model="form.tipo" value="usuario" />Solicitante
+        <input type="radio" ng-model="form.tipo" value="cliente" />Cliente 
+        <input type="radio" ng-model="form.tipo" value="triador" />Triador 
+		</br>
+        
+        <h2>Avatar (opcional)</h2> 
+        
+        <h2><img id="fotoPerfil" src="imagens/fotoPerfil.jpg"> <input type="file" value="Escolha uma Foto" ng-model="form.profile_foto" id="profile_foto"></h2>
+        
+        <h2><input type="submit" value="Concluir"> <input type="button" value="Limpar"></h2>
+	
+    </form>
+        
+</body>
+
+</html>

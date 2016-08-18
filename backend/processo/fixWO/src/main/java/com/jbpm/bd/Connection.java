@@ -8,7 +8,7 @@ public class Connection extends AbstractConnection {
 
 	public Connection() {
 		//MYSQL
-//		PoolingDataSource ds = new PoolingDataSource();
+/*//		PoolingDataSource ds = new PoolingDataSource();
 //		ds.setUniqueName("jdbc/jbpm-ds");
 //		ds.setClassName("bitronix.tm.resource.jdbc.lrc.LrcXADataSource");
 //		ds.setMaxPoolSize(5); 
@@ -18,7 +18,7 @@ public class Connection extends AbstractConnection {
 //		ds.getDriverProperties().put("url", "jdbc:mysql://localhost/jbpm");
 //		ds.getDriverProperties().put("driverClassName", "com.mysql.jdbc.Driver");
 //		ds.init();
-		
+*/		
 		//POSTGRES
 		PoolingDataSource ds = new PoolingDataSource();
 		ds.setUniqueName("jdbc/jbpm-ds");

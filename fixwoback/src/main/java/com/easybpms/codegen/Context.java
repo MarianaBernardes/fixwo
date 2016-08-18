@@ -84,7 +84,8 @@ public class Context extends AbstractContext {
 		process = new Process();
 		process.setName("fixwo");
 		process.setIdBpms("com_fixwo_domain_Ocorrencia");
-		processPaths.add("C:\\Users\\Andre Saude\\Documents\\GitLocal\\fixwo\\fixwoback\\src\\main\\resources\\fixwo.bpmn2");
+		//processPaths.add("C:\\Users\\Andre Saude\\Documents\\GitLocal\\fixwo\\fixwoback\\src\\main\\resources\\fixwo.bpmn2");
+		processPaths.add("C:\\workspace\\mars\\fixwo\\fixwoback\\src\\main\\resources\\fixwo.bpmn2");
 
 		//Variaveis do Processo fixwo  
 		property = new Property();

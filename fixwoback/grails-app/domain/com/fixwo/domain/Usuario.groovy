@@ -7,7 +7,7 @@ import java.util.List;
 import com.easybpms.domain.IUser
 import com.easybpms.integration.grails.controller.EasyBpmsUserRestfulController
 
-@Resource(uri="/usuarios", readOnly=false, formats=["json","xml"], superClass=EasyBpmsUserRestfulController)
+@Resource(uri="/usuario", readOnly=false, formats=["json","xml"], superClass=EasyBpmsUserRestfulController)
 class Usuario {
 
     String nome
@@ -16,7 +16,7 @@ class Usuario {
     String email
 	Cliente cliente
     int ativo=0;
-    static hasMany = [grupos:Grupo]
+    static hasMany = [grupo:Grupo]
     static belongsTo = [Grupo]
 
     static constraints = {
@@ -24,5 +24,6 @@ class Usuario {
 		email(email:true, nullable:false, blank:false)
 		login(nullable:false, blank:false, unique:true)
 		hashSenha(nullable:false, blank:false, password:true)
-		grupos(nullable:true, blank:true)
-    }}
+		grupo(nullable:true, blank:true)
+    }
+}
