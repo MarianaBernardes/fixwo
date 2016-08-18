@@ -91,8 +91,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('cadastrarOcorrencia', {
       url: '/cadastrarOcorrencia',
   	  params: {
-  		qrcode: null
-  	  },
+          qrcode: null,
+          location: null,
+          lat: null,
+          lon: null,
+          option: null
+        },
       templateUrl: 'templates/cadastrarOcorrencia.html',
       controller: 'CadastrarOcorrenciaCtrl'
     })
