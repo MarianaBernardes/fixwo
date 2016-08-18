@@ -242,6 +242,18 @@ module.exports = [
         "clobbers": [
             "cordova.plugins.barcodeScanner"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
+        "id": "cordova-plugin-geolocation.geolocation",
+        "clobbers": [
+            "navigator.geolocation"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
+        "id": "cordova-plugin-geolocation.PositionError",
+        "runs": true
     }
 ];
 module.exports.metadata = 
@@ -259,7 +271,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.2.2",
     "cordova-sqlite-storage": "1.4.6",
     "ionic-plugin-keyboard": "2.2.1",
-    "phonegap-plugin-barcodescanner": "6.0.1"
+    "phonegap-plugin-barcodescanner": "6.0.1",
+    "cordova-plugin-geolocation": "2.2.0"
 };
 // BOTTOM OF METADATA
 });
