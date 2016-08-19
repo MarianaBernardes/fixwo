@@ -1,3 +1,4 @@
+ionic platform remove android
 ionic plugin add cordova-plugin-camera
 ionic plugin add cordova-plugin-compat
 ionic plugin add cordova-plugin-console
@@ -13,5 +14,5 @@ ionic plugin add ionic-plugin-keyboard
 ionic plugin add phonegap-plugin-barcodescanner
 ionic plugin add https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git
 ionic plugin add cordova-plugin-network-information
-ionic platform remove android
+ionic plugin add cordova-plugin-geolocation
 ionic platform add android

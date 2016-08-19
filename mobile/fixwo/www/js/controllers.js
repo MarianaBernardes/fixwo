@@ -66,116 +66,49 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	$scope.option = $state.params.qrcodeOrGeolocation;
 
 	$scope.fotos = [];
+	$scope.fotosFileEntry = [];
 
-	function connection() {
-		// Wait for Cordova to load
-	    // 
-	    document.addEventListener("deviceready", onDeviceReady, false);
 
-	    // Cordova is loaded and it is now safe to make calls Cordova methods
-	    //
-	    function onDeviceReady() {
-	        checkConnection();
+	function upload(fileEntry) {
+	    // !! Assumes variable fileURL contains a valid URL to a text file on the device,
+	    var fileURL = fileEntry.toURL();
+
+	    var success = function (r) {
+	        console.log("Successful upload...");
+	        console.log("Code = " + r.responseCode);
+	        displayFileData(fileEntry.fullPath + " (content uploaded to server)");
 	    }
 
-	    function checkConnection() {
-	        var networkState = navigator.network.connection.type;
-
-	        var states = {};
-	        states[Connection.UNKNOWN]  = 'Unknown connection';
-	        states[Connection.ETHERNET] = 'Ethernet connection';
-	        states[Connection.WIFI]     = 'WiFi connection';
-	        states[Connection.CELL_2G]  = 'Cell 2G connection';
-	        states[Connection.CELL_3G]  = 'Cell 3G connection';
-	        states[Connection.CELL_4G]  = 'Cell 4G connection';
-	        states[Connection.NONE]     = 'No network connection';
-
-	        alert('[Connection](connection.html) type: ' + states[networkState]);
+	    var fail = function (error) {
+	        alert("An error has occurred: Code = " + error.code);
 	    }
 
-	}
+	    var options = new FileUploadOptions();
+	    options.fileKey = "file";
+	    options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1);
+	    options.mimeType = "image/jpeg";
 
-	
+	    var params = {};
+	    params.value1 = "test";
+	    params.value2 = "param";
+
+	    options.params = params;
+
+	    var ft = new FileTransfer();
+	    // SERVER must be a URL that can handle the request, like
+	    // http://some.server.com/upload.php
+	    ft.upload(fileURL, encodeURI(SERVER), success, fail, options);
+	};
 
 
-	$scope.uploadP = function() {
-		document.addEventListener("deviceready", onDeviceReady, error);
-
-		function onDeviceReady() {
-            // Retrieve image file location from specified source
-            navigator.camera.getPicture(uploadPhoto,
-            	function(message) { alert('get picture failed'); },
-                { quality: 50, 
-                destinationType: navigator.camera.DestinationType.FILE_URI,
-                sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY }
-            );
-        }
-
-        function error() {
-
-        }
-
-		function uploadPhoto(imageURI) {
-            var options = new FileUploadOptions();
-            options.fileKey="file";
-            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
-            options.mimeType="image/jpeg";
-
-            var params = new Object();
-            params.value1 = "test";
-            params.value2 = "param";
-
-            options.params = params;
-
-            var ft = new FileTransfer();
-            ft.upload(imageURI, encodeURI("http://some.server.com/upload.php"), win, fail, options);
-        }
-
-        function win(r) {
-            console.log("Code = " + r.responseCode);
-            console.log("Response = " + r.response);
-            console.log("Sent = " + r.bytesSent);
-        }
-
-        function fail(error) {
-            alert("An error has occurred: Code = " + error.code);
-            console.log("upload error source " + error.source);
-            console.log("upload error target " + error.target);
-        }
-
-	}
-
-	/*function download() {
-		var fileTransfer = new FileTransfer();
-		var uri = encodeURI("http://xiostorage.com/wp-content/uploads/2015/10/test.png");
-		alert("fileTransfer - OK");
-
-		fileTransfer.download(
-		    uri,
-		    filePath,
-		    function(entry) {
-		        console.log("download complete: " + entry.fullPath);
-		        alert("download complete: " + entry.fullPath);
-		        //$scope.fotos.push(filePath);
-		    },
-		    function(error) {
-		        console.log("download error source " + error.source);
-		        alert("download error source " + error.source);
-		        console.log("download error target " + error.target);
-		        alert("download error target " + error.target);
-		        console.log("upload error code" + error.code);
-		        alert("upload error code" + error.code);
-
-		    }
-		);
-	}*/
-
-	function download() {
+	//Faz download de uma imagem de um servidor
+	//remote file é o link da imagem
+	function downloadFile(remoteFile) {
 		document.addEventListener(
 	    	"deviceready",   
 	      	function () {
-		        var remoteFile = "http://xiostorage.com/wp-content/uploads/2015/10/test.png";
-		        var uri = encodeURI("http://xiostorage.com/wp-content/uploads/2015/10/test.png");
+		        //var remoteFile = "http://xiostorage.com/wp-content/uploads/2015/10/test.png";
+		        var uri = encodeURI(remoteFile);
 		        var localFileName = remoteFile.substring(remoteFile.lastIndexOf('/')+1);
 		        alert("Download ...");
 		        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
@@ -185,16 +118,17 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 		            		{create: true, exclusive: false}, 
 		            		function(fileEntry) {
 		            			alert("fileEntry.name: " + fileEntry.name);
-		                		var localPath = fileEntry.fullPath;
+		                		var localPath = fileEntry.toURL();
 		                		if (device.platform === "Android" && localPath.indexOf("file://") === 0) {
 		                    		localPath = localPath.substring(7);
 		               			}
+		               			alert(localPath);
 		                		var ft = new FileTransfer();
-		                		ft.download(uri, localPath, 
+		                		ft.download(uri, localPath,
 		                			function(entry) {
 		                				console.log("download complete: " + entry.fullPath);
 		        						alert("download complete: " + entry.fullPath);
-		                				$scope.fotos.push(entry);
+		                				$scope.fotos.push(entry.toURL());
 		                        		// var dwnldImg = document.getElementById("dwnldImg");
 		                        		// dwnldImg.src = entry.fullPath;
 		                        		// dwnldImg.style.visibility = "visible";
@@ -221,21 +155,23 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
     }
 
 
-
+	function b64DecodeUnicode(str) {
+	    return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
+	        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+	    }).join(''));
+	}
 
 
 	$scope.goToCadastrarOcorrenciaState = function() {
-		$state.go('^.tab.cadastrarOcorrencia');
+
 	};
 
 	$scope.adicionarFoto = function() {
 
-		connection();
-		download();
-		/*
+		//upload(fileEntry);
 		var cameraOptions = {
 	      quality: 80,
-	      destinationType: Camera.DestinationType.DATA_URL,
+	      destinationType: Camera.DestinationType.FILE_URI,
 	      sourceType: Camera.PictureSourceType.CAMERA,
 	      encodingType: Camera.EncodingType.JPEG,
 	      mediaType: Camera.MediaType.PICTURE,
@@ -250,22 +186,42 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	    	"deviceready",   
 	      	function () {
 	        	$cordovaCamera.getPicture(cameraOptions).then(	
-	        		function (imageData) {
-	          			$scope.fotos.push("data:image/jpeg;base64," + imageData);
+	        		//Recupera a URL da foto
+	        		function (imageUri) {
+	        			//alert(imageUri);
+	        			//Insere a url no vetor de urls 
+	          			$scope.fotos.push(imageUri);
+	        			//Acessa o sistema de arquivos de persistência
 	          			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
 	          				function (fs) {
-								alert('file system open: ' + fs.name);
-					    		fs.root.getFile("image.jpeg", 
-					    			{ create: true, exclusive: false }, 
-					    			function (fileEntry) {
-					    				alert("fileEntry is file?" + fileEntry.isFile.toString());
-					    				alert("fileEntry.name: " + fileEntry.name);
-					    				alert("fileEntry.fullPath " + fileEntry.fullPath);
-								    	writeFile(fileEntry, imageData);
-					    			}, function fail(error) { 
-					    				alert(error.code); 
-					    			}
-					    		);
+								//alert('file system open: ' + fs);
+								//Converte a URL da imagem em um File Entry
+								window.resolveLocalFileSystemURL(imageUri, 
+								    function success(fileEntry) {
+								        //alert("got file: " + fileEntry.fullPath);
+								        console.log("got file: " + fileEntry.fullPath);
+								        //Copia a foto para o sistema de arquivos 
+								        //de persistência do aplicativo
+								        copyFileEntryTo(fileEntry, fs.root);
+								        //Recupera o FileEntry da foto persistida
+								        fs.root.getFile(fileEntry.name, 
+										{ create: true, exclusive: false }, 
+							    			function (newFileEntry) {
+							    				//alert(newFileEntry.name);
+							    				//Insere o FileEntry da foto persistida no
+							    				//vetor de FileEntry
+							    				$scope.fotosFileEntry.push(newFileEntry);
+							    			}, function fail(error) { 
+							    				alert(error.code); 
+							    			}
+							    		);
+								    }, function (error) {
+									    // If don't get the FileEntry (which may happen when testing
+									    // on some emulators), copy to a new FileEntry.
+									    alert(error.message);
+									    //createNewFileEntry(imgUri);
+								    }
+								);
 							}, function fail(error) { 
 								alert(error.code); 
 							}
@@ -275,10 +231,38 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	      			}
 	    		)
 			}, false
-		);*/
+		);
 
 	}
 
+	//Copia um arquivo para outro diretório
+	function copyFileEntryTo(fileEntry, parentNewFileEntry) {
+		function win(entry) {
+		    console.log("New Path: " + entry.fullPath);
+		    //alert("New Path: " + entry.fullPath);
+		}
+
+		function fail(error) {
+		    alert(error.code);
+		}
+	    // copy the file to a new directory and rename it
+	    fileEntry.copyTo(parentNewFileEntry, fileEntry.name, win, fail);
+	}
+
+	//Recebe um fileEntry e remove o arquivo
+	function removeFile(fileEntry) {
+		function success(fileEntry) {
+    		console.log("Removal succeeded");
+    		alert("Removal succeeded");
+		}
+		function fail(error) {
+    		alert('Error removing file: ' + error.code);
+		}
+		// remove the file
+		entry.remove(success, fail);
+	}
+
+	//Recebe um fileEntry e um objeto e escreve este objeto no arquivo.
 	function writeFile(fileEntry, dataObj) {
     // Create a FileWriter object for our FileEntry (image.jpeg).
 	    fileEntry.createWriter(
@@ -303,53 +287,48 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	}
 
 	function getFileEntry(imgUri) {
-	    window.resolveLocalFileSystemURL(imgUri, 
-		    	function success(fileEntry) {
-		        // Do something with the FileEntry object, like write to it, upload it, etc.
-		        writeFile(fileEntry, imgUri);
-		        alert("got file: " + fileEntry.fullPath);
-		        console.log("got file: " + fileEntry.fullPath);
-		        // displayFileData(fileEntry.nativeURL, "Native URL");
-		    }, function (error) {
-		      // If don't get the FileEntry (which may happen when testing
-		      // on some emulators), copy to a new FileEntry.
-		      alert(error.message);
-		      createNewFileEntry(imgUri);
-		    }
-		);
-	}
+		var fileEntryReturn = null;
+		document.addEventListener("deviceready", onDeviceReady, false);
 
-	function persistanceFile(file) {
-		alert(1);
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
-			alert(fs.name);
-			alert(2);
-    		console.log('file system open: ' + fs.name);
-    		fs.root.getFile(file, 
-    		{ create: true, exclusive: false }, 
-    		function (fileEntry) {
-    			alert(fileEntry.isFile.toString());
-       			console.log("fileEntry is file?" + fileEntry.isFile.toString());
-		        // fileEntry.name == 'someFile.txt'
-			    // fileEntry.fullPath == '/someFile.txt'
-			    writeFile(fileEntry, null);
-    		}, onErrorCreateFile);
-		}, onErrorLoadFs);
+		function onDeviceReady() {
+		    window.resolveLocalFileSystemURL(imgUri, 
+			    function success(fileEntry) {
+			        // Do something with the FileEntry object, like write to it, upload it, etc.
+			        //writeFile(fileEntry, imgUri);
+			        alert("got file: " + fileEntry.fullPath);
+			        console.log("got file: " + fileEntry.fullPath);
+			        fileEntryReturn = fileEntry;
+			        // displayFileData(fileEntry.nativeURL, "Native URL");
+			    }, function (error) {
+				    // If don't get the FileEntry (which may happen when testing
+				    // on some emulators), copy to a new FileEntry.
+				    alert(error.message);
+				    //return null;
+				    //createNewFileEntry(imgUri);
+			    }
+			);
+		}
+
+		return fileEntryReturn;
 	}
 
 	function createNewFileEntry(imgUri) {
-   		window.resolveLocalFileSystemURL(cordova.file.cacheDirectory, 
-	    	function success(dirEntry) {
-		        // JPEG file
-		        dirEntry.getFile("tempFile.jpeg", 
-		        	{ create: true, exclusive: false }, 
-		        	function (fileEntry) {
-		            	// Do something with it, like write to it, upload it, etc.
-		            	// writeFile(fileEntry, imgUri);
-		            	console.log("got file: " + fileEntry.fullPath);
-		            	// displayFileData(fileEntry.fullPath, "File copied to");
-		        	}, onErrorCreateFile);
-	    	}, onErrorResolveUrl);
+		document.addEventListener("deviceready", onDeviceReady, false);
+
+		function onDeviceReady() {
+	   		window.resolveLocalFileSystemURL(cordova.file.cacheDirectory, 
+		    	function success(dirEntry) {
+			        // JPEG file
+			        dirEntry.getFile("tempFile.jpeg", 
+			        	{ create: true, exclusive: false }, 
+			        	function (fileEntry) {
+			            	// Do something with it, like write to it, upload it, etc.
+			            	// writeFile(fileEntry, imgUri);
+			            	console.log("got file: " + fileEntry.fullPath);
+			            	// displayFileData(fileEntry.fullPath, "File copied to");
+			        	}, onErrorCreateFile);
+		    	}, onErrorResolveUrl);
+	   	}
 	}
 
 })
