@@ -29,6 +29,8 @@ class Ocorrencia {
     static constraints = {
         setor (nullable:true, blank:true)
         local (nullable:true, blank:true)
+		lon (nullable:true, blank:true)
+		lat(nullable:true, blank:true)
         avaliacao (nullable:true, blank:true)
         feedback (nullable:true, blank:true)
         tenancy(nullable:true, blank:true)

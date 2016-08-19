@@ -1,25 +1,10 @@
-Ôªø<!doctype html>
-<html ng-app="fixWO">
-<head>
-<meta charset="UTF-8">
-<title>Ordem de Servi√ßo</title>
-
-<link rel="stylesheet" type="text/css" href="../css/style.css"/>
-<script src="http://code.angularjs.org/1.0.3/angular-resource.min.js"></script>
-		
-		<script src="../services.js"></script>
-    	<script src="../app.js"></script>
-
 <script>
 function resolve() {
    	document.getElementById("textarea").style.display = "inline";
 	document.getElementById("enviar").style.display = "inline";
 }
 </script>
-
-</head>
-
-<body>
+<div>
 <div class="div_tabela">
 <table id="tab2" border="1">
   <tr ng-repeat="result in results">
@@ -33,16 +18,16 @@ function resolve() {
     <td><strong>Data:</strong> {{result.data}}</td>
   </tr>
   <tr>
-    <td><strong>Situa√ß√£o:</strong> {{result.situacao}}</td>
+    <td><strong>SituaÁ„o:</strong> {{result.situacao}}</td>
   </tr>
   <tr>
-    <td class="tab2_menu"><strong>Coment√°rios:</strong> {{result.comentario}}</td>
+    <td class="tab2_menu"><strong>Coment·rios:</strong> {{result.comentario}}</td>
   </tr>
 </table>
 
 <input type="button" name="marcar" id="marcar" value="Marcar Como Resolvida" onclick="resolver()" style="color: #FFFFFF; background-color: #CC0000">
 
-<textarea name="textarea" id="textarea" placeholder="Escreva um coment√°rio (Opcional)" cols="num" rows="num" style="display: none; ng-model="cliente_coment"></textarea>
+<textarea name="textarea" id="textarea" placeholder="Escreva um coment·rio (Opcional)" cols="num" rows="num" style="display: none; ng-model="cliente_coment"></textarea>
 
 <input type="button" name="enviar" id="enviar" value="Enviar" style="color: #FFFFFF; background-color: #CC0000; display: none;">
 </br>
@@ -52,7 +37,7 @@ function resolve() {
 
 <div class="div_localizacao" ng-controller="Mapa">
 
-<h1>Localiza√ß√£o</h1>
+<h1>LocalizaÁ„o</h1>
 
 <p style="display: none;">{{result.localizacao}}}}</p>
 
@@ -88,7 +73,7 @@ function resolve() {
 
 <div class="div_comentarios">
 
-<h1>Coment√°rios</h1>
+<h1>Coment·rios</h1>
 <hr style="height:2px; border:none; color:#000; background-color:#000; margin-top: 0px; margin-bottom: 0px;"/>
 
 <table width="50%" border="1" ng-repeat="comentario in result.comentarios">
@@ -100,5 +85,4 @@ function resolve() {
 </table>
 
 </div>
-</body>
-</html>
+</div>

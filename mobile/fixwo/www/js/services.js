@@ -47,6 +47,25 @@ angular.module('starter.services', ['ionic','ngCordova'])
   		//alert(ocorrencias);
   		return ocorrencias;
   		//return $cordovaSQLite.execute(db, 'SELECT * FROM ocorrencias').rows;
-  	}
+  	},
+    get: function(ocorrenciaID) {
+        $cordovaSQLite.execute(db, 'SELECT * FROM ocorrencias').then(
+        function(res){
+
+          for (var i = 0; i < res.rows.length; i++) {
+            ocorrencias.push(res.rows.item(i));
+          }
+        },
+        function(error) {
+          alert('erro no select: ' + error.message)
+        }
+        );
+      for (var i = 0; i < ocorrencias.length; i++) {
+        if (ocorrencias[i].id === parseInt(ocorrenciaID)) {
+          return ocorrencias[i];
+        }
+      }
+      return null;
+  }
   };
 });

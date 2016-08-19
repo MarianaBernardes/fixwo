@@ -6,13 +6,8 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
       <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
 
-      <!-- SPELLS -->
-      <!-- load angular and angular route via CDN -->
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-      <script src="/app.js"></script>
-</head>
-<body ng-controller="Main">
+      </head>
+<body>
 	
 	 <header>
             <nav class="navbar navbar-default">
@@ -31,8 +26,8 @@
 							<td><a href="#"> Home</a></td>
 							<td><a href="#reclamacoes">Reclamações</a></td>
 							<td><a href="#mapa">Minha Área</a></td>
-							<td><a href="#qrcode">QR Code</a></td>
-							<td><form method=GET action=http://www.google.com/search><input type=hidden name=sitesearch value=http://dicaslegais.weebly.com/><input type=text name=q size=20><input type=submit value=Procurar></form></td>
+							<td><a href="#imprimirQR">QR Code</a></td>
+							<td><input ng-model="busca" size=20><input type="button" value="Buscar" /></td>
                             <td><a href="#logout">Logout</a></td>
 						</tr>
 				</table>
@@ -42,12 +37,11 @@
         
         
          <!-- MAIN CONTENT AND INJECTED VIEWS -->
-        <div id="main">
+         <div ng-view></div>
 
-            <!-- angular templating -->
-            <!-- this is where content will be injected -->
-            <div ng-view></div>
-
-        </div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+  <script src="http://code.angularjs.org/1.2.1/angular-route.min.js"></script>
+  <script src="app.js"></script>
         </body>
         </html>

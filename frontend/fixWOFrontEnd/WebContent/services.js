@@ -15,6 +15,11 @@ angular.module('searchLocalJsonService', ['ngResource'])
   return $resource('local.json');
 });
 
+angular.module('searchOSJsonService', ['ngResource'])
+.factory('SearchOSJsonService', function($resource) {
+  return $resource('os.json');
+});
+
 angular.service('CommonService', function(){
 	  this.value = '';
 	});

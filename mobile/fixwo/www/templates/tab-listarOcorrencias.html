@@ -4,7 +4,7 @@
 		<ion-item   class="item item-thumbnail-right"
 				ng-repeat="ocorrencia in ocorrencias"
 				type="item-text-wrap"
-				ng-click = "detalhesDaOcorrencia(ocorrencia.id)"
+				href="#/tab/listarOcorrencias/{{ocorrencia.id}}"
 				>
 			<img src="{{ ocorrencia.imagem }}" style="width: 128px; height: 128px"></img>
 			<h2><b> {{ ocorrencia.titulo }} </b></h2><br/>

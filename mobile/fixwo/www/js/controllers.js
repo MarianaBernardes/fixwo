@@ -2,12 +2,13 @@ var teste = "ola";
 angular.module('starter.controllers', ['ionic','ngCordova'])
 
 .controller('NavBackButtonCtrl', function($scope, $ionicHistory) {
-  $scope.goBack = function() {
-    $ionicHistory.goBack();
-  };
+	$scope.goBack = function() {
+		$ionicHistory.goBack();
+	};
 })
 
-.controller('TabCadastrarOcorrenciaCtrl', function($scope, $state, $cordovaBarcodeScanner) {
+.controller('TabCadastrarOcorrenciaCtrl',
+	function($scope, $state, $cordovaBarcodeScanner, $cordovaGeolocation) {
 
 	$scope.readQrCode = function() {
 		// leio qrcode e em seguida
@@ -29,7 +30,7 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 				console.log("Barcode Format -> " + imageData.format);
 				console.log("Cancelled -> " + imageData.cancelled);
-				       
+
 				},
 
 				function(error) {
@@ -39,12 +40,23 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 			);
 	}
 
-	//$scope.goToGeolocationState
-
 	$scope.readGeolocation = function(){
-				var curlat = 0;
-				var curlon = 0;
 
+		// opções para utilização da geolocalização
+		var posOptions = {
+			timeout: 10000,
+			enableHighAccuracy: false
+		};		
+
+		// executando a recuperação da latitude e longitude
+		$cordovaGeolocation
+			.getCurrentPosition(posOptions)
+			.then(function (position) {
+				var curlat = position.coords.latitude;
+				var curlon = position.coords.longitude;
+
+				// após recuperados, monta-se uma estrutura que guarda
+				// atributos importantes para tela de cadastro de ocorrência
 				var params = {
 					qrcode: null,
 					location: curlat.toString()+', '+curlon.toString(),
@@ -53,15 +65,27 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 					option: 'geolocation'
 				};
 
-		$state.go('^.^.cadastrarOcorrencia', params);
+				// vai para a view de cadastrar ocorrencia,
+				// com parâmetros de geolocalização
+				$state.go('^.^.cadastrarOcorrencia', params);
+			},
+			function(err) {
+				alert("Ocorreu um erro: "+err.message);
+			});		
 	}
 
 })
 
 .controller('CadastrarOcorrenciaCtrl', function($scope, $state, $cordovaCamera) {
+	// Recuperando informações do qrcode OU geolocalização
+
+	// será nulo se vier da geolocalização
 	$scope.qrcode 	= $state.params.qrcode;
+	// Será nulo se vier do qrcode
 	$scope.lon 			= $state.params.lon;
 	$scope.lat			= $state.params.lat;
+	// caso for qrcode, será uma string que representa o local
+	// caso for geolocalização, será a lat e long concatenadas
 	$scope.location = $state.params.location;
 	$scope.option = $state.params.qrcodeOrGeolocation;
 
@@ -82,6 +106,7 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	    var fail = function (error) {
 	        alert("An error has occurred: Code = " + error.code);
 	    }
+
 
 	    var options = new FileUploadOptions();
 	    options.fileKey = "file";
@@ -161,9 +186,8 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	    }).join(''));
 	}
 
-
 	$scope.goToCadastrarOcorrenciaState = function() {
-
+		$state.go('^.tab.cadastrarOcorrencia');
 	};
 
 	$scope.adicionarFoto = function() {
@@ -227,9 +251,9 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 							}
 						);
 					}, function(error) {
-	      				alert(error.message);
-	      			}
-	    		)
+							alert(error.message);
+						}
+					)
 			}, false
 		);
 
@@ -264,26 +288,26 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 	//Recebe um fileEntry e um objeto e escreve este objeto no arquivo.
 	function writeFile(fileEntry, dataObj) {
-    // Create a FileWriter object for our FileEntry (image.jpeg).
-	    fileEntry.createWriter(
-	    	function (fileWriter) {
+		// Create a FileWriter object for our FileEntry (image.jpeg).
+			fileEntry.createWriter(
+				function (fileWriter) {
 				fileWriter.onwriteend = function() {
-		        	alert("Successful file write...");
-		        	console.log("Successful file write...");
-		            readFile(fileEntry);
-		        };
-		        fileWriter.onerror = function (e) {
-		        	alert("Failed file write: " + e.toString());
-		            console.log("Failed file write: " + e.toString());
-		        };
-		        // If data object is not passed in,
-		        // create a new Blob instead.
-		        if (!dataObj) {
-		            dataObj = new Blob(['some file data'], { type: 'text/plain' });
-		        }
-		        fileWriter.write(dataObj);
-	    	}
-	    );
+							alert("Successful file write...");
+							console.log("Successful file write...");
+								readFile(fileEntry);
+						};
+						fileWriter.onerror = function (e) {
+							alert("Failed file write: " + e.toString());
+								console.log("Failed file write: " + e.toString());
+						};
+						// If data object is not passed in,
+						// create a new Blob instead.
+						if (!dataObj) {
+								dataObj = new Blob(['some file data'], { type: 'text/plain' });
+						}
+						fileWriter.write(dataObj);
+				}
+			);
 	}
 
 	function getFileEntry(imgUri) {
@@ -337,11 +361,11 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 	$scope.ocorrencias = Ocorrencias.all();
 
-	$scope.detalhesDaOcorrencia = function(ocorrId) {
-		console.log(ocorrId);
-		alert(ocorrId);
-		$state.go('^.^.detalhesDaOcorrencia', {ocorrenciaId : ocorrId});
-	};
+	// $scope.detalhesDaOcorrencia = function(ocorrId) {
+	// 	console.log(ocorrId);
+	// 	alert(ocorrId);
+	// 	$state.go('^.^.detalhesDaOcorrencia', {ocorrenciaId : ocorrId});
+	// };
 
 })
 
@@ -392,6 +416,6 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 .controller('DetalhesDaOcorrenciaCtrl', function($scope, $state, $stateParams, Ocorrencias) {
 	console.log($state.params.ocorrenciaId);
-	alert($state.params.ocorrenciaId);
+	//alert($state.params.ocorrenciaId);
 	$scope.ocorrencia = Ocorrencias.get($state.params.ocorrenciaId);
 });

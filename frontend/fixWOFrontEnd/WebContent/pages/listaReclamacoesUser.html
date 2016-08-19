@@ -1,21 +1,5 @@
-ï»¿<!doctype html>
-<html ng-app="fixWO">
-<head>
-<meta charset="UTF-8">
-<title>osado de ReclamaÃ§Ãµes</title>
-
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-    	<script src="http://code.angularjs.org/1.0.3/angular-resource.min.js"></script>
-		
-		<script src="../services.js"></script>
-    	<script src="../app.js"></script>
-
-<link rel="stylesheet" type="text/css" href="../css/style.css"/>
-
-</head>
-
-<body ng-controller="OS">
-<h1>Minhas Ordens de ServiÃ§o</h1>
+<div ng-controller="OS">
+<h1>Minhas Ordens de Serviço</h1>
 <table width="98%" border="1" id="tab_reclamacoes">
 <colgroup>
 <col class="tab_foto">
@@ -28,9 +12,9 @@
   <tr>
     <th scope="col">foto</th>
     <th scope="col">tipo</th>
-    <th scope="col">situaÃ§Ã£o</th>
+    <th scope="col">situação</th>
     <th scope="col">data</th>
-    <th scope="col">requisiÃ§Ãµes</th>
+    <th scope="col">requisições</th>
     <th scope="col">detalhes</th>
   </tr>
   <tr ng-repeat="os in allOS">
@@ -42,5 +26,4 @@
     <td><a href="#">Exibir mais detalhes</a></td>
   </tr>
 </table>
-</body>
-</html>
+</div>

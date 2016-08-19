@@ -1,32 +1,12 @@
-﻿<!doctype html>
-<html ng-app="fixWO">
-<head>
-<meta charset="utf-8">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
 
-<link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.css" />
-		<script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
-		<script src="http://leaflet.github.com/Leaflet.label/leaflet.label.js"></script>
-
-<link rel="stylesheet" type="text/css" href="../css/style.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-    	<script src="http://code.angularjs.org/1.0.3/angular-resource.min.js"></script>
-		
-		<script src="../services.js"></script>
-    	<script src="../app.js"></script>
-<title>Cadastrar Local</title>
 </head>
-
-<body ng-controller="Main">
-	
-    <form>
-    	<h1>Cadastrar Local</h1>
-    	
-    	<form name="saveDataLocal" action="#" ng-controller="FormCtrlLocal" ng-submit="submitForm()">
-        
-    	<h2>Nome do Local: <input type="text" ng-model="form.descricao"></h2>
-    	
-    	<h2>Selecione a área do local:</h2>
-    	<div id="mapa1" style="width:80%; height:300px;">
+<h1>Cadastrar Local</h1>
+ 
+<div ng-app="postserviceApp" ng-controller="postserviceCtrl">
+<div>
+<h2>Nome do Local:</h2> <input ng-model="descricao">
+<div id="mapa1" style="width:80%; height:300px;">
 		<script type="text/javascript">
 			var map = L.map('mapa1');
 			L.control.scale().addTo(map);
@@ -56,12 +36,11 @@
 			}
         </script>
         </div>
-        </br>
-        <div ng-controller="pageRedirect">
-        	<input type="submit" value="Concluir" ng-cick="goTo(qrcode)">
-        </div>
-    </form>
-        
-</body>
 
-</html>
+<input type="button" value="Enviar" ng-click="postdata(descricao)" /> <br/><br/>
+</div>
+<p>Output Message : {{msg}}</p>
+<p>StatusCode: {{statusval}}</p>
+<p>Status: {{statustext}}</p>
+<p>Response Headers: {{headers}}</p>
+</div>
