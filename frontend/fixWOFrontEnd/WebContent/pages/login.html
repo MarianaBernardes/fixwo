@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="fixWO">
+<html>
  
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -14,51 +14,67 @@
   	<script src="../app.js"></script>
     <link href="../css/style.css" rel="stylesheet">
  
+ 	<script>
+ 	angular.module("loginapp", []).controller('loginCtrl', function($scope, $http) {
+ 	$scope.myData = null;
+	$scope.getLogin = function (txtUsuario,txtPassword) {
+		$http.get("http://localhost:8080/usuario").then(function (response) {
+      		var x=1;
+      		
+      		angular.forEach(response, function(item){
+                   if(item.login == txtUsuario){
+                   	if(item.hashSenha == txtPassword){
+      					window.location.assign("http://localhost/fixwoFrontEnd/WebContent/pages/index.html")
+      					x=0;
+      				}
+      				}
+      			})
+      		if(x == 1){
+      			//$scope.myData = "Dados incorretos";
+      		}
+  		},function(response) {
+      	//Second function handles error
+      	$scope.myData = "Não foi possível conectar ao servidor";
+  		});
+  		}
+	});
+ 	</script>
 </head>
  
-<body>
+<body ng-app="loginapp" ng-controller="loginCtrl">
  
-    <div class="container" ng-controller="controllerLogin">
+ 	
+    <div class="container">
      <br>
          <div class="row">
             <div class="col-md-4 col-md-offset-4">
               <div class="panel panel-default">
                   <div class="panel-heading">
                     <h3 class="panel-title">FixWO - Login</h3>
-                </div>
+                  </div>
                   <div class="panel-body">
                     <form  ng-submit="entrar()">
                         <fieldset>
                             <div class="form-group">
                               <input class="form-control" ng-model="txtUsuario" placeholder="Usuario" name="usuario" type="text" required>
-                          </div>
+                            </div>
                           <div class="form-group">
                               <input class="form-control" ng-model="txtPassword" placeholder="Password" name="password" type="password" value=""required>
                           </div>
                           <div class="row">
-                           <div class="col-md-6">
-                            <input class="btn btn-lg btn-info btn-block" type="submit" value="Entrar">
+                          <div class="col-md-6">
+                            <input type="button" value="Entrar" ng-click="getLogin(txtUsuario,txtPassword)" />
                            </div>
-                          </div>
+                           </div>
                         </fieldset>
                      </form>
                   </div>
               </div>
             </div>
           </div> 
-        
-        <div class="alert alert-warning alert-dismissible fade in" role="alert" ng-hide="alertaLoginErro">
-          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-          <strong>Erro!</strong> Os dados estão incorretos!
         </div>
-       
-		 <div class="alert alert-success alert-dismissible fade in" role="alert" ng-hide="alertaLoginCorrecto">
-          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-          
-          <strong>Bem vindo!</strong> {{rsJSON | json}}.
-        </div>
-    </div> 
- 
-   
+    </div>
+    <center><font color="red">{{myData}}</font></center>
+    <center><a href="cadastrarUsuario.html">Cadastrar Novo Usuário</a></center>
  
 </body></html>

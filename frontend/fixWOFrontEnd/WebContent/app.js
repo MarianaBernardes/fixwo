@@ -1,103 +1,81 @@
-var appLogin = angular.module('fixWOLogin', []);
-function controllerForm($scope, $http) {
-      $scope.rsJSON = [ ];
-      $scope.alertaLoginCorreto = true;
-      $scope.alertaLoginErro    = true;
-      $scope.entrar = function() {
-        consultarUsuario($http,$scope);
-      };
- }
-  
+var app3 = angular.module('fixQR', ['ngCordova']);
 
-  function consultarUsuario($http,$scope){
-    $http.post('login/index.php',{ usuario : $scope.txtUsuario , password : $scope.txtPassword })
-        .success(function(data) {
-           if (typeof(data.usuario) == "undefined"){
-             $scope.alertaLoginErro = false;   
-             $scope.alertaLoginCorreto = true;   
-             $scope.txtUsuario    = '';
-             $scope.Password = '';   
-           }else{
-             $scope.rsJSON = data.usuario;
-             $scope.alertaLoginCorreto = false;            
-             $scope.alertaLoginErro = true;   
-           }
-        })
-        .error(function(data) {
-            console.log('Error: ' + data);
-        });   
-        
-  }
+var app2 = angular.module('fixWOLogin', []);
 
-var app = angular.module('fixWO', ['jsonService','searchMapJsonService', 'searchLocalJsonService', 'ngRoute',
-                                   'fixWO.login', 'ngCordova']);
 
-app.controller('Main', function($scope, JsonService) {
-	  JsonService.get(function(data){
-	    $scope.estado = data.estado;
-	    $scope.cidades = data.cidades;
-	  });
-	});
+var app = angular.module('fixWO', ['ngRoute']);
 
-app.controller('Mapa', function($scope, SearchMapJsonService) {
+app.controller('Mapa', function($scope) {
 	SearchMapJsonService.get(function(search){
 	    $scope.searchQuery = search.searchQuery;
 	    $scope.locais = search.locais;
 	  });
 	});
 
-app.controller('OS', function($scope, SearchOSJsonService) {
-	SearchMapJsonService.get(function(data){
-	    $scope.allOS = data;
-	  });
+app.controller('Main', function($scope) {
+	
 	});
 
-app.controller('BuscaOS', function($scope, SearchOSJsonService, busca) {
+app.controller('OS', function($scope, $http) {
+ 	$scope.allOS = null;
+ 	$http.get("http://localhost:8080/ordemservico").then(function (response) {
+ 		$scope.allOS = response;
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
+});
+
+app.controller('BuscaOS', function($scope) {
 	SearchMapJsonService.get(function(data){
 		$scope.allOS=[];
 	    if(data.local == busca) $scope.allOS.push(data);
 	  });
 	});
 
-
-app.controller('FormCtrlUser', function ($scope, $http) {
-    
-    $scope.data = {
-        login: "default",
-        senha: "default",
-        nome: "default",
-        email: "default",
-        tipo: "default",
-        profile_foto: "default"
-    };
-    $scope.submitForm = function() {
-        console.log("Submetendo dados....");
-        $http.post('http://localhost:8080/usuario', JSON.stringify(data)).success(function(){/*callback*/});
-    };
-});
-
-app.controller('FormCtrlLocal', function ($scope, $http) {
-    
-    $scope.data = {
-        descricao: "default",
-        area: "default",
-        cliente: $scope.usuario.login,
-    };
-    $scope.submitForm = function() {
-        console.log("Submetendo dados....");
-        $http.post('http://localhost:8080/local', JSON.stringify(data)).success(function(){/*callback*/});
-    };
-    QRCode($scope, SearchLocalJsonService);
-});
-    
-
-app.controller('search', function(CommonService){
-	  $scope.goToResult = function(searchBoxValue){
-	    CommonService.value = searchBoxValue;
-	    // Redirect to result view
-	  };
+app2.controller('FormCtrlUser', function ($scope, $http) {
+	$scope.postdata = function (login,senha,nome,email,tipo1,tipo2,tipo3,tipo4) {
+	var data = {
+	login: login,
+	senha: senha,
+	nome: nome,
+	email: email,
+	tipo1: tipo1,
+	tipo2: tipo2,
+	tipo3: tipo3,
+	tipo4: tipo4,
+	ativo: 1
+	};
+	//Call the services
+	$http.post('http://localhost:8080/usuario', JSON.stringify(data)).then(function (response) {
+	if (response.data)
+	$scope.msg = "Post Data Submitted Successfully!";
+	}, function (response) {
+	$scope.msg = "Service not Exists";
 	});
+	window.location.assign("http://localhost/fixwoFrontEnd/WebContent/pages/login.html")
+	};
+});
 
+app.controller('postserviceCtrl', function ($scope, $http) {
+	$scope.descricao = null;
+	$scope.postdata = function (descricao) {
+	var data = {
+	descricao: descricao,
+	};
+	//Call the services
+	$http.post('http://posttestserver.com/post.php', JSON.stringify(data)).then(function (response) {
+	if (response.data)
+	$scope.msg = "Post Data Submitted Successfully!";
+	}, function (response) {
+	$scope.msg = "Service not Exists";
+	$scope.statusval = response.status;
+	$scope.statustext = response.statusText;
+	$scope.headers = response.headers();
+	});
+	};
+});
+    
 app.controller('pageRedirect', function ($location, $scope) {
     $scope.goTo = function (page) {
         $location.path('/' + page);
@@ -108,32 +86,69 @@ app.config(function($routeProvider) {
 	$routeProvider
     // Set defualt view of our app to home
      
-    // route for the home page
     .when('/', {
-        templateUrl : 'pages/homeCliente.html',
-        controller  : 'mainController'
+    	controller: 'Main',
+        templateUrl : 'pages/homeCliente.html'
+    })
+    
+    .when('/homeUser', {
+    	controller: 'Main',
+        templateUrl : 'pages/homeUser.html'
     })
 
-    // route for the about page
     .when('/reclamacoes', {
-        templateUrl : 'pages/listaReclamacoesCliente.html',
-        controller  : 'mainController'
+    	controller: 'Main',
+        templateUrl : 'pages/listaReclamacoesCliente.html'
     })
 
-    // route for the contact page
+    .when('/cadastrar', {
+    	controller: 'Main',
+        templateUrl : 'pages/cadastrarUsuario.html'
+    })
+
+	.when('/cadastrarLocal', {
+		controller: 'Main',
+        templateUrl : 'pages/cadastrarLocal.html'
+    })
+    
     .when('/mapa', {
-        templateUrl : 'pages/home.html',
-        controller  : 'mainController'
+    	controller: 'Main',
+        templateUrl : 'pages/mapa.html',
     })
-
-	.when('/qrcode', {
+    
+    .when('/OSListaCliente', {
+    	controller: 'Main',
+        templateUrl : 'pages/listaReclamacoesCliente.html',
+    })
+    
+    .when('/OSListaUSer', {
+    	controller: 'Main',
+        templateUrl : 'pages/listaReclamacoesUser.html',
+    })
+    
+    .when('/imprimirQR', {
+    	controller: 'Main',
         templateUrl : 'pages/imprimirQRCode.html',
-        controller  : 'mainController'
     })
-	
-	.when('/logout', {
-        templateUrl : 'pages/login.html',
-        controller  : 'mainController'
+    
+    .when('/OSCliente', {
+    	controller: 'Main',
+        templateUrl : 'pages/reclamacaoCliente.html',
+    })
+    
+    .when('/OSUser', {
+    	controller: 'Main',
+        templateUrl : 'pages/reclamacaoUser.html',
+    })
+    
+    .when('/buscaOSCliente', {
+    	controller: 'Main',
+        templateUrl : 'pages/buscaReclamacoesCliente.html',
+    })
+    
+    .when('/buscaOSUser', {
+    	controller: 'Main',
+        templateUrl : 'pages/buscaReclamacoesUser.html',
     });
 });
 
@@ -184,7 +199,7 @@ app.controller('imprimirQRCode', function ($scope, SearchLocalJsonService, QRCod
     }
 });
 
-app.directive('qrcode', ['$window', function($window) {
+app3.directive('qrcode', ['$window', function($window) {
 
     var canvas2D = !!$window.CanvasRenderingContext2D,
         levels = {
