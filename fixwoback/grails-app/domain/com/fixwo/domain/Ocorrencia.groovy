@@ -9,7 +9,7 @@ class Ocorrencia {
     String titulo
     String descricao
     int categoria
-    int status
+    String status = ""
     Usuario solicitante
     Byte fotos
     String lat
@@ -17,10 +17,10 @@ class Ocorrencia {
     Setor setor
     Local local
 
-	String feedback
-	String avaliacao
-	String tenancy
-	String replica
+	String feedback = ""
+	boolean avaliacao
+	String tenancy = ""
+	String replica = ""
 
 
     static hasMany = [area:Area]
@@ -31,9 +31,11 @@ class Ocorrencia {
         local (nullable:true, blank:true)
 		lon (nullable:true, blank:true)
 		lat(nullable:true, blank:true)
-        avaliacao (nullable:true, blank:true)
+        status (nullable:true, blank:true)
         feedback (nullable:true, blank:true)
         tenancy(nullable:true, blank:true)
+		replica(nullable:true, blank:true)
+		avaliacao(nullable:true, blank:true)
     } 
 
 }

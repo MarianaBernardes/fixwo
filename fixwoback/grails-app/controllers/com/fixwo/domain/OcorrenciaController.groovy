@@ -1,9 +1,13 @@
 package com.fixwo.domain
 
+import static org.springframework.http.HttpStatus.*
+
 import grails.transaction.Transactional
 import groovy.json.JsonSlurper;
 import com.easybpms.integration.grails.controller.ObservableRestfulController
-import grails.rest.*
+
+import com.easybpms.bd.Session
+import com.easybpms.codegen.AbstractContext
 
 class OcorrenciaController extends ObservableRestfulController {
 
@@ -16,7 +20,9 @@ class OcorrenciaController extends ObservableRestfulController {
    @Transactional(readOnly=false)
     def save(Ocorrencia ocorrencia) {
 			
-        if (ocorrencia == null) {
+		Session.setEntityManager(emanager)
+
+		if (ocorrencia == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
@@ -68,4 +74,9 @@ class OcorrenciaController extends ObservableRestfulController {
         }
 
     }
+	
+	def notifyObservers(arg) {
+		AbstractContext.getContext().notifyObservers(arg.getClass().getSimpleName(), arg)
+	}
+
 }
