@@ -20,17 +20,18 @@ class TarefaController {
 	static responseFormats=["json", "xml"]
 
 	TarefaController(){
-		System.out.println("criei o controller TarefaController")
+		//System.out.println("criei o controller TarefaController")
 	}
 
 	@Transactional(readOnly=false)
 	def index() {
-		System.out.println("entrei no index")
-		// RestfulController: def instance = createResource()
+		//System.out.println("entrei no index")
+		//Exemplo de passagem de parâmetro por GET na URL.
 		System.out.println("parametro: " + params.roger )
 		
 		Session.setEntityManager(emanager)
 		
+		//aqui será alterado para a função com restrições de busca pelo modelo de domínio (Ocorrencia), id do usuário e id do tenancy
 		respond CRUDActivity.readAll()
 		return
 	}
