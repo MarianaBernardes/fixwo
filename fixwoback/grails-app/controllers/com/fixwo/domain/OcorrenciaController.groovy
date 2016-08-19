@@ -36,8 +36,8 @@ class OcorrenciaController extends ObservableRestfulController {
 
        
         String urlWiki="http://api.wikimapia.org/?key=example&function=place.search&format=json"
-        String lat="&lat="+params.lat
-        String lon="&lon="+params.lon
+        String lat="&lat="+ocorrencia.lat
+        String lon="&lon="+ocorrencia.lon
 
         urlWiki = urlWiki + lat + lon
 
