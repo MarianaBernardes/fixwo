@@ -2,3 +2,4 @@ target
 .metadata
 /fixwoback/.gradle
 /RemoteSystemsTempFiles
+/fixwoback/.settings
