@@ -1,5 +1,7 @@
 <div ng-controller="OS">
 <h1>Ordens de Serviço em sua área</h1>
+
+<center><input ng-model="busca_text" size=20><button type="button" ng-click="busca(busca_text)">Buscar</button></center>
 <table width="98%" border="1" id="tab_reclamacoes">
 <colgroup>
 <col class="tab_foto">
@@ -9,12 +11,14 @@
   <tr>
     <th scope="col">Foto</th>
     <th scope="col">Titulo</th>
+    <th scope="col"></th>
     
   </tr>
   <tr ng-repeat="os in allOS">
-    <td><img src="{{os.fotos}}" width="100%" height="100%"></td>
+    <!--<td><img data-ng-src="data:image/PNG;base64,{{os.fotos[1]}}" width="100%" height="100%"></td>  -->
+    <td><img data-ng-src="data:image/PNG;base64,{{os.fotos}}" width="100%" height="100%"></td>
     <td>{{os.descricao}}</td>
-    <td><a href="#reclamacaoCliente">Exibir mais detalhes</a></td>
+    <td><a href ng-click="redirOS({{os.id}})">Exibir mais detalhes / <br/>Responder</a></td>
   </tr>
 </table>
 </div>

@@ -1,14 +1,22 @@
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title>Cadastrar Local</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<link href="../css/style.css" rel="stylesheet">
+	<script src="../app.js"></script>
 </head>
 <h1>Cadastrar Local</h1>
  
-<div ng-app="postserviceApp" ng-controller="postserviceCtrl">
+<div ng-app="fixWO" ng-controller="LocalCtrl">
 <div>
 <h2>Nome do Local:</h2> <input ng-model="descricao">
 <div id="mapa1" style="width:80%; height:300px;">
 		<script type="text/javascript">
 			var map = L.map('mapa1');
+			L.map('map').setView([51.505, -0.09], 13);
 			L.control.scale().addTo(map);
 			
 			L.tileLayer('http://{s}{hash}.wikimapia.org/?x={x}&y={y}&zoom={z}&type=&lng=3', {
@@ -33,14 +41,15 @@
 				var myBounds = new L.LatLngBounds(myPoints);
 				map.fitBounds(myBounds);
 				
+				map.on('click', function (e) {
+   					postdata(e.latlng.lat,e.latlng.lng)
+				});
+				
 			}
         </script>
         </div>
 
 <input type="button" value="Enviar" ng-click="postdata(descricao)" /> <br/><br/>
+<script src="../app.js"></script>
 </div>
-<p>Output Message : {{msg}}</p>
-<p>StatusCode: {{statusval}}</p>
-<p>Status: {{statustext}}</p>
-<p>Response Headers: {{headers}}</p>
 </div>

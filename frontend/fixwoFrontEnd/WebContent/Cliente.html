@@ -1,0 +1,46 @@
+<!doctype html>
+<html ng-app="fixWO">
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<meta charset="utf-8">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+
+      </head>
+<body>
+	
+	 <header>
+            <nav class="navbar navbar-default">
+            <div class="container">
+                <table id="menu" width="100%">
+    
+				    <colgroup>
+				    <col class="menu_profile">
+				    <col class="menu_listareclamacoes">
+				    <col class="menu_mapa">
+				    <col class="menu_imprimirqr">
+				    <col class="menu_logout">
+				    </colgroup>
+						<tr>
+							<td><a href="#"> Home</a></td>
+							<td><a href="#reclamacoes">Reclamações</a></td>
+							<td><a href="#mapa">Minha Área</a></td>
+							<td><a href="pages/imprimirQRCode.html" target="_blank">QR Code</a></td>
+							<!--  <td><input ng-model="busca_text" size=20><button type="button" ng-click="busca(busca_text)">Buscar</button></td>
+                            --><td><a href="index.html">Logout</a></td>
+						</tr>
+				</table>
+            </div>
+            </nav>
+        </header>
+        
+        
+         <!-- MAIN CONTENT AND INJECTED VIEWS -->
+         <div ng-view></div>
+
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+  <script src="http://code.angularjs.org/1.2.1/angular-route.min.js"></script>
+  <script src="app.js"></script>
+        </body>
+        </html>

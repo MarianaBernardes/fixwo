@@ -1,0 +1,26 @@
+<div ng-controller="AtividadesTriador">
+<h1>Ordens de Serviço em sua área</h1>
+<table width="98%" border="1" id="tab_reclamacoes">
+<colgroup>
+<col class="tab_ativ">
+<col class="tab_tipo">
+<col class="tab_url">
+</colgroup>
+  <tr>
+    <th scope="col">Atividade</th>
+    <th scope="col">Tipo</th>
+    <th scope="col">URL</th>
+    
+  </tr>
+  <tr ng-repeat="ativ in atividades">
+    <td>{{ativ.atividade}}</td>
+    <td>{{ativ.tipo}}</td>
+    <td><select ng-model="setor" ng-change="changedValue(setor)" data-ng-options="setor.nome for setor in setores">
+	    		<option value="">Selecione um Setor</option>
+			</select></td>
+    <td><button type="button" ng-click="defResp(setor,ativ)">Definir Setor Responsável</button></td>
+  </tr>
+</table>
+
+<a href="#cadastrarSetor"><h2>Cadastrar Novo Setor</h2></a>
+</div>

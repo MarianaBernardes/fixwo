@@ -1,32 +1,79 @@
-<html>
-<body ng-app="fixQR"><div>
-	
-    	<h1>Imprimir QR Codes</h1>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='http://fonts.googleapis.com/css?family=Titillium+Web:200,300' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+  <link href="../css/style.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Imprimir QR</title>
+</head>
+
+<body class="container" ng-app="adaptiveApp">
+
+  <div ng-controller="AdaptiveCtrl">
+
+  <div class="body">
+  
+  <h1>Imprimir QR Codes</h1>
     	
     	<h2>Escolha o Local:</h2>
-    	<div ng-controller="imprimirQRCode">
+    	<div>
 	    	<select ng-model="localQR" ng-change="changedValue(localQR)" data-ng-options="local.nome for local in data">
-	    		<option value=""></option>
+	    		<option value="">Selecione um local</option>
 			</select>
 	    	
 	    </div>    
         <button type="button" ng-click="printIt()">Gerar PDF</button>
         
-    	<a href="#cadastrarLocal"><h2>Cadastrar Novo Local</h2></a>
-	
- 		<div  id="printArea">
+    	<a href="cadastrarLocal.html"><h2>Cadastrar Novo Local</h2></a>
+
+    <div  id="printArea">
 			<h1> Encotrou um problema neste local?
-			</br>Nos informe através do aplicativo FixWO,
+			</br>Nos informe atravÃ©s do aplicativo FixWO,
 			</br>escaneando o QRCode abaixo</h1>
-			<qrcode version="5" error-correction-level="M" size="300" data="fixwo://sadsad" href="fixwo://sadsad"></qrcode>
-			</div>
-    
-    
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
-  <script src="//monospaced.github.io/bower-qrcode-generator/js/qrcode.js"></script>
-  <script src="//monospaced.github.io/bower-qrcode-generator/js/qrcode_UTF8.js"></script>
-  <script src="../qrcode.js"></script><script src="../qrcode.js"></script>
-  <script src="../app.js"></script>
- </div>
- </body>
- </html>
+    <p>
+      <qr text="qrcodeString" type-number="typeNumber" correction-level="correctionLevel" size="size" input-mode="inputMode" image="image"></qr>
+    </p>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.14/angular.min.js"></script>
+<script src="../lib/qrcode.js"></script>
+<script src="../src/angular-qr.js"></script>
+
+<script>
+angular.module('adaptiveApp', ['ja.qr']).
+
+controller('AdaptiveCtrl', function ($scope) {
+  
+  $http.get("http://localhost:8080/local").then(function (response) {
+ 		 		
+ 		$scope.data = response;
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
+
+  $scope.changedValue=function(item){
+    	$scope.qrcodeString = 'fixwo://'+item.id;
+    }    
+  
+  $scope.printIt = function(){
+  	   var table = document.getElementById('printArea').innerHTML;
+  	   var myWindow = $window.open('', '', 'width=800, height=600');
+  	   myWindow.document.write(table);
+  	   myWindow.print();
+    }
+  
+  $scope.qrcodeString = 'fixwo://';
+  $scope.size = 250;
+  $scope.correctionLevel = '';
+  $scope.typeNumber = 0;
+  $scope.inputMode = '';
+  $scope.image = true;
+});
+</script>
+</body>
+</html>

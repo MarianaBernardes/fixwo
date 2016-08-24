@@ -1,0 +1,22 @@
+<link href="../css/style.css" rel="stylesheet">
+<div ng-controller="Atividades">
+<h1>Atividades</h1>
+<table width="98%" border="1" id="tab_reclamacoes">
+<colgroup>
+<col class="tab_ativ">
+<col class="tab_tipo">
+<col class="tab_url">
+</colgroup>
+  <tr>
+    <th scope="col">Atividade</th>
+    <th scope="col">Tipo</th>
+    <th scope="col">URL</th>
+    
+  </tr>
+  <tr ng-repeat="ativ in atividades">
+    <td>Ordem de Serviço: {{ativ.descricao}}</td>
+    <td>{{ativ.tipo}}</td>
+    <td><a href="redirOS({{ativ.id}})">Realizar tarefa</a></td>
+  </tr>
+</table>
+</div>

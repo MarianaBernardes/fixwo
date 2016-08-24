@@ -1,47 +1,105 @@
-<!doctype html>
-<html ng-app="fixWO">
+<!DOCTYPE html>
+<html>
+ 
 <head>
-<link rel="stylesheet" type="text/css" href="css/style.css"/>
-<meta charset="utf-8">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
-
-      </head>
-<body>
-	
-	 <header>
-            <nav class="navbar navbar-default">
-            <div class="container">
-                <table id="menu" width="100%">
-    
-				    <colgroup>
-				    <col class="menu_profile">
-				    <col class="menu_listareclamacoes">
-				    <col class="menu_mapa">
-				    <col class="menu_imprimirqr">
-				    <col class="menu_busca">
-				    <col class="menu_logout">
-				    </colgroup>
-						<tr>
-							<td><a href="#"> Home</a></td>
-							<td><a href="#reclamacoes">Reclamações</a></td>
-							<td><a href="#mapa">Minha Área</a></td>
-							<td><a href="#imprimirQR">QR Code</a></td>
-							<td><input ng-model="busca" size=20><input type="button" value="Buscar" /></td>
-                            <td><a href="#logout">Logout</a></td>
-						</tr>
-				</table>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ 
+    <title>FixWO</title>
+ 
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+ 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+ 	<script src="http://code.angularjs.org/1.0.3/angular-resource.min.js"></script>
+  	<script src="app.js"></script>
+    <link href="css/style.css" rel="stylesheet">
+ 	
+ 	<script>
+ 	angular.module("loginapp", []).controller('loginCtrl', function($scope, $http) {
+ 		$scope.myData = null;
+	$scope.getLogin = function (txtUsuario,txtPassword) {
+		$http.get("http://localhost:8080/usuario").then(function (response) {
+      		var x=1;
+      		
+      		angular.forEach(response, function(item){
+                   if(item.login == txtUsuario){
+                   	if(item.hashSenha == txtPassword){
+                   		clienteIDService.setID(item.id);
+                   		if(1 in item.grupo){
+                   			window.location.assign("http://localhost/fixwoFrontEnd/WebContent/User.html")
+      						x=0;
+      					}else if(2 in item.grupo){
+      						if(3 in item.grupo){
+      							window.location.assign("http://localhost/fixwoFrontEnd/WebContent/CliTriador.html")
+      							x=0;
+      						}
+      						else if(4 in item.grupo){
+      							window.location.assign("http://localhost/fixwoFrontEnd/WebContent/CliResponsavel.html")
+      							x=0;
+      						}
+      						else{
+								window.location.assign("http://localhost/fixwoFrontEnd/WebContent/Cliente.html")
+      							x=0;      						
+      						}
+      					}else if(3 in item.grupo){
+      							window.location.assign("http://localhost/fixwoFrontEnd/WebContent/pages/atividadesTriador2.html")
+      							x=0;
+      					}
+      					else if(4 in item.grupo){
+      						window.location.assign("http://localhost/fixwoFrontEnd/WebContent/pages/atividades2.html")
+      						x=0;
+      					}else{
+      						window.location.assign("http://localhost/fixwoFrontEnd/WebContent/Cliente.html")
+      						x=0;
+      					}
+      				 }
+      				}
+      			});
+      		if(x == 1){
+      			//$scope.myData = "Dados incorretos";
+      		}
+  		},function(response) {
+      	//Second function handles error
+      	$scope.myData = "Não foi possível conectar ao servidor";
+  		});
+  		};
+	});
+ 	</script>
+ 	
+</head>
+ 
+<body ng-app="loginapp" ng-controller="loginCtrl">
+ 
+ 	
+    <div class="container">
+     <br>
+         <div class="row">	
+            <div class="col-md-4 col-md-offset-4">
+              <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">FixWO - Login</h3>
+                  </div>
+                  <div class="panel-body">
+                    <form  ng-submit="entrar()">
+                        <fieldset>
+                            <div class="form-group">
+                              <input class="form-control" ng-model="txtUsuario" placeholder="Usuario" name="usuario" type="text" required>
+                            </div>
+                          <div class="form-group">
+                              <input class="form-control" ng-model="txtPassword" placeholder="Password" name="password" type="password" value=""required>
+                          </div>
+                          <div class="row">
+                          <div class="col-md-6">
+                            <input type="button" value="Entrar" ng-click="getLogin(txtUsuario,txtPassword)" />
+                           </div>
+                           </div>
+                        </fieldset>
+                     </form>
+                  </div>
+              </div>
             </div>
-            </nav>
-        </header>
-        
-        
-         <!-- MAIN CONTENT AND INJECTED VIEWS -->
-         <div ng-view></div>
-
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-  <script src="http://code.angularjs.org/1.2.1/angular-route.min.js"></script>
-  <script src="app.js"></script>
-        </body>
-        </html>
+          </div> 
+        </div>
+    <center><font color="red">{{myData}}</font></center>
+    <center><a href="pages/cadastrarUsuario.html">Cadastrar Novo Usuário</a></center>
+ <script src="app.js"></script>
+</body></html>

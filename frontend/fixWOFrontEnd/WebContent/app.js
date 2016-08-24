@@ -1,9 +1,43 @@
-var app3 = angular.module('fixQR', ['ngCordova']);
-
 var app2 = angular.module('fixWOLogin', []);
 
-
 var app = angular.module('fixWO', ['ngRoute']);
+
+app.service('clienteIDService', function() {
+	  var clienteID = null;
+
+	  var setID = function(newObj) {
+	      clienteID = newObj;
+	  };
+
+	  var getID = function(){
+	      return clienteID;
+	  };
+
+	  return {
+	    setID: setID,
+	    getID: getID
+	  };
+
+	});
+
+app.service('osIDService', function() {
+	  var osID = null;
+
+	  var setOSID = function(newObj) {
+	      osID = newObj;
+	  };
+
+	  var getOSID = function(){
+	      return osID;
+	  };
+
+	  return {
+	    setOSID: setOSID,
+	    getOSID: getOSID
+	  };
+
+	});
+
 
 app.controller('Mapa', function($scope) {
 	SearchMapJsonService.get(function(search){
@@ -16,36 +50,312 @@ app.controller('Main', function($scope) {
 	
 	});
 
-app.controller('OS', function($scope, $http) {
- 	$scope.allOS = null;
- 	$http.get("http://localhost:8080/ordemservico").then(function (response) {
- 		$scope.allOS = response;
- 	},function(response) {
- 		      //Second function handles error
- 		      $scope.myData = "Something went wrong";
- 	});
-});
-
-app.controller('BuscaOS', function($scope) {
-	SearchMapJsonService.get(function(data){
-		$scope.allOS=[];
-	    if(data.local == busca) $scope.allOS.push(data);
-	  });
+app.controller('loginCtrl', function($scope, $http, clienteIDService) {
+ 	$scope.myData = null;
+	$scope.getLogin = function (txtUsuario,txtPassword) {
+		$http.get("http://localhost:8080/usuario").then(function (response) {
+      		var x=1;
+      		
+      		angular.forEach(response, function(item){
+                   if(item.login == txtUsuario){
+                   	if(item.hashSenha == txtPassword){
+                   		clienteIDService.setID(item.id);
+                   		if(1 in item.grupo){
+                   			window.location.assign("http://localhost/fixwoFrontEnd/WebContent/User.html")
+      						x=0;
+      					}else if(2 in item.grupo){
+      						if(3 in item.grupo){
+      							window.location.assign("http://localhost/fixwoFrontEnd/WebContent/CliTriador.html")
+      							x=0;
+      						}
+      						else if(4 in item.grupo){
+      							window.location.assign("http://localhost/fixwoFrontEnd/WebContent/CliResponsavel.html")
+      							x=0;
+      						}
+      						else{
+								window.location.assign("http://localhost/fixwoFrontEnd/WebContent/Cliente.html")
+      							x=0;      						
+      						}
+      					}else if(3 in item.grupo){
+      							window.location.assign("http://localhost/fixwoFrontEnd/WebContent/pages/atividadesTriador2.html")
+      							x=0;
+      					}
+      					else if(4 in item.grupo){
+      						window.location.assign("http://localhost/fixwoFrontEnd/WebContent/pages/atividades2.html")
+      						x=0;
+      					}else{
+      						window.location.assign("http://localhost/fixwoFrontEnd/WebContent/Cliente.html")
+      						x=0;
+      					}
+      				 }
+      				}
+      			});
+      		if(x == 1){
+      			//$scope.myData = "Dados incorretos";
+      		}
+  		},function(response) {
+      	//Second function handles error
+      	$scope.myData = "Não foi possível conectar ao servidor";
+  		});
+  		};
 	});
+
 
 app2.controller('FormCtrlUser', function ($scope, $http) {
 	$scope.postdata = function (login,senha,nome,email,tipo1,tipo2,tipo3,tipo4) {
-	var data = {
-	login: login,
-	senha: senha,
-	nome: nome,
-	email: email,
-	tipo1: tipo1,
-	tipo2: tipo2,
-	tipo3: tipo3,
-	tipo4: tipo4,
-	ativo: 1
-	};
+	if(tipo1!='' && tipo2!='' && tipo3!='' && tipo4!=''){
+		var data = {
+				login: login,
+				senha: senha,
+				nome: nome,
+				email: email,
+				grupo: [
+				        {
+				        	id: tipo1
+				        },
+				        {
+				        	id: tipo2
+				        },
+				        {
+				        	id: tipo3
+				        },
+				        {
+				        	id: tipo4
+				        }
+				],
+				ativo: 1
+				};
+		}else if(tipo1!='' && tipo2!='' && tipo3!='' && tipo4==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo1
+					        },
+					        {
+					        	id: tipo2
+					        },
+					        {
+					        	id: tipo3
+					        }
+					],
+					ativo: 1
+				};
+		}else if(tipo1!='' && tipo2=='' && tipo3!='' && tipo4==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo1
+					        },
+					        {
+					        	id: tipo3
+					        },
+					        {
+					        	id: tipo4
+					        }
+					],
+					ativo: 1
+				};
+		}else if(tipo1!='' && tipo2!='' && tipo3=='' && tipo4==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo1
+					        },
+					        {
+					        	id: tipo2
+					        },
+					        {
+					        	id: tipo4
+					        }
+					],
+					ativo: 1
+				};
+		}else if(tipo1!='' && tipo2!='' && tipo3=='' && tipo4==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo1
+					        },
+					        {
+					        	id: tipo2
+					        }
+					      
+					],
+					ativo: 1
+				};
+		}else if(tipo1!='' && tipo3!='' && tipo2=='' && tipo4==''){
+				var data = {
+						login: login,
+						senha: senha,
+						nome: nome,
+						email: email,
+						grupo: [
+						        {
+						        	id: tipo1
+						        },
+						        {
+						        	id: tipo3
+						        }
+						      
+						],
+						ativo: 1
+				};
+		}else if(tipo1!='' && tipo4!='' && tipo2=='' && tipo3==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo1
+					        },
+					        {
+					        	id: tipo4
+					        }
+					      
+					],
+					ativo: 1
+				};
+		}else if(tipo1!='' && tipo2=='' && tipo3=='' && tipo4==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo1
+					        }
+					],
+					ativo: 1
+				};
+		}else if(tipo2!='' && tipo4!='' && tipo3=='' && tipo1==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo2
+					        },
+					        {
+					        	id: tipo4
+					        }
+					],
+					ativo: 1
+				};
+		}else if(tipo2!='' && tipo3!='' && tipo4=='' && tipo1==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo2
+					        },
+					        {
+					        	id: tipo3
+					        }
+					],
+					ativo: 1
+				};
+		}else if(tipo2!='' && tipo3!='' && tipo4!='' && tipo1==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo2
+					        },
+					        {
+					        	id: tipo3
+					        },
+					        {
+					        	id: tipo4
+					        }
+					],
+					ativo: 1
+				};
+		}else if(tipo2!='' && tipo3=='' && tipo4=='' && tipo1==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo2
+					        }
+					],
+					ativo: 1
+				};
+		}else if(tipo3!='' && tipo4!='' && tipo2=='' && tipo1==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo3
+					        },
+					        {
+					        	id: tipo4
+					        }
+					],
+					ativo: 1
+				};
+		}else if(tipo3!='' && tipo4=='' && tipo2=='' && tipo1==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo3
+					        }
+					],
+					ativo: 1
+				};
+		}
+		else if(tipo3=='' && tipo4!='' && tipo2=='' && tipo1==''){
+			var data = {
+					login: login,
+					senha: senha,
+					nome: nome,
+					email: email,
+					grupo: [
+					        {
+					        	id: tipo4
+					        }
+					],
+					ativo: 1
+				};
+		}
+	
+	
 	//Call the services
 	$http.post('http://localhost:8080/usuario', JSON.stringify(data)).then(function (response) {
 	if (response.data)
@@ -53,8 +363,22 @@ app2.controller('FormCtrlUser', function ($scope, $http) {
 	}, function (response) {
 	$scope.msg = "Service not Exists";
 	});
+	
+	if(tipo2!=''){
+		var data2 = {
+				nome: nome
+		};
+		
+		$http.post('http://localhost:8080/cliente', JSON.stringify(data2)).then(function (response) {
+			if (response.data)
+			$scope.msg = "Post Data Submitted Successfully!";
+			}, function (response) {
+			$scope.msg = "Service not Exists";
+			});
+	}
+
 	window.location.assign("http://localhost/fixwoFrontEnd/WebContent/pages/login.html")
-	};
+		};
 });
 
 app.controller('postserviceCtrl', function ($scope, $http) {
@@ -88,27 +412,22 @@ app.config(function($routeProvider) {
      
     .when('/', {
     	controller: 'Main',
-        templateUrl : 'pages/homeCliente.html'
+        templateUrl : 'pages/HomeCliente.html'
     })
     
     .when('/homeUser', {
     	controller: 'Main',
-        templateUrl : 'pages/homeUser.html'
+        templateUrl : 'pages/HomeUser.html'
     })
-
-    .when('/reclamacoes', {
+    
+    .when('/homeCliTriador', {
     	controller: 'Main',
-        templateUrl : 'pages/listaReclamacoesCliente.html'
+        templateUrl : 'pages/HomeCliTriador.html'
     })
-
-    .when('/cadastrar', {
+    
+    .when('/homeCliResponsavel', {
     	controller: 'Main',
-        templateUrl : 'pages/cadastrarUsuario.html'
-    })
-
-	.when('/cadastrarLocal', {
-		controller: 'Main',
-        templateUrl : 'pages/cadastrarLocal.html'
+        templateUrl : 'pages/HomeCliResponsavel.html'
     })
     
     .when('/mapa', {
@@ -116,41 +435,42 @@ app.config(function($routeProvider) {
         templateUrl : 'pages/mapa.html',
     })
     
-    .when('/OSListaCliente', {
-    	controller: 'Main',
+    .when('/reclamacoes', {
+    	controller: 'OS',
         templateUrl : 'pages/listaReclamacoesCliente.html',
     })
     
-    .when('/OSListaUSer', {
-    	controller: 'Main',
-        templateUrl : 'pages/listaReclamacoesUser.html',
+    .when('/reclamacoesUser', {
+    	controller: 'OSUser',
+        templateUrl : 'pages/listaReclamacoesUser.html'
     })
     
-    .when('/imprimirQR', {
-    	controller: 'Main',
-        templateUrl : 'pages/imprimirQRCode.html',
-    })
-    
-    .when('/OSCliente', {
-    	controller: 'Main',
+    .when('/reclamacaoCliente', {
+    	controller: 'Reclamacao',
         templateUrl : 'pages/reclamacaoCliente.html',
     })
     
-    .when('/OSUser', {
-    	controller: 'Main',
+    .when('/reclamacaoUser', {
+    	controller: 'ReclamacaoUser',
         templateUrl : 'pages/reclamacaoUser.html',
+    })
+    
+    .when('/atividadesTriador', {
+    	controller: 'AtividadesTriador',
+        templateUrl : 'pages/atividadesTriador.html'
+    })
+    
+    .when('/atividades', {
+    	controller: 'Atividades',
+        templateUrl : 'pages/atividades.html'
     })
     
     .when('/buscaOSCliente', {
     	controller: 'Main',
         templateUrl : 'pages/buscaReclamacoesCliente.html',
-    })
-    
-    .when('/buscaOSUser', {
-    	controller: 'Main',
-        templateUrl : 'pages/buscaReclamacoesUser.html',
     });
 });
+
 
 app.factory('QRCode', function() {
 	 var savedData = {}
@@ -199,186 +519,281 @@ app.controller('imprimirQRCode', function ($scope, SearchLocalJsonService, QRCod
     }
 });
 
-app3.directive('qrcode', ['$window', function($window) {
-
-    var canvas2D = !!$window.CanvasRenderingContext2D,
-        levels = {
-          'L': 'Low',
-          'M': 'Medium',
-          'Q': 'Quartile',
-          'H': 'High'
-        },
-        draw = function(context, qr, modules, tile) {
-          for (var row = 0; row < modules; row++) {
-            for (var col = 0; col < modules; col++) {
-              var w = (Math.ceil((col + 1) * tile) - Math.floor(col * tile)),
-                  h = (Math.ceil((row + 1) * tile) - Math.floor(row * tile));
-
-              context.fillStyle = qr.isDark(row, col) ? '#000' : '#fff';
-              context.fillRect(Math.round(col * tile),
-                               Math.round(row * tile), w, h);
+app.controller('OS', function($scope, $http, $location, clienteIDService, osIDService) {
+ 	$scope.allOS = null;
+ 	
+ 	var OSs = [];
+ 	var OSs2 = [];
+ 	var id = clienteIDService.getID();
+ 	
+ 	$http.get("http://localhost:8080/ordemservico").then(function (response) {
+ 		
+ 		angular.forEach(response, function(item){
+            if(item.cliente == id){
+            	OSs.push(item);
             }
-          }
-        };
+ 		});
+ 		$scope.allOS = OSs;
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
+ 	
+ 	$scope.redirOS = function (id) {
+ 		osIDService.setOSID(id);
+ 		$location.path('reclamacaoCliente');
+ 	};
+ 	
+ 	$scope.busca = function (value) {
+ 			var localID = 0;
+ 			$http.get("http://localhost:8080/local").then(function (response) {
+ 		 		
+ 		 		angular.forEach(response, function(item){
+ 		            if(item.descricao == value){
+ 		            	localID = item.id;
+ 		            }
+ 		 		});
+ 		 		
+ 		 		angular.forEach(OSs, function(item2){
+ 		            if(item2.local == localID){
+ 		            	OSs2.push(item2);
+ 		            }
+ 		 		});
+ 		 		
+ 		 		$scope.allOS = OSs2;
+ 		 	},function(response) {
+ 		 		      //Second function handles error
+ 		 		      $scope.myData = "Something went wrong";
+ 		 	});
+ 			
+ 	};
+ 	
+});
 
-    return {
-      restrict: 'E',
-      template: '<canvas class="qrcode"></canvas>',
-      link: function(scope, element, attrs) {
-        var domElement = element[0],
-            $canvas = element.find('canvas'),
-            canvas = $canvas[0],
-            context = canvas2D ? canvas.getContext('2d') : null,
-            download = 'download' in attrs,
-            href = attrs.href,
-            link = download || href ? document.createElement('a') : '',
-            trim = /^\s+|\s+$/g,
-            error,
-            version,
-            errorCorrectionLevel,
-            data,
-            size,
-            modules,
-            tile,
-            qr,
-            $img,
-            setVersion = function(value) {
-              version = Math.max(1, Math.min(parseInt(value, 10), 10)) || 4;
-            },
-            setErrorCorrectionLevel = function(value) {
-              errorCorrectionLevel = value in levels ? value : 'M';
-            },
-            setData = function(value) {
-              if (!value) {
-                return;
-              }
+app.controller('OSUSer', function($scope, $http, $location, clienteIDService, osIDService) {
+ 	$scope.allOS = null;
+ 	
+ 	var OSs = [];
+ 	var id = clienteIDService.getID();
+ 	
+ 	$http.get("http://localhost:8080/ordemservico").then(function (response) {
+ 		
+ 		angular.forEach(response, function(item){
+            if(item.cliente == id){
+            	OSs.push(item);
+            }
+ 		});
+ 		$scope.allOS = OSs;
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
+ 	
+ 	$scope.redirOS = function (id) {
+ 		osIDService.setOSID(id);
+ 		$location.path('/reclamacaoUser');
+ 	};
+ 	
+ 	$scope.busca = function (value) {
+			var localID = 0;
+			$http.get("http://localhost:8080/local").then(function (response) {
+		 		
+		 		angular.forEach(response, function(item){
+		            if(item.descricao == value){
+		            	localID = item.id;
+		            }
+		 		});
+		 		
+		 		angular.forEach(OSs, function(item2){
+		            if(item2.local == localID){
+		            	OSs2.push(item2);
+		            }
+		 		});
+		 		
+		 		$scope.allOS = OSs2;
+		 	},function(response) {
+		 		      //Second function handles error
+		 		      $scope.myData = "Something went wrong";
+		 	});
+			
+	};
+ 	
+});
 
-              data = value.replace(trim, '');
-              qr = qrcode(version, errorCorrectionLevel);
-              qr.addData(data);
+app.controller('Reclamacao', function($scope, $http, osIDService) {
+ 	$scope.allOS = null;
+ 	
+ 	var OSs = [];
+ 	var idOS = osIDService.getOSID();
+ 	var user = null;
+ 	var comentarios = [];
+ 	var user_comentarios = [];
+ 	
+ 	$http.get("http://localhost:8080/ordemservico").then(function (response) {
+ 		
+ 		angular.forEach(response, function(item){
+            if(item.id == idOS){
+            	OSs.push(item);
+            }
+ 		});
+ 		
+ 		$scope.results = OSs;
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
+ 	
+ 	$http.get("http://localhost:8080/comentario").then(function (response) {
+ 		
+ 		angular.forEach(response, function(item4){
+ 			angular.forEach(OSs, function(item5){
+ 				if(item4.ordemServico == item5.id){
+ 					comentarios.push(item4);
+ 				}
+ 			});
+ 		});
+ 		
+ 		$scope.comentarios = comentarios;
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
+ 	
+$http.get("http://localhost:8080/usuario").then(function (response) {
+ 		
+ 		angular.forEach(response, function(item2){
+ 			angular.forEach(OSs, function(item3){
+ 				if(item2.id == item3.solicitante){
+ 					user = item2.nome;
+ 				}
+ 			});
+ 			
+ 			angular.forEach(comentarios, function(item6){
+ 				if(item2.id == item6.usuario){
+ 					item6.usuario= item2.nome;
+ 					user_comentarios.push(item6);
+ 				}
+ 			});
+ 			
+ 		});
+ 		
+ 		$scope.usuario = user;
+ 		$scope.user_comentarios = user_comentarios;
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
 
-              try {
-                qr.make();
-              } catch(e) {
-                error = e.message;
-                return;
-              }
+	angular.forEach(response, function(item2){
+		angular.forEach(OSs, function(item3){
+			if(item2.id == item3.solicitante){
+				user = item2.nome;
+			}
+		});
+	});
+	
+	$scope.results = OSs;
+	$scope.usuario = OSs;
+ 	
+ 	$scope.putdata = function (comment) {
+ 		var data = {
+				status: Concluido,
+				avaliacao: true,
+				feedback: comment
+				};
+ 		
+ 		$http.put('http://localhost:8080/ordemservico/'+idOS, JSON.stringify(data)).then(function (response) {
+ 			if (response.data)
+ 				$scope.msg = "Post Data Submitted Successfully!";
+ 			}, function (response) {
+ 			$scope.msg = "Service not Exists";
+ 			});
+ 	};
 
-              error = false;
-              modules = qr.getModuleCount();
-            },
-            setSize = function(value) {
-              size = parseInt(value, 10) || modules * 2;
-              tile = size / modules;
-              canvas.width = canvas.height = size;
-            },
-            render = function() {
-              if (!qr) {
-                return;
-              }
+});
 
-              if (error) {
-                if (link) {
-                  link.removeAttribute('download');
-                  link.title = '';
-                  link.href = '#_';
-                }
-                if (!canvas2D) {
-                  domElement.innerHTML = '<img src width="' + size + '"' +
-                                         'height="' + size + '"' +
-                                         'class="qrcode">';
-                }
-                scope.$emit('qrcode:error', error);
-                return;
-              }
+app.controller('Atividades', function($scope, $http, $location, clienteIDService, osIDService) {
+ 	$scope.atividades = null;
+ 	
+ 	var OSs = [];
+ 	var Seto = [];
+ 	var id = clienteIDService.getID();
+ 	
+ 	$http.get("http://localhost:8080/setor").then(function (response) {
+ 		
+ 		angular.forEach(response, function(item){
+ 			Seto.push(item);
+ 		});
 
-              if (download) {
-                domElement.download = 'qrcode.png';
-                domElement.title = 'Download QR code';
-              }
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
+ 	
+ 	$http.get("http://localhost:8080/ordemservico").then(function (response) {
+ 		
+ 		angular.forEach(response, function(item){
+            if(item.avaliacao == false){
+            	angular.forEach(Seto, function(item2){
+         			if(item.setor == item2.id){
+         				if(item2.responsavelSetor == id){
+         					OSs.push(item);
+         				}
+         			}
+         		});
+            }
+ 		});
+ 		
+ 		$scope.atividades = OSs;
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
+ 	
+ 	$scope.redirOS = function (id) {
+ 		osIDService.setOSID(id);
+ 		$location.path('/reclamacaoCliente');
+ 	};
+});
 
-              if (canvas2D) {
-                draw(context, qr, modules, tile);
-
-                if (download) {
-                  domElement.href = canvas.toDataURL('image/png');
-                  return;
-                }
-              } else {
-                domElement.innerHTML = qr.createImgTag(tile, 0);
-                $img = element.find('img');
-                $img.addClass('qrcode');
-
-                if (download) {
-                  domElement.href = $img[0].src;
-                  return;
-                }
-              }
-
-              if (href) {
-                domElement.href = href;
-              }
-            };
-
-        if (link) {
-          link.className = 'qrcode-link';
-          $canvas.wrap(link);
-          domElement = link;
-        }
-
-        setVersion(attrs.version);
-        setErrorCorrectionLevel(attrs.errorCorrectionLevel);
-        setSize(attrs.size);
-
-        attrs.$observe('version', function(value) {
-          if (!value) {
-            return;
-          }
-
-          setVersion(value);
-          setData(data);
-          setSize(size);
-          render();
-        });
-
-        attrs.$observe('errorCorrectionLevel', function(value) {
-          if (!value) {
-            return;
-          }
-
-          setErrorCorrectionLevel(value);
-          setData(data);
-          setSize(size);
-          render();
-        });
-
-        attrs.$observe('data', function(value) {
-          if (!value) {
-            return;
-          }
-
-          setData(value);
-          setSize(size);
-          render();
-        });
-
-        attrs.$observe('size', function(value) {
-          if (!value) {
-            return;
-          }
-
-          setSize(value);
-          render();
-        });
-
-        attrs.$observe('href', function(value) {
-          if (!value) {
-            return;
-          }
-
-          href = value;
-          render();
-        });
-      }
-    };
-  }]);
+app.controller('AtividadesTrador', function($scope, $http, $location, clienteIDService, osIDService) {
+ 	$scope.atividades = null;
+ 	
+ 	var OSs = [];
+ 	var id = clienteIDService.getID();
+ 	
+ 	$http.get("http://localhost:8080/ordemservico").then(function (response) {
+ 		
+ 		angular.forEach(response, function(item){
+            if(item.avaliacao == false){
+            	OSs.push(item);
+            }
+ 		});
+ 		$scope.atividades = OSs;
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
+ 	
+ 	$http.get("http://localhost:8080/setor").then(function (response) {
+ 		
+ 		$scope.setores = response;
+ 	},function(response) {
+ 		      //Second function handles error
+ 		      $scope.myData = "Something went wrong";
+ 	});
+ 	
+ 	$scope.defResp = function (setor_value, ativ) {
+ 		var data = {
+				setor: setor_value.id,
+				};
+ 		
+ 		$http.put('http://localhost:8080/ordemservico/'+ativ.id, JSON.stringify(data)).then(function (response) {
+ 			if (response.data)
+ 				$scope.msg = "Post Data Submitted Successfully!";
+ 			}, function (response) {
+ 			$scope.msg = "Service not Exists";
+ 			});
+ 	};
+ 	
+});
