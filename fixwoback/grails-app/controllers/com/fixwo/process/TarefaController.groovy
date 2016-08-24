@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext
 import javax.sql.*
 
 import com.easybpms.bd.Session
-import com.easybpms.bd.dao.CRUDActivity
+import com.easybpms.bd.dao.CRUDActivityInstance
 
 class TarefaController {
 
@@ -25,15 +25,18 @@ class TarefaController {
 
 	@Transactional(readOnly=false)
 	def index() {
-		//System.out.println("entrei no index")
-		//Exemplo de passagem de parâmetro por GET na URL.
-		System.out.println("parametro: " + params.roger )
-		
+		//Exemplo de passagem de parâmetro por GET na URL: http://localhost:8080/fixwo/tarefa?tenancy=1&usuario=1
+		System.out.println("parametros: tenancy ==> " + params.tenancy + ", usuario ==> " + params.usuario)
+
 		Session.setEntityManager(emanager)
-		
+
 		//aqui será alterado para a função com restrições de busca pelo modelo de domínio (Ocorrencia), id do usuário e id do tenancy
-		respond CRUDActivity.readAll()
+		//params = tenancy , usuario
+		try {
+			respond CRUDActivityInstance.readActivityInstances(params.tenancy, params.usuario)
+		} catch (Exception e) {
+			render "Nenhuma atividade encontrada!"
+		}
 		return
 	}
-
 }
