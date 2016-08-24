@@ -11,7 +11,6 @@ class Ocorrencia {
     int categoria
     String status = ""
     Usuario solicitante
-    Byte fotos
     String lat
     String lon
     Setor setor
@@ -21,9 +20,9 @@ class Ocorrencia {
 	boolean avaliacao
 	String tenancy = ""
 	String replica = ""
+	
 
-
-    static hasMany = [area:Area]
+    static hasMany = [area:Area, foto:Foto]
     static belongsTo = [Area]
 	
     static constraints = {
