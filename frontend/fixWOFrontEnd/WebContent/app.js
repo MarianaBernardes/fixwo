@@ -756,7 +756,7 @@ app.controller('Atividades', function($scope, $http, $location, clienteIDService
  	};
 });
 
-app.controller('AtividadesTrador', function($scope, $http, $location, clienteIDService, osIDService) {
+app.controller('AtividadesTriador', function($scope, $http, $location, clienteIDService, osIDService) {
  	$scope.atividades = null;
  	
  	var OSs = [];
