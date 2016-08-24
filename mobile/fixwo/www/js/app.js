@@ -8,7 +8,7 @@
 
 var db = null;
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ngResource'])
 
 .run(function($ionicPlatform, $cordovaSQLite) {
   $ionicPlatform.ready(function() {
@@ -41,6 +41,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       'data TEXT, comentario TEXT, imagem TEXT)');
   });
 })
+
+.config(['$resourceProvider', function($resourceProvider) {
+  // Don't strip trailing slashes from calculated URLs
+  $resourceProvider.defaults.stripTrailingSlashes = false;
+}])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -98,21 +103,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           lat: null,
           lon: null,
           option: null
-        },
+      },
       templateUrl: 'templates/cadastrarOcorrencia.html',
       controller: 'CadastrarOcorrenciaCtrl'
-    })
-
-  .state('fotos', {
-      url: '/fotos',
-      templateUrl: 'templates/fotos.html',
-      controller: 'FotosCtrl'
-    })
-
-  .state('comentarios', {
-      url: '/comentarios',
-      templateUrl: 'templates/comentarios.html',
-      controller: 'ComentariosCtrl'
     })
 
   .state('login', {

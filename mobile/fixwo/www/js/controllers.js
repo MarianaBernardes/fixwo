@@ -1,5 +1,5 @@
-var teste = "ola";
-angular.module('starter.controllers', ['ionic','ngCordova'])
+angular.module('starter.controllers', ['ionic','ngCordova', 'ngResource'])
+
 
 .controller('NavBackButtonCtrl', function($scope, $ionicHistory) {
 	$scope.goBack = function() {
@@ -7,8 +7,10 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	};
 })
 
+
 .controller('TabCadastrarOcorrenciaCtrl',
-	function($scope, $state, $cordovaBarcodeScanner, $cordovaGeolocation) {
+	function($scope, $state, $cordovaBarcodeScanner, $cordovaGeolocation, ServiceGLCMonitor, 
+		ServiceFixwoHTTP, ServiceFixwoREST, $rootScope) {
 
 	$scope.readQrCode = function() {
 		// leio qrcode e em seguida
@@ -42,6 +44,14 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 	$scope.readGeolocation = function(){
 
+		var params = {
+			qrcode: null,
+			location: "curlat.toString()+', '+curlon.toString()",
+			lat: 'curlat',
+			lon: 'curlon',
+			option: 'geolocation'
+		};
+
 		// opções para utilização da geolocalização
 		var posOptions = {
 			timeout: 10000,
@@ -49,37 +59,60 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 		};		
 
 		// executando a recuperação da latitude e longitude
-		$cordovaGeolocation
-			.getCurrentPosition(posOptions)
-			.then(function (position) {
-				var curlat = position.coords.latitude;
-				var curlon = position.coords.longitude;
+		document.addEventListener("deviceready", onDeviceReady, false);
+		function onDeviceReady() {
+			$cordovaGeolocation
+				.getCurrentPosition(posOptions)
+				.then(function (position) {
+					var curlat = position.coords.latitude;
+					var curlon = position.coords.longitude;
 
-				// após recuperados, monta-se uma estrutura que guarda
-				// atributos importantes para tela de cadastro de ocorrência
-				var params = {
-					qrcode: null,
-					location: curlat.toString()+', '+curlon.toString(),
-					lat: curlat,
-					lon: curlon,
-					option: 'geolocation'
-				};
+					// após recuperados, monta-se uma estrutura que guarda
+					// atributos importantes para tela de cadastro de ocorrência
+					var params = {
+						qrcode: null,
+						location: curlat.toString()+', '+curlon.toString(),
+						lat: curlat,
+						lon: curlon,
+						option: 'geolocation'
+					};
 
-				// vai para a view de cadastrar ocorrencia,
-				// com parâmetros de geolocalização
-				$state.go('^.^.cadastrarOcorrencia', params);
-			},
-			function(err) {
-				alert("Ocorreu um erro: "+err.message);
-			});		
+					// vai para a view de cadastrar ocorrencia,
+					// com parâmetros de geolocalização
+					$state.go('^.^.cadastrarOcorrencia', params);
+				},
+				function(err) {
+					alert("Ocorreu um erro: "+err.message);
+				});
+			}
+			$state.go('^.^.cadastrarOcorrencia', params);
 	}
 
 })
 
-.controller('CadastrarOcorrenciaCtrl', function($scope, $state, $cordovaCamera) {
+
+.controller('CadastrarOcorrenciaCtrl', function($scope, $state, $cordovaCamera, 
+	ServiceFixwoHTTP, ServiceFixwoREST, $rootScope) {
 	// Recuperando informações do qrcode OU geolocalização
 
 	// será nulo se vier da geolocalização
+	$scope.ocorrencia = 
+	{
+		titulo:null,
+		descricao:null,
+		categoria:0,
+		status:null,
+		solicitante:$rootScope.usuario,
+		fotos: new Uint8ClampedArray(1024),
+		lat:$state.params.lat,
+		lon:$state.params.lon,
+		setor:null,
+		local:$state.params.qrcode,
+		feedback:null,
+		avaliacao:false,
+		tenancy:null,
+		replica:null
+	} 
 	$scope.qrcode 	= $state.params.qrcode;
 	// Será nulo se vier do qrcode
 	$scope.lon 			= $state.params.lon;
@@ -91,6 +124,29 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 	$scope.fotos = [];
 	$scope.fotosFileEntry = [];
+
+	$scope.resposta;
+
+	function testeHttp() {
+
+		var ola = 
+		{
+			nome: "Carlos",
+			idade: 22,
+			teste:true
+		}
+
+		ServiceGLCMonitor.getUsuario(JSON.stringify(ola))
+			.then(function(response){
+				$scope.resposta = response.data;
+			})
+			.catch(function(response) {
+				alert(response.data + response.status);
+        throw  error;
+			});
+
+		alert(JSON.stringify($scope.resposta));
+	}
 
 
 	function upload(fileEntry) {
@@ -186,7 +242,41 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 	    }).join(''));
 	}
 
+	function getBase64FromImageUrl(url) {
+    var img = new Image();
+
+    img.setAttribute('crossOrigin', 'anonymous');
+
+    img.onload = function () {
+        var canvas = document.createElement("canvas");
+        canvas.width =this.width;
+        canvas.height =this.height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(this, 0, 0);
+
+        var dataURL = canvas.toDataURL("image/png");
+
+        alert(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
+    };
+
+    img.src = url;
+}
+
 	$scope.goToCadastrarOcorrenciaState = function() {
+		ServiceFixwoHTTP.registrarOcorrencia($scope.ocorrencia)
+		.then(function(response){
+			$scope.resposta = response.data;
+		})
+		.catch(function(response) {
+			alert(response.data + response.status);
+      throw  error;
+		});
+		//ServiceFixwoREST.registrarOcorrencia($scope.ocorrencia);
+		if ($scope.resposta === undefined) {
+			alert("Sem conexão. Ocorrência cadastrada localmente.")
+		} 
+		alert($scope.resposta);
 		$state.go('^.tab.cadastrarOcorrencia');
 	};
 
@@ -194,66 +284,69 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 		//upload(fileEntry);
 		var cameraOptions = {
-	      quality: 80,
-	      destinationType: Camera.DestinationType.FILE_URI,
-	      sourceType: Camera.PictureSourceType.CAMERA,
-	      encodingType: Camera.EncodingType.JPEG,
-	      mediaType: Camera.MediaType.PICTURE,
-	      targetWidth: 800,
-	      targetHeight: 600,
-	      allowEdit: false,
-	      correctOrientation: true,
-	      saveToPhotoAlbum: true
-	    };
+	    quality: 80,
+	    destinationType: Camera.DestinationType.FILE_URI,
+	    sourceType: Camera.PictureSourceType.CAMERA,
+	    encodingType: Camera.EncodingType.JPEG,
+	    mediaType: Camera.MediaType.PICTURE,
+	    targetWidth: 800,
+	    targetHeight: 600,
+	    allowEdit: false,
+	    correctOrientation: true,
+	    saveToPhotoAlbum: false
+	  };
 
-	    document.addEventListener(
-	    	"deviceready",   
-	      	function () {
-	        	$cordovaCamera.getPicture(cameraOptions).then(	
-	        		//Recupera a URL da foto
-	        		function (imageUri) {
-	        			//alert(imageUri);
-	        			//Insere a url no vetor de urls 
-	          			$scope.fotos.push(imageUri);
-	        			//Acessa o sistema de arquivos de persistência
-	          			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
-	          				function (fs) {
+	  document.addEventListener(
+	  	"deviceready",   
+	     	function () {
+	       	$cordovaCamera.getPicture(cameraOptions).then(	
+	       		//Recupera a URL da foto
+	       		function (imageUri) {
+	       			//alert(imageUri);
+	       			//Insere a url no vetor de urls 
+	       			$scope.fotos.push(imageUri);
+	       			alert(imageUri.data);
+	       			alert(imageUri);
+	       			//alert(getBase64FromImageUrl(imageUri));
+	       			//Acessa o sistema de arquivos de persistência
+	       			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
+	     					function (fs) {
 								//alert('file system open: ' + fs);
 								//Converte a URL da imagem em um File Entry
 								window.resolveLocalFileSystemURL(imageUri, 
-								    function success(fileEntry) {
-								        //alert("got file: " + fileEntry.fullPath);
-								        console.log("got file: " + fileEntry.fullPath);
-								        //Copia a foto para o sistema de arquivos 
-								        //de persistência do aplicativo
-								        copyFileEntryTo(fileEntry, fs.root);
-								        //Recupera o FileEntry da foto persistida
-								        fs.root.getFile(fileEntry.name, 
+						    	function success(fileEntry) {
+								    //alert("got file: " + fileEntry.fullPath);
+								    console.log("got file: " + fileEntry.fullPath);
+								    //Copia a foto para o sistema de arquivos 
+								    //de persistência do aplicativo
+								    copyFileEntryTo(fileEntry, fs.root);
+								    //Recupera o FileEntry da foto persistida
+								    fs.root.getFile(fileEntry.name, 
 										{ create: true, exclusive: false }, 
-							    			function (newFileEntry) {
-							    				//alert(newFileEntry.name);
-							    				//Insere o FileEntry da foto persistida no
-							    				//vetor de FileEntry
-							    				$scope.fotosFileEntry.push(newFileEntry);
-							    			}, function fail(error) { 
-							    				alert(error.code); 
-							    			}
-							    		);
-								    }, function (error) {
-									    // If don't get the FileEntry (which may happen when testing
-									    // on some emulators), copy to a new FileEntry.
-									    alert(error.message);
-									    //createNewFileEntry(imgUri);
-								    }
+							    		function (newFileEntry) {
+							    		//alert(newFileEntry.name);
+							    		//Insere o FileEntry da foto persistida no
+							    		//vetor de FileEntry
+							    		$scope.fotosFileEntry.push(newFileEntry);
+							    		}, function fail(error) { 
+							    			alert(error.code); 
+							    		}
+							    	);
+								  }, function (error) {
+							    // If don't get the FileEntry (which may happen when testing
+							    // on some emulators), copy to a new FileEntry.
+							    alert(error.message);
+							    //createNewFileEntry(imgUri);
+							    }
 								);
 							}, function fail(error) { 
 								alert(error.code); 
 							}
 						);
 					}, function(error) {
-							alert(error.message);
-						}
-					)
+						alert(error.message);
+					}
+				)
 			}, false
 		);
 
@@ -357,7 +450,9 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 })
 
-.controller('ListarOcorrenciasCtrl', function($scope, $state, Ocorrencias) {
+
+.controller('ListarOcorrenciasCtrl', function($scope, $state, Ocorrencias, ServiceFixwoHTTP, 
+	ServiceFixwoREST, $rootScope) {
 
 	$scope.ocorrencias = Ocorrencias.all();
 
@@ -369,30 +464,40 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 
 })
 
-.controller('FotosCtrl', function($scope, $state) {
-	
-	$scope.goToComentariosState = function() {
-		$state.go('^.comentarios');
+
+
+
+.controller('LoginCtrl', function($scope, $state, ServiceFixwoHTTP, ServiceFixwoREST, $rootScope) {
+
+	$scope.usuario = 
+	{
+		nome: null, 
+		login:null, 
+		hashSenha: null,
+		email:null, 
+		cliente:null,
+		ativo:0
 	};
-
-})
-
-.controller('ComentariosCtrl', function($scope, $state) {
-
-	$scope.goToCadastrarOcorrenciaState = function() {
-		$state.go('^.tab.cadastrarOcorrencia');
-	};
-		
-})
-
-
-.controller('LoginCtrl', function($scope, $state) {
-
-	$scope.usuario = { nome: null, cpf:null, email:null, senha: null};
+	$scope.resposta;
 
 	$scope.login = function() {
+		$scope.usuario.login = $scope.usuario.email;
+		ServiceFixwoHTTP.getUsuario($scope.usuario)
+		.then(function(response){
+			$scope.resposta = JSON.parse(response.data);
+		})
+		.catch(function(response) {
+			alert(response.data + response.status);
+      throw  error;
+		});
+		//ServiceFixwoREST.getUsuario($scope.usuario);
 		console.log("nome: "+$scope.usuario.nome + ";cpf: "+$scope.usuario.cpf+
 			";email: "+$scope.usuario.email+";senha: "+$scope.usuario.senha);
+		if ($scope.resposta === undefined || !($scope.usuario.hashSenha === $scope.resposta.hashSenha)) {
+			alert("Senha ou email incorretos!");
+			//return;
+		}
+		$rootScope.usuario = $scope.usuario;
 		$state.go('^.tab.cadastrarOcorrencia');
 	};
 
@@ -402,19 +507,53 @@ angular.module('starter.controllers', ['ionic','ngCordova'])
 		
 })
 
-.controller('RegistrarCtrl', function($scope, $state) {
 
-	$scope.usuario = { nome: null, cpf:null, email:null, senha: null};
+.controller('RegistrarCtrl', function($scope, $state, ServiceFixwoHTTP, ServiceFixwoREST, $rootScope) {
+
+	$scope.usuario = 
+	{
+		nome: null, 
+		login:null, 
+		hashSenha: null,
+		email:null, 
+		cliente:null,
+		ativo:0
+	};
+	$scope.hashSenhaConfirmar;
+	$scope.resposta;
 
 	$scope.registrar = function() {
+		$scope.usuario.login = $scope.usuario.email;
+		if (!($scope.hashSenhaConfirmar === $scope.usuario.hashSenha)) {
+			alert("Senhas incompatíveis!");
+			//return;
+		}
+
+		ServiceFixwoHTTP.registrarUsuario($scope.usuario)
+		.then(function(response){
+			$scope.resposta = response.data;
+		})
+		.catch(function(response) {
+			alert(response.data + response.status);
+      throw  error;
+		});
+		//ServiceFixwoREST.registrarUsuario($scope.usuario);
 		console.log("nome: "+$scope.usuario.nome + ";cpf: "+$scope.usuario.cpf+
 			";email: "+$scope.usuario.email+";senha: "+$scope.usuario.senha);
+
+		if ($scope.resposta === undefined) {
+			alert("Falha!");
+			//return;
+		}
+		$rootScope.usuario = $scope.usuario;
 		$state.go('^.tab.cadastrarOcorrencia');
 	};
 		
 })
 
-.controller('DetalhesDaOcorrenciaCtrl', function($scope, $state, $stateParams, Ocorrencias) {
+
+.controller('DetalhesDaOcorrenciaCtrl', function($scope, $state, $stateParams, Ocorrencias, 
+	ServiceFixwoHTTP, ServiceFixwoREST, $rootScope) {
 	console.log($state.params.ocorrenciaId);
 	//alert($state.params.ocorrenciaId);
 	$scope.ocorrencia = Ocorrencias.get($state.params.ocorrenciaId);
