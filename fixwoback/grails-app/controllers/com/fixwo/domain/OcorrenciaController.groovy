@@ -6,7 +6,7 @@ import grails.transaction.Transactional
 import groovy.json.JsonSlurper;
 import com.easybpms.integration.grails.controller.ObservableRestfulController
 
-import com.easybpms.bd.Session
+import com.easybpms.db.Session
 import com.easybpms.codegen.AbstractContext
 
 class OcorrenciaController extends ObservableRestfulController {

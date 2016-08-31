@@ -5,9 +5,9 @@ import grails.rest.RestfulController
 import grails.transaction.Transactional
 import grails.web.http.HttpHeaders
 
-import com.easybpms.bd.CRUDException
-import com.easybpms.bd.Session
-import com.easybpms.bd.dao.CRUDUser
+import com.easybpms.db.CRUDException
+import com.easybpms.db.Session
+import com.easybpms.db.dao.CRUDUser
 import com.easybpms.codegen.AbstractContext
 import com.easybpms.integration.auth.UserImpl
 

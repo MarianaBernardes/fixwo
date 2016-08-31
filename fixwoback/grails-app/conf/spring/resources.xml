@@ -70,7 +70,7 @@
  	<property name="persistenceUnitName" value="com.easybpms.persistence.jpa"/>
   </bean>
 
-  <bean id="easyBpmsSession" class="com.easybpms.bd.Session">
+  <bean id="easyBpmsSession" class="com.easybpms.db.Session">
     <property name="entityManagerFactory" ref="easyBpmsEMF"/>
   </bean>
    
@@ -106,7 +106,7 @@
   
   <bean id="process" factory-method="newClassPathResource" class="org.kie.internal.io.ResourceFactory">
 	  <constructor-arg>
-    	<value>fixwo.bpmn2</value>
+    	<value>fixwoProcess.bpmn2</value>
   	  </constructor-arg>
   </bean>
 

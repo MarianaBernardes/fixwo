@@ -8,7 +8,7 @@ import grails.web.http.HttpHeaders
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
-import com.easybpms.bd.Session
+import com.easybpms.db.Session
 import com.easybpms.codegen.AbstractContext
 
 /**

@@ -2,7 +2,7 @@
 
 import grails.transaction.Transactional
 
-import com.easybpms.bd.Session
+import com.easybpms.db.Session
 import com.easybpms.codegen.AbstractContext
 
 class BootStrap {

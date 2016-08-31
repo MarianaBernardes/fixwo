@@ -9,8 +9,8 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 import javax.sql.*
 
-import com.easybpms.bd.Session
-import com.easybpms.bd.dao.CRUDActivityInstance
+import com.easybpms.db.Session
+import com.easybpms.db.dao.CRUDActivityInstance
 
 class TarefaController {
 

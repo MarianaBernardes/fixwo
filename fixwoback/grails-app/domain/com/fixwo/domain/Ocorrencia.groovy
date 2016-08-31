@@ -9,33 +9,34 @@ class Ocorrencia {
     String titulo
     String descricao
     int categoria
-    String status = ""
     Usuario solicitante
     Byte fotos
     String lat
     String lon
-    Setor setor
     Local local
 
-	String feedback = ""
+	
 	boolean avaliacao
+	boolean existeArea
 	String tenancy = ""
-	String replica = ""
+	String setor = ""
+	String status = ""
+	String feedback = ""
 
 
     static hasMany = [area:Area]
     static belongsTo = [Area]
 	
     static constraints = {
-        setor (nullable:true, blank:true)
         local (nullable:true, blank:true)
 		lon (nullable:true, blank:true)
 		lat(nullable:true, blank:true)
+		setor (nullable:true, blank:true)
         status (nullable:true, blank:true)
         feedback (nullable:true, blank:true)
         tenancy(nullable:true, blank:true)
-		replica(nullable:true, blank:true)
 		avaliacao(nullable:true, blank:true)
+		existeArea(nullable:true, blank:true)
     } 
 
 }
