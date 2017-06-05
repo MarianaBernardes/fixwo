@@ -3,3 +3,5 @@ target
 /fixwoback/.gradle
 /RemoteSystemsTempFiles
 /fixwoback/.settings
+fixwoback/.classpath
+fixwoback/.project
