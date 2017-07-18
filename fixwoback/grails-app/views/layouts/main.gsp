@@ -28,6 +28,7 @@
                         <asset:image src="grails-cupsonly-logo-white.svg"/>
                     </i> Grails
                 </a>
+                <a href='<c:url value="/logout" />'>Logout</a>
             </div>
             <div class="navbar-collapse collapse" aria-expanded="false" style="height: 0.8px;">
                 <ul class="nav navbar-nav navbar-right">

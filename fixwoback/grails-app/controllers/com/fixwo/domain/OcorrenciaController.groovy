@@ -2,12 +2,12 @@ package com.fixwo.domain
 
 import static org.springframework.http.HttpStatus.*
 
-import grails.transaction.Transactional
-import groovy.json.JsonSlurper;
+import com.easybpms.codegen.AbstractContext
+import com.easybpms.db.Session
 import com.easybpms.integration.grails.controller.ObservableRestfulController
 
-import com.easybpms.db.Session
-import com.easybpms.codegen.AbstractContext
+import grails.transaction.Transactional
+import groovy.json.JsonSlurper;
 
 class OcorrenciaController extends ObservableRestfulController {
 
@@ -17,6 +17,14 @@ class OcorrenciaController extends ObservableRestfulController {
 		super(Ocorrencia)
 	}
 
+	def index(){
+		render "ocorrencia"
+	}
+	
+	def index2(){
+		render "index2"
+	}
+	
    @Transactional(readOnly=false)
     def save(Ocorrencia ocorrencia) {
 			

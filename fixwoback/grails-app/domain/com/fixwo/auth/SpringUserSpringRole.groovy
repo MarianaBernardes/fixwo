@@ -1,0 +1,90 @@
+package com.fixwo.auth
+
+import grails.gorm.DetachedCriteria
+import grails.rest.Resource
+import groovy.transform.ToString
+
+import org.codehaus.groovy.util.HashCodeHelper
+import grails.compiler.GrailsCompileStatic
+
+@GrailsCompileStatic
+@ToString(cache=true, includeNames=true, includePackage=false)
+@Resource(uri="/grupousuario", readOnly=false, formats=["json","xml"])
+class SpringUserSpringRole implements Serializable {
+
+	private static final long serialVersionUID = 1
+
+	SpringUser springUser
+	SpringRole springRole
+
+	@Override
+	boolean equals(other) {
+		if (other instanceof SpringUserSpringRole) {
+			other.springUserId == springUser?.id && other.springRoleId == springRole?.id
+		}
+	}
+
+    @Override
+	int hashCode() {
+	    int hashCode = HashCodeHelper.initHash()
+        if (springUser) {
+            hashCode = HashCodeHelper.updateHash(hashCode, springUser.id)
+		}
+		if (springRole) {
+		    hashCode = HashCodeHelper.updateHash(hashCode, springRole.id)
+		}
+		hashCode
+	}
+
+	static SpringUserSpringRole get(long springUserId, long springRoleId) {
+		criteriaFor(springUserId, springRoleId).get()
+	}
+
+	static boolean exists(long springUserId, long springRoleId) {
+		criteriaFor(springUserId, springRoleId).count()
+	}
+
+	private static DetachedCriteria criteriaFor(long springUserId, long springRoleId) {
+		SpringUserSpringRole.where {
+			springUser == SpringUser.load(springUserId) &&
+			springRole == SpringRole.load(springRoleId)
+		}
+	}
+
+	static SpringUserSpringRole create(SpringUser springUser, SpringRole springRole, boolean flush = false) {
+		def instance = new SpringUserSpringRole(springUser: springUser, springRole: springRole)
+		instance.save(flush: flush)
+		instance
+	}
+
+	static boolean remove(SpringUser u, SpringRole r) {
+		if (u != null && r != null) {
+			SpringUserSpringRole.where { springUser == u && springRole == r }.deleteAll()
+		}
+	}
+
+	static int removeAll(SpringUser u) {
+		u == null ? 0 : SpringUserSpringRole.where { springUser == u }.deleteAll() as int
+	}
+
+	static int removeAll(SpringRole r) {
+		r == null ? 0 : SpringUserSpringRole.where { springRole == r }.deleteAll() as int
+	}
+
+	static constraints = {
+		springRole validator: { SpringRole r, SpringUserSpringRole ur ->
+			if (ur.springUser?.id) {
+				SpringUserSpringRole.withNewSession {
+					if (SpringUserSpringRole.exists(ur.springUser.id, r.id)) {
+						return ['userRole.exists']
+					}
+				}
+			}
+		}
+	}
+
+	static mapping = {
+		id composite: ['springUser', 'springRole']
+		version false
+	}
+}
