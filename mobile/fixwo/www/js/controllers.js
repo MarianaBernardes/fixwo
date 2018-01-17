@@ -95,7 +95,6 @@ angular.module('starter.controllers', ['ionic','ngCordova', 'ngResource'])
 	ServiceFixwoHTTP, ServiceFixwoREST, $rootScope) {
 	// Recuperando informações do qrcode OU geolocalização
 
-	// será nulo se vier da geolocalização
 	$scope.ocorrencia = 
 	{
 		titulo:null,
@@ -113,10 +112,14 @@ angular.module('starter.controllers', ['ionic','ngCordova', 'ngResource'])
 		tenancy:null,
 		replica:null
 	} 
+	
+	// será nulo se vier da geolocalização
 	$scope.qrcode 	= $state.params.qrcode;
+	
 	// Será nulo se vier do qrcode
 	$scope.lon 			= $state.params.lon;
 	$scope.lat			= $state.params.lat;
+	
 	// caso for qrcode, será uma string que representa o local
 	// caso for geolocalização, será a lat e long concatenadas
 	$scope.location = $state.params.location;
@@ -270,7 +273,7 @@ angular.module('starter.controllers', ['ionic','ngCordova', 'ngResource'])
 		})
 		.catch(function(response) {
 			alert(response.data + response.status);
-      throw  error;
+			throw  error;
 		});
 		//ServiceFixwoREST.registrarOcorrencia($scope.ocorrencia);
 		if ($scope.resposta === undefined) {
@@ -453,8 +456,8 @@ angular.module('starter.controllers', ['ionic','ngCordova', 'ngResource'])
 
 .controller('ListarOcorrenciasCtrl', function($scope, $state, Ocorrencias, ServiceFixwoHTTP, 
 	ServiceFixwoREST, $rootScope) {
-
-	$scope.ocorrencias = Ocorrencias.all();
+	alert(JSON.stringify($rootScope.usuario, null, 4));
+	//$scope.ocorrencias = Ocorrencias.all();
 
 	// $scope.detalhesDaOcorrencia = function(ocorrId) {
 	// 	console.log(ocorrId);
@@ -471,34 +474,21 @@ angular.module('starter.controllers', ['ionic','ngCordova', 'ngResource'])
 
 	$scope.usuario = 
 	{
-		nome: null, 
-		login:null, 
-		hashSenha: null,
-		email:null, 
-		cliente:null,
-		ativo:0
+		username:null, 
+		password:null
 	};
-	$scope.resposta;
 
 	$scope.login = function() {
-		$scope.usuario.login = $scope.usuario.email;
-		ServiceFixwoHTTP.getUsuario($scope.usuario)
-		.then(function(response){
-			$scope.resposta = JSON.parse(response.data);
+		//$scope.usuario.login = $scope.usuario.email;
+		ServiceFixwoREST.login($scope.usuario)
+		.then(function(result){
+			alert(JSON.stringify(result, null, 4));
+			$rootScope.usuario = result;
+			$state.go('^.tab.cadastrarOcorrencia');
 		})
-		.catch(function(response) {
-			alert(response.data + response.status);
-      throw  error;
-		});
-		//ServiceFixwoREST.getUsuario($scope.usuario);
-		console.log("nome: "+$scope.usuario.nome + ";cpf: "+$scope.usuario.cpf+
-			";email: "+$scope.usuario.email+";senha: "+$scope.usuario.senha);
-		if ($scope.resposta === undefined || !($scope.usuario.hashSenha === $scope.resposta.hashSenha)) {
+		.catch(function(){
 			alert("Senha ou email incorretos!");
-			//return;
-		}
-		$rootScope.usuario = $scope.usuario;
-		$state.go('^.tab.cadastrarOcorrencia');
+		});
 	};
 
 	$scope.registrar = function() {
@@ -513,32 +503,37 @@ angular.module('starter.controllers', ['ionic','ngCordova', 'ngResource'])
 	$scope.usuario = 
 	{
 		nome: null, 
-		login:null, 
-		hashSenha: null,
+		username:null,
+		//login:null, 
+		//hashSenha: null,
+		password:null,
 		email:null, 
-		cliente:null,
-		ativo:0
+		cliente:1,
+		accountExpired:false,
+		accountLocked:false,
+		passwordExpired:false
 	};
 	$scope.hashSenhaConfirmar;
 	$scope.resposta;
 
 	$scope.registrar = function() {
-		$scope.usuario.login = $scope.usuario.email;
-		if (!($scope.hashSenhaConfirmar === $scope.usuario.hashSenha)) {
+		//$scope.usuario.login = $scope.usuario.email;
+		if (!($scope.usuario.hashSenhaConfirmar === $scope.usuario.password)) {
 			alert("Senhas incompatíveis!");
 			//return;
 		}
 
-		ServiceFixwoHTTP.registrarUsuario($scope.usuario)
+		ServiceFixwoREST.registrarUsuario($scope.usuario)
 		.then(function(response){
-			$scope.resposta = response.data;
+			alert("Usuário cadastrado com Sucesso")
+			$state.go('^.login');
 		})
 		.catch(function(response) {
-			alert(response.data + response.status);
-      throw  error;
+			alert("Erro ao cadastrar usuário");
+			//throw  error;
 		});
 		//ServiceFixwoREST.registrarUsuario($scope.usuario);
-		console.log("nome: "+$scope.usuario.nome + ";cpf: "+$scope.usuario.cpf+
+		/*console.log("nome: "+$scope.usuario.nome + ";cpf: "+$scope.usuario.cpf+
 			";email: "+$scope.usuario.email+";senha: "+$scope.usuario.senha);
 
 		if ($scope.resposta === undefined) {
@@ -546,7 +541,7 @@ angular.module('starter.controllers', ['ionic','ngCordova', 'ngResource'])
 			//return;
 		}
 		$rootScope.usuario = $scope.usuario;
-		$state.go('^.tab.cadastrarOcorrencia');
+		$state.go('^.tab.cadastrarOcorrencia');*/
 	};
 		
 })

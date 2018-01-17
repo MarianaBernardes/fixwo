@@ -1,4 +1,4 @@
-var IP = "177.105.60.127";
+var IP = "127.0.0.1";
 var PORTA = "8080";
 
 var IP_TESTE = "192.168.56.1";
@@ -97,26 +97,87 @@ angular.module('starter.services', ['ionic','ngCordova', 'ngResource'])
 
 })
 
-.factory('ServiceFixwoREST', function($http) {
+.factory('ServiceFixwoREST', function($http, $resource) {
 
 
   return {
 
     registrarOcorrencia: function(ocorrencia) {
-      var Ocorrencia = $resource("http://"+IP+":"+PORTA+"/fixwo/ocorrencia");
-      var newOcorrencia = new Ocorrencia(ocorrencia);
-      newOcorrencia.$save();
+    	return new Promise(
+    		function(resolve, reject){
+    			$http({
+    	            url: 'http://localhost:8080/api/ocorrencia',
+    	            method: "POST",
+    	            data:{
+    	            	
+    	            },
+    	            headers: {'Content-Type': 'application/json'}
+    	        }).success(function (data, status, headers, config) {
+    	            //alert("success " + JSON.stringify(data, null, 4));
+    	            usuario.accessToken = data.access_token;
+    	            resolve(usuario);
+    	        }).error(function (data, status, headers, config) {
+    	        	reject();
+    	        });
+    		}
+    	)
     },
 
-    getUsuario: function(usuario) {
-      var Usuario = $resource("http://"+IP+":"+PORTA+"/fixwo/usuario");
-      return Usuario.get({login:usuario.login});
+    login: function(usuario) {
+    	return new Promise(
+    		function(resolve, reject){
+    			$http({
+    	            url: 'http://localhost:8080/api/login',
+    	            method: "POST",
+    	            data:{
+    	            	username:usuario.username,
+    	            	password:usuario.password
+    	            },
+    	            headers: {'Content-Type': 'application/json'}
+    	        }).success(function (data, status, headers, config) {
+    	            //alert("success " + JSON.stringify(data, null, 4));
+    	            usuario.accessToken = data.access_token;
+    	            resolve(usuario);
+    	        }).error(function (data, status, headers, config) {
+    	        	reject();
+    	        });
+    		}
+    	)
     },
 
     registrarUsuario: function(usuario) {
-      var Usuario = $resource("http://"+IP+":"+PORTA+"/fixwo/usuario");
-      var newUsuario = new Usuario(usuario);
-      newUsuario.$save();
+    	return new Promise(
+    		function(resolve, reject){
+    			//alert(JSON.stringify(usuario, null, 4));
+    			$http({
+    	            url: 'http://localhost:8080/api/guest/usuario',
+    	            method: "POST",
+    	            data:{
+    	            	nome:usuario.nome,
+    	            	email:usuario.email,
+    	            	cliente:usuario.cliente,
+    	            	username:usuario.username,
+    	            	password:usuario.password,
+    	            	accountExpired:usuario.accountExpired,
+    	            	accountLocked:usuario.accountLocked,
+    	            	passwordExpired:usuario.passwordExpired
+    	            },
+    	            headers: {'Content-Type': 'application/json'}
+    	        }).success(function (data, status, headers, config) {
+    	            //alert("success " + JSON.stringify(data, null, 4));
+    	            //usuario.accessToken = data.access_token;
+    	            resolve();
+    	        }).error(function (data, status, headers, config) {
+    	        	reject();
+    	        });
+    		}
+    	)
+    	/*//alert(JSON.stringify(usuario, null, 4));
+    	var Usuario = $resource("http://"+IP+":"+PORTA+"/api/guest/usuario");
+    	//alert("User: " + Usuario);
+    	var newUsuario = new Usuario(usuario);
+    	//alert("User: " + JSON.stringify(newUsuario, null, 4));
+    	newUsuario.$save();*/
     },
 
     getOcorrencias: function(usuario) {
